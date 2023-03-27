@@ -1,6 +1,6 @@
 # cosmos_client
 
-A new Flutter project.
+This is the client application of Cosmos™.
 
 ## Getting Started
 
