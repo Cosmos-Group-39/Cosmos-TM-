@@ -1,0 +1,1 @@
+This is the sever application of Cosmos™.
