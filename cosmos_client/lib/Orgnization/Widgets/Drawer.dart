@@ -1,4 +1,4 @@
-import 'package:cosmos_ran/Constants.dart';
+import 'package:cosmos_client/Constants.dart';
 import 'package:flutter/material.dart';
 
 Widget kDrawer() {
@@ -12,10 +12,10 @@ Widget kDrawer() {
           const SizedBox(height: 60),
           const FlutterLogo(size: 60),
           const SizedBox(height: 60),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5, left: 30, right: 30),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 5, left: 30, right: 30),
             child: Row(
-              children: const [
+              children: [
                 Text('Your Profile',
                     style: TextStyle(
                         color: kBackgroundColor,
@@ -28,10 +28,10 @@ Widget kDrawer() {
           ),
           Divider(color: kBackgroundColor.withOpacity(0.5)),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5, left: 30, right: 30),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 5, left: 30, right: 30),
             child: Row(
-              children: const [
+              children: [
                 Text('Home',
                     style: TextStyle(
                         color: kBackgroundColor,
@@ -44,10 +44,10 @@ Widget kDrawer() {
           ),
           Divider(color: kBackgroundColor.withOpacity(0.5)),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5, left: 30, right: 30),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 5, left: 30, right: 30),
             child: Row(
-              children: const [
+              children: [
                 Text('Workflows',
                     style: TextStyle(
                         color: kBackgroundColor,
@@ -60,10 +60,10 @@ Widget kDrawer() {
           ),
           Divider(color: kBackgroundColor.withOpacity(0.5)),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5, left: 30, right: 30),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 5, left: 30, right: 30),
             child: Row(
-              children: const [
+              children: [
                 Text('Create Workflows',
                     style: TextStyle(
                         color: kBackgroundColor,
@@ -76,10 +76,10 @@ Widget kDrawer() {
           ),
           Divider(color: kBackgroundColor.withOpacity(0.5)),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5, left: 30, right: 30),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 5, left: 30, right: 30),
             child: Row(
-              children: const [
+              children: [
                 Text('Organizations',
                     style: TextStyle(
                         color: kBackgroundColor,
@@ -92,10 +92,10 @@ Widget kDrawer() {
           ),
           Divider(color: kBackgroundColor.withOpacity(0.5)),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5, left: 30, right: 30),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 5, left: 30, right: 30),
             child: Row(
-              children: const [
+              children: [
                 Text('Payments',
                     style: TextStyle(
                         color: kBackgroundColor,
@@ -108,10 +108,10 @@ Widget kDrawer() {
           ),
           Divider(color: kBackgroundColor.withOpacity(0.5)),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5, left: 30, right: 30),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 5, left: 30, right: 30),
             child: Row(
-              children: const [
+              children: [
                 Text('Your Profile',
                     style: TextStyle(
                         color: kBackgroundColor,
@@ -124,10 +124,10 @@ Widget kDrawer() {
           ),
           Divider(color: kBackgroundColor.withOpacity(0.5)),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5, left: 30, right: 30),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 5, left: 30, right: 30),
             child: Row(
-              children: const [
+              children: [
                 Text('Help & Tips',
                     style: TextStyle(
                         color: kBackgroundColor,
@@ -140,10 +140,10 @@ Widget kDrawer() {
           ),
           Divider(color: kBackgroundColor.withOpacity(0.5)),
           const SizedBox(height: 150),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5, left: 90, right: 30),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 5, left: 90, right: 30),
             child: Row(
-              children: const [
+              children: [
                 Text('Log out',
                     style: TextStyle(
                         color: kBackgroundColor,

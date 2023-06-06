@@ -1,8 +1,8 @@
-import 'dart:io';
-import 'package:cosmos_ran/Chat/Models/msg_Model.dart';
-import 'package:cosmos_ran/Chat/widgets/otherMsg_widget.dart';
-import 'package:cosmos_ran/Chat/widgets/ownMsg_widget.dart';
-import 'package:cosmos_ran/Constants.dart';
+import 'package:cosmos_client/Chat/Models/msg_Model.dart';
+import 'package:cosmos_client/Chat/widgets/otherMsg_widget.dart';
+import 'package:cosmos_client/Chat/widgets/ownMsg_widget.dart';
+import 'package:cosmos_client/Constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -76,9 +76,9 @@ class _GroupPageState extends State<GroupPage> {
             size: 60.0,
             color: Colors.deepOrange,
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Center(
                 child: Text(
                   'Are You Sure ?',
@@ -113,7 +113,7 @@ class _GroupPageState extends State<GroupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () {}, icon: Icon(Icons.close)),
+        leading: IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
         title: const Text(
           'Workflow Name',
           style: TextStyle(

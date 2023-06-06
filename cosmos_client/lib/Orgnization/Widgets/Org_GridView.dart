@@ -1,8 +1,7 @@
-import 'package:cosmos_ran/Constants.dart';
-import 'package:cosmos_ran/Orgnization/Screens/Org_Form.dart';
-import 'package:cosmos_ran/Orgnization/Screens/Org_Settings.dart';
-import 'package:cosmos_ran/Orgnization/Screens/Your_Org.dart';
-
+import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/Orgnization/Screens/Org_Form.dart';
+import 'package:cosmos_client/Orgnization/Screens/Org_Settings.dart';
+import 'package:cosmos_client/Orgnization/Screens/Your_Org.dart';
 import 'package:flutter/material.dart';
 
 Widget orgGridView(BuildContext context) {
@@ -26,9 +25,9 @@ Widget orgGridView(BuildContext context) {
               borderRadius: BorderRadius.circular(20),
               color: kPrimaryColor.withOpacity(0.1),
             ),
-            child: Column(
+            child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(Icons.add_circle_outline,
                       color: kPrimaryColor, size: 50),
                   Padding(
@@ -54,9 +53,9 @@ Widget orgGridView(BuildContext context) {
               borderRadius: BorderRadius.circular(20),
               color: kPrimaryColor.withOpacity(0.1),
             ),
-            child: Column(
+            child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(Icons.people_rounded, color: kPrimaryColor, size: 50),
                   Padding(
                     padding: EdgeInsets.only(top: 20),
@@ -78,9 +77,9 @@ Widget orgGridView(BuildContext context) {
               borderRadius: BorderRadius.circular(20),
               color: kPrimaryColor.withOpacity(0.1),
             ),
-            child: Column(
+            child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(Icons.contact_support_sharp,
                       color: kPrimaryColor, size: 50),
                   Padding(
@@ -106,9 +105,9 @@ Widget orgGridView(BuildContext context) {
               borderRadius: BorderRadius.circular(20),
               color: kPrimaryColor.withOpacity(0.1),
             ),
-            child: Column(
+            child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(Icons.settings, color: kPrimaryColor, size: 50),
                   Padding(
                     padding: EdgeInsets.only(top: 20, left: 5, right: 5),

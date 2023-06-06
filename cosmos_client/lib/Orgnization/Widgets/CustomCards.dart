@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'package:cosmos_ran/Constants.dart';
-import 'package:cosmos_ran/Orgnization/Screens/Org_profile.dart';
-import 'package:cosmos_ran/Orgnization/Screens/Your_Org.dart';
-import 'package:cosmos_ran/Orgnization/Utils/FormValidation.dart';
-import 'package:cosmos_ran/Orgnization/Widgets/Profile_Pic.dart';
+import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/Orgnization/Screens/Org_profile.dart';
+import 'package:cosmos_client/Orgnization/Screens/Your_Org.dart';
+import 'package:cosmos_client/Orgnization/Utils/FormValidation.dart';
+import 'package:cosmos_client/Orgnization/Widgets/Profile_Pic.dart';
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatefulWidget {
@@ -64,10 +64,10 @@ class _CustomCardState extends State<CustomCard> {
             size: 60.0,
             color: Colors.deepOrange,
           ),
-          content: SingleChildScrollView(
+          content: const SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: const [
+              children: [
                 Text(
                   'Are You Sure ?',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),

@@ -1,4 +1,4 @@
-import 'package:cosmos_ran/Constants.dart';
+import 'package:cosmos_client/Constants.dart';
 import 'package:flutter/material.dart';
 
 Widget workflowsSearch(BuildContext context) {

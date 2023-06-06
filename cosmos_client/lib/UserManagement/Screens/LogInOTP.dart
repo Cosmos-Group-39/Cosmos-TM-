@@ -1,5 +1,5 @@
-import 'package:cosmos_ran/Constants.dart';
-import 'package:cosmos_ran/UserManagement/Screens/LogInPassword.dart';
+import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/UserManagement/Screens/LogInPassword.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 

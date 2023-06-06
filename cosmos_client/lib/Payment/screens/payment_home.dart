@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:cosmos_ran/Constants.dart';
+import 'package:cosmos_client/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -56,12 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
       await Stripe.instance.presentPaymentSheet().then((value) {
         showDialog(
             context: context,
-            builder: (_) => AlertDialog(
+            builder: (_) => const AlertDialog(
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Row(
-                        children: const [
+                        children: [
                           Icon(
                             Icons.check_circle,
                             color: Colors.green,

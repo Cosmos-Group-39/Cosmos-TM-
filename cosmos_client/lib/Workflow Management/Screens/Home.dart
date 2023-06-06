@@ -1,6 +1,6 @@
-import 'package:cosmos_ran/Constants.dart';
-import 'package:cosmos_ran/Workflow%20Management/Screens/NewWorkflow.dart';
-import 'package:cosmos_ran/Workflow%20Management/Widgets/WFSearchBox.dart';
+import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
+import 'package:cosmos_client/Workflow%20Management/Widgets/WFSearchBox.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:cosmos_ran/Constants.dart';
+import 'package:cosmos_client/Constants.dart';
 import 'package:flutter/material.dart';
 
 class OrgSettings extends StatefulWidget {
@@ -20,9 +20,9 @@ class _OrgSettingsState extends State<OrgSettings> {
             size: 60.0,
             color: Colors.deepOrange,
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Text(
                 'Are You Sure ?',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
@@ -59,9 +59,9 @@ class _OrgSettingsState extends State<OrgSettings> {
             size: 60.0,
             color: Colors.blueAccent,
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Text(
                 'Save changes ?',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),

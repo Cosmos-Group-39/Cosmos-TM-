@@ -1,8 +1,8 @@
-import 'package:cosmos_ran/Constants.dart';
-import 'package:cosmos_ran/Orgnization/Widgets/Const_Texts.dart';
-import 'package:cosmos_ran/Orgnization/Widgets/Drawer.dart';
-import 'package:cosmos_ran/Orgnization/Widgets/Org_GridView.dart';
-import 'package:cosmos_ran/Orgnization/Widgets/Org_SearchBox.dart';
+import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
+import 'package:cosmos_client/Orgnization/Widgets/Drawer.dart';
+import 'package:cosmos_client/Orgnization/Widgets/Org_GridView.dart';
+import 'package:cosmos_client/Orgnization/Widgets/Org_SearchBox.dart';
 import 'package:flutter/material.dart';
 
 class OrgMain extends StatefulWidget {

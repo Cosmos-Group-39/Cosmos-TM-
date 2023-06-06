@@ -1,8 +1,5 @@
-import 'package:cosmos_ran/Constants.dart';
-import 'package:cosmos_ran/UserManagement/Screens/LogInOTP.dart';
-import 'package:cosmos_ran/Workflow%20Management/Widgets/WFSearchBox.dart';
+import 'package:cosmos_client/Constants.dart';
 import 'package:flutter/material.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class NewWorkflowScreen extends StatefulWidget {
   const NewWorkflowScreen({Key? key}) : super(key: key);
@@ -39,7 +36,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               const Divider(
                 thickness: 5,
                 indent: 20,
@@ -54,7 +51,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               //templates
               Container(
@@ -90,13 +87,13 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
                   }).toList(),
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               const Divider(
                 thickness: 5,
                 indent: 20,
                 endIndent: 20,
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               //custom workflow
               const Text(
@@ -107,7 +104,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
 
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -117,17 +114,17 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
                     alignment: Alignment.center,
                   ),
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     'Create',
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                   )),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               const Divider(
                 thickness: 5,
                 indent: 20,
                 endIndent: 20,
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
 
               //custom workflow
               const Text(
@@ -138,7 +135,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
 
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -148,7 +145,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
                     alignment: Alignment.center,
                   ),
                   onPressed: () {},
-                  child: Icon(
+                  child: const Icon(
                     Icons.file_download_outlined,
                     size: 30,
                   )),

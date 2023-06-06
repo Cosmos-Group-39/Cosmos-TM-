@@ -1,6 +1,6 @@
-import 'package:cosmos_ran/Constants.dart';
-import 'package:cosmos_ran/UserManagement/Screens/LogInOTP.dart';
-import 'package:cosmos_ran/UserManagement/Screens/SignUp.dart';
+import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/UserManagement/Screens/LogInOTP.dart';
+import 'package:cosmos_client/UserManagement/Screens/SignUp.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {

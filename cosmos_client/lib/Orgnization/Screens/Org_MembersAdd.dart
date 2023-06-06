@@ -1,6 +1,6 @@
-import 'package:cosmos_ran/Constants.dart';
-import 'package:cosmos_ran/Orgnization/Widgets/Const_Texts.dart';
-import 'package:cosmos_ran/Orgnization/Widgets/Members_Search.dart';
+import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
+import 'package:cosmos_client/Orgnization/Widgets/Members_Search.dart';
 import 'package:flutter/material.dart';
 
 class OrgAddMembers extends StatefulWidget {
@@ -22,9 +22,9 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
             size: 60.0,
             color: kPrimaryColor,
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Text(
                 'Select Member Role ?',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
@@ -65,9 +65,9 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
             size: 60.0,
             color: Colors.deepOrange,
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Text(
                 'Are You Sure ?',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
@@ -138,9 +138,9 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
                           children: [
                             const FlutterLogo(),
                             const SizedBox(width: 10),
-                            Column(
+                            const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Text('Member Name',
                                     style: TextStyle(
                                         color: kBackgroundColor,

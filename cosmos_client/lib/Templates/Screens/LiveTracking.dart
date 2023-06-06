@@ -1,7 +1,5 @@
-import 'package:cosmos_ran/Constants.dart';
+import 'package:cosmos_client/Constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TrackingTemp extends StatefulWidget {

@@ -1,8 +1,8 @@
-import 'package:cosmos_ran/Constants.dart';
-import 'package:cosmos_ran/Orgnization/Screens/Org_HomePage.dart';
-import 'package:cosmos_ran/Orgnization/Utils/FormValidation.dart';
-import 'package:cosmos_ran/Orgnization/Widgets/Const_Texts.dart';
-import 'package:cosmos_ran/Orgnization/Widgets/CustomCards.dart';
+import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/Orgnization/Screens/Org_HomePage.dart';
+import 'package:cosmos_client/Orgnization/Utils/FormValidation.dart';
+import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
+import 'package:cosmos_client/Orgnization/Widgets/CustomCards.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 

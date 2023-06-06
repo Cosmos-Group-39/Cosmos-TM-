@@ -1,9 +1,7 @@
 import 'dart:io';
-import 'package:cosmos_ran/Constants.dart';
-import 'package:cosmos_ran/Orgnization/Screens/Org_MembersAdd.dart';
-import 'package:cosmos_ran/Orgnization/Screens/Your_Org.dart';
-import 'package:cosmos_ran/Orgnization/Utils/FormValidation.dart';
-import 'package:cosmos_ran/Orgnization/Widgets/Profile_Pic.dart';
+import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/Orgnization/Screens/Org_MembersAdd.dart';
+import 'package:cosmos_client/Orgnization/Utils/FormValidation.dart';
 import 'package:flutter/material.dart';
 
 class OrgPro extends StatefulWidget {
