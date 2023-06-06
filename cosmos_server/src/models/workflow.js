@@ -1,6 +1,19 @@
 const mongoose = require('mongoose');
 
-const postSchema = new mongoose.Schema({
+const accessSchema = new mongoose.Schema({
+    accessLevel: {
+        type: String,
+        enum: ['Owner', 'Editor', 'Viewer'],
+        required: true
+    },
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
+});
+
+const workflowSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -11,18 +24,31 @@ const postSchema = new mongoose.Schema({
         required: true,
         default: 'free',
     },
-    label: {
-        type: String,
-    },
     subWorkflows: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'SubWorkflow'
+    }],
+    users: {
+        type: [accessSchema],
+        required: true
+    },
+    accessCodes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'AccessCode'
+    }],
+    chat: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chat'
+    },
+    labels: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Label'
     }],
     active: {
         type: Boolean,
         required: true,
         default: true
-    },
+    }
 });
 
-module.exports =  mongoose.model('Workflow', postSchema);
+module.exports = mongoose.model('Workflow', workflowSchema);

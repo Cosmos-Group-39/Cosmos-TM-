@@ -1,6 +1,19 @@
 const mongoose = require('mongoose');
 
-const postSchema = new mongoose.Schema({
+const memberSchema = new mongoose.Schema({
+    isAdmin: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
+});
+
+const organizationSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -16,10 +29,14 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Workflow'
     }],
-    members: [{
+    members: {
+        type: [memberSchema],
+        required: true
+    },
+    labels: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Review'
-    }],
+        ref: 'Label'
+    }]
 });
 
-module.exports =  mongoose.model('Organization', postSchema);
+module.exports = mongoose.model('Organization', organizationSchema);

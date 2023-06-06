@@ -33,16 +33,21 @@ const userSchema = new mongoose.Schema({
   },
   subscription: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Subscription'
+    ref: 'Subscription',
+    required: true,
   },
+  workflows: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Workflow'
+  }],
+  organizations: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Organization'
+  }],
   reviews: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Review'
-  }],
-  
-  label: {
-    type: String
-  }
+  }]
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
+const subscriptionSchema = new mongoose.Schema({
     features: [{
         type: String,
         required: true
@@ -15,5 +15,5 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Subscription', userSchema);
+module.exports = mongoose.model('Subscription', subscriptionSchema);
 
