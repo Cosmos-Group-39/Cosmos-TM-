@@ -12,15 +12,9 @@ class OrgSearch extends StatefulWidget {
 class _OrgSearchState extends State<OrgSearch> {
   TextEditingController _searchController = TextEditingController();
   List<FormModel> cardsx = []; // Replace with your actual list of cards
-  List<FormModel> _searchResults = [];
 
   void _performSearch(String searchText) {
-    setState(() {
-      _searchResults = cardsx
-          .where((card) =>
-              card.cardName.toLowerCase().contains(searchText.toLowerCase()))
-          .toList();
-    });
+    setState(() {});
   }
 
   @override

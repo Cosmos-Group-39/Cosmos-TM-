@@ -1,4 +1,6 @@
+import 'package:cosmos_client/UserManagement/Models/userModel.dart';
 import 'package:cosmos_client/UserManagement/Screens/SignUp.dart';
+import 'package:cosmos_client/UserManagement/Screens/userProfile.dart';
 import 'package:flutter/material.dart';
 
 void main() {

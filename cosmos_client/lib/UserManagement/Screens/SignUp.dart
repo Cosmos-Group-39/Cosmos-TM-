@@ -1,8 +1,11 @@
 import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/UserManagement/Models/userModel.dart';
+import 'package:cosmos_client/UserManagement/Screens/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'dart:async';
+import 'package:uuid/uuid.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -13,18 +16,21 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final formKey = GlobalKey<FormState>();
+  String userId = Uuid().v4();
+  DateTime picked = DateTime.now(); // Declare and initialize the variable here
 
   String initialCountry = 'LK';
   PhoneNumber phoneNumber = PhoneNumber(isoCode: 'LK');
 
   bool isLoginSelected = true;
 
-  TextEditingController cardControllerFN = TextEditingController();
-  TextEditingController cardControllerLN = TextEditingController();
-  TextEditingController cardControllerCreatePass = TextEditingController();
-  TextEditingController cardControlleConfirmPass = TextEditingController();
-  TextEditingController cardControllerBirthday = TextEditingController();
-  TextEditingController cardControllerMobileNo = TextEditingController();
+  TextEditingController firstNController = TextEditingController();
+  TextEditingController lastNController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController createPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController birthdayController = TextEditingController();
+  TextEditingController mobileNumberController = TextEditingController();
 
   Future<DateTime?> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -41,7 +47,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget buildFirstName() {
     return Expanded(
       child: TextFormField(
-        controller: cardControllerFN,
+        controller: firstNController,
 
         decoration: const InputDecoration(
           labelText: 'First Name',
@@ -53,15 +59,6 @@ class _SignupScreenState extends State<SignupScreen> {
           if (value!.isEmpty) {
             return 'Please enter First Name';
           }
-
-          bool emailValid = RegExp(
-                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9+\.[a-zA-Z]+")
-              .hasMatch(value);
-
-          if (!emailValid) {
-            return "Enter Valid Email";
-          }
-
           return null;
         },
       ),
@@ -72,7 +69,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget buildLastName() {
     return Expanded(
       child: TextFormField(
-        controller: cardControllerLN,
+        controller: lastNController,
 
         decoration: const InputDecoration(
           labelText: 'Last Name',
@@ -85,13 +82,37 @@ class _SignupScreenState extends State<SignupScreen> {
           if (value!.isEmpty) {
             return 'Please enter Last Name';
           }
+          return null;
+        },
+      ),
+    );
+  }
+
+  //Email
+  Widget buildEmail() {
+    return Expanded(
+      child: TextFormField(
+        controller: emailController,
+        keyboardType: TextInputType
+            .emailAddress, // Set the keyboard type to email address
+
+        decoration: const InputDecoration(
+          labelText: 'Email',
+          border: OutlineInputBorder(),
+        ),
+
+        // Validations
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please enter an email address';
+          }
 
           bool emailValid = RegExp(
                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9+\.[a-zA-Z]+")
               .hasMatch(value);
 
           if (!emailValid) {
-            return "Enter Valid Email";
+            return 'Enter a valid email address';
           }
 
           return null;
@@ -103,7 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
   // Create Password
   Widget buildCreatePassword() {
     return TextFormField(
-      controller: cardControllerCreatePass,
+      controller: createPasswordController,
 
       decoration: const InputDecoration(
         labelText: '6-8 characters',
@@ -129,7 +150,7 @@ class _SignupScreenState extends State<SignupScreen> {
   // Confirm Password
   Widget buildConfirmPassword() {
     return TextFormField(
-      controller: cardControlleConfirmPass,
+      controller: confirmPasswordController,
 
       decoration: const InputDecoration(
         labelText: 'min 6-8 characters',
@@ -143,7 +164,7 @@ class _SignupScreenState extends State<SignupScreen> {
           return 'Please enter password';
         }
 
-        if (value != cardControllerCreatePass.text) {
+        if (value != createPasswordController.text) {
           return 'Incorrect password';
         }
 
@@ -156,29 +177,26 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget buildBirthday() {
     return GestureDetector(
       onTap: () async {
-        final DateTime? picked = await _selectDate(context);
+        picked =
+            (await _selectDate(context))!; // Assign the value to the variable
 
         if (picked != null) {
           setState(() {
-            cardControllerBirthday.text =
-                DateFormat('dd/MM/yyyy').format(picked);
+            birthdayController.text = DateFormat('dd/MM/yyyy').format(picked);
           });
         }
       },
       child: AbsorbPointer(
         child: TextFormField(
-          controller: cardControllerBirthday,
-
+          controller: birthdayController,
           decoration: const InputDecoration(
             labelText: 'DD/MM/YYYY',
             border: OutlineInputBorder(),
           ),
-
           // Validations
-
           validator: (value) {
             if (value!.isEmpty) {
-              return 'Please enter birthday';
+              return 'Please enter a birthday';
             }
 
             final parts = value.split('/');
@@ -197,17 +215,17 @@ class _SignupScreenState extends State<SignupScreen> {
             }
 
             if (year > currentYear) {
-              return 'Enter valid year';
+              return 'Enter a valid year';
             }
 
             if (month < 1 || month > 12) {
-              return 'Enter valid month';
+              return 'Enter a valid month';
             }
 
             final daysInMonth = DateTime(year, month + 1, 0).day;
 
             if (day < 1 || day > daysInMonth) {
-              return 'Enter valid date';
+              return 'Enter a valid date';
             }
 
             return null;
@@ -220,38 +238,54 @@ class _SignupScreenState extends State<SignupScreen> {
   // Mobie Number
   Widget buildMobileNo() {
     return InternationalPhoneNumberInput(
-      onInputChanged: (PhoneNumber number) {
-        setState(() {
-          phoneNumber = number;
-        });
+      onInputChanged: (PhoneNumber mobile) {
+        // Validate number length
+        if (mobile.phoneNumber?.length == 9) {
+          setState(() {
+            phoneNumber = mobile;
+          });
+        }
       },
-
       selectorConfig: const SelectorConfig(
         selectorType: PhoneInputSelectorType.DROPDOWN,
         setSelectorButtonAsPrefixIcon: true,
       ),
-
       initialValue: phoneNumber,
       countries: const ['US', 'CA', 'IN', 'LK'], // List of supported countries
-      textFieldController: cardControllerMobileNo,
+      textFieldController: mobileNumberController,
       inputDecoration: const InputDecoration(
         hintText: 'Enter your phone number',
         border: OutlineInputBorder(),
       ),
-
       formatInput: true,
-
       keyboardType: const TextInputType.numberWithOptions(signed: true),
-
-      onSaved: (PhoneNumber number) {},
+      onSaved: (PhoneNumber mobile) {},
     );
   }
 
   //Submit Form
-  void submitForm() async {
+  void submitForm() {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      // Call the API to create the organization
+
+      UserModel userModel = UserModel(
+        id: userId,
+        name: firstNController.text + " " + lastNController.text,
+        email: emailController.text,
+        password: confirmPasswordController.text,
+        dob: picked,
+        mobile: mobileNumberController.text,
+        active: false, // Set the initial active status as false
+        profilePic: '',
+        address: '',
+      );
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UserProfileScreen(userModel: userModel),
+        ),
+      );
     }
   }
 
@@ -323,6 +357,15 @@ class _SignupScreenState extends State<SignupScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: buildConfirmPassword(),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text('Email',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(fontWeight: FontWeight.w600)),
+                      const SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: buildEmail(),
                       ),
                       const SizedBox(height: 20),
                       const Text('Birthday',
