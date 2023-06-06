@@ -20,6 +20,7 @@ class _GroupPageState extends State<GroupPage> {
   IO.Socket? socket;
   List<MsgModel> listMsg = [];
   TextEditingController _msgController = TextEditingController();
+
   @override
   void initState() {
     super.initState();

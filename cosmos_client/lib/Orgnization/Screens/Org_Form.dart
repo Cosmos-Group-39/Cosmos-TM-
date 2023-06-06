@@ -1,7 +1,7 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Orgnization/Screens/Your_Org.dart';
-import 'package:cosmos_client/Orgnization/Utils/FormValidation.dart';
-import 'package:cosmos_client/Orgnization/Utils/api_services.dart';
+import 'package:cosmos_client/Orgnization/Models/FormValidation.dart';
+import 'package:cosmos_client/Orgnization/Services/api_services.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Profile_Pic.dart';
 import 'package:flutter/material.dart';

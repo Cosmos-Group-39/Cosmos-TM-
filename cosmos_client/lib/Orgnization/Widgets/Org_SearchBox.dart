@@ -1,5 +1,5 @@
 import 'package:cosmos_client/Constants.dart';
-import 'package:cosmos_client/Orgnization/Utils/FormValidation.dart';
+import 'package:cosmos_client/Orgnization/Models/FormValidation.dart';
 import 'package:flutter/material.dart';
 
 class OrgSearch extends StatefulWidget {

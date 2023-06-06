@@ -1,6 +1,6 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Orgnization/Screens/Org_HomePage.dart';
-import 'package:cosmos_client/Orgnization/Utils/FormValidation.dart';
+import 'package:cosmos_client/Orgnization/Models/FormValidation.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
 import 'package:cosmos_client/Orgnization/Widgets/CustomCards.dart';
 import 'package:flutter/material.dart';
