@@ -18,6 +18,11 @@ class _CreatedSubWorkflowsState extends State<CreatedSubWorkflows> {
   TextEditingController _subwfController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _subwfController.dispose();
     super.dispose();
