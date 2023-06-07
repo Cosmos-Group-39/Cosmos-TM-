@@ -174,7 +174,10 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
                 child: DropdownButton<String>(
                   alignment: AlignmentDirectional.center,
                   style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w600),
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                    decoration: null,
+                  ),
                   value: selectedTemplate,
                   onChanged: (String? newValue) {
                     setState(() {

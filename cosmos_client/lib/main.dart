@@ -1,4 +1,5 @@
 import 'package:cosmos_client/Orgnization/Screens/Org_HomePage.dart';
+import 'package:cosmos_client/UserManagement/Screens/SignUp.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: NewWorkflowScreen(),
+      home: SignupScreen(),
     );
   }
 }
