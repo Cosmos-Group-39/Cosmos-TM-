@@ -1,6 +1,5 @@
-import 'package:cosmos_client/UserManagement/Models/userModel.dart';
-import 'package:cosmos_client/UserManagement/Screens/SignUp.dart';
-import 'package:cosmos_client/UserManagement/Screens/userProfile.dart';
+import 'package:cosmos_client/Orgnization/Screens/Org_HomePage.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,11 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Cosmos(TM)',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-        ),
-        home: SignupScreen());
+      title: 'Cosmos(TM)',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      home: NewWorkflowScreen(),
+    );
   }
 }

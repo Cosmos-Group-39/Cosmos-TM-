@@ -14,15 +14,15 @@ class OrgForm extends StatefulWidget {
 }
 
 class _OrgFormState extends State<OrgForm> {
-  final formKey = GlobalKey<FormState>();
+  final formKeyorg = GlobalKey<FormState>();
   ApiService apiService = ApiService();
   TextEditingController cardControllername = TextEditingController();
   TextEditingController cardControllerDes = TextEditingController();
   late String profilePic;
 
   void submitForm() async {
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
+    if (formKeyorg.currentState!.validate()) {
+      formKeyorg.currentState!.save();
 
       // Call the API to create the organization
       try {
@@ -62,6 +62,7 @@ class _OrgFormState extends State<OrgForm> {
     });
   }
 
+  //Org Name
   Widget buildOrgNameField() {
     return TextFormField(
       controller: cardControllername,
@@ -86,6 +87,7 @@ class _OrgFormState extends State<OrgForm> {
     );
   }
 
+  //org description
   Widget buildDescriptionField() {
     return TextFormField(
       controller: cardControllerDes,
@@ -142,7 +144,7 @@ class _OrgFormState extends State<OrgForm> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: Form(
-                  key: formKey,
+                  key: formKeyorg,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
