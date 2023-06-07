@@ -1,7 +1,7 @@
-import 'dart:io';
+import 'package:cosmos_client/Workflow%20Management/Screens/worksWorkflows.dart';
+import 'package:flutter/material.dart';
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
-import 'package:flutter/material.dart';
 
 class SubWorkflowCard extends StatefulWidget {
   final Function(SubWorkflowModel) subwfonEdit;
@@ -25,6 +25,7 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
   @override
   void initState() {
     super.initState();
+    _stitleController.text = widget.item.title;
   }
 
   @override
@@ -44,8 +45,7 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
     widget.subwfonEdit(subwf_editedItem);
   }
 
-  //Delete sub workflow
-  deletesubWorkflow() {
+  void deletesubWorkflow() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -87,8 +87,7 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
     );
   }
 
-  //Update subworkflow
-  changeSubCard() {
+  void changeSubCard() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -137,19 +136,8 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
     return InkWell(
       borderRadius: BorderRadius.circular(25),
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => OrgPro(
-        //       item: FormModel(
-        //         cardID: uuid.v1(),
-        //         cardName: widget.item.cardName,
-        //         description: widget.item.description,
-        //         profilePic: widget.item.profilePic,
-        //       ),
-        //     ),
-        //   ),
-        // );
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => WorksWorkflowScreen()));
       },
       child: Card(
         elevation: 10,
@@ -158,37 +146,42 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
-            gradient: const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [kPrimaryColor, kSecondaryColor],
-            ),
+            color: kPrimaryColor,
           ),
-          height: 120,
+          padding: const EdgeInsets.only(
+            top: 25,
+            bottom: 25,
+            right: 25,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const SizedBox(width: 10),
               Flexible(
+                flex: 3,
                 child: Text(
                   widget.item.title,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                     color: kBackgroundColor,
-                    fontWeight: FontWeight.w800,
                   ),
-                  overflow: TextOverflow.visible,
-                  softWrap: false,
                 ),
               ),
-              const SizedBox(width: 100),
-              const SizedBox(width: 100),
-              IconButton(
-                  onPressed: changeSubCard,
-                  icon: const Icon(Icons.create, color: kBackgroundColor)),
-              IconButton(
-                  onPressed: deletesubWorkflow,
-                  icon: const Icon(Icons.delete, color: kBackgroundColor))
+              SizedBox(width: 60),
+              Flexible(
+                flex: 1,
+                child: IconButton(
+                  icon: const Icon(Icons.edit, color: kBackgroundColor),
+                  onPressed: () => changeSubCard(),
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: IconButton(
+                  icon: const Icon(Icons.delete, color: kBackgroundColor),
+                  onPressed: () => deletesubWorkflow(),
+                ),
+              ),
             ],
           ),
         ),

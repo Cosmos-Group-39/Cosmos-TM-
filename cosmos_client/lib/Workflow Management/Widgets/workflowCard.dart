@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/yourSubWorkflow.dart';
 import 'package:flutter/material.dart';
 
 class WorkflowCard extends StatefulWidget {
@@ -137,19 +138,12 @@ class _WorkflowCardState extends State<WorkflowCard> {
     return InkWell(
       borderRadius: BorderRadius.circular(25),
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => OrgPro(
-        //       item: FormModel(
-        //         cardID: uuid.v1(),
-        //         cardName: widget.item.cardName,
-        //         description: widget.item.description,
-        //         profilePic: widget.item.profilePic,
-        //       ),
-        //     ),
-        //   ),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CreatedSubWorkflows(),
+          ),
+        );
       },
       child: Card(
         elevation: 10,
