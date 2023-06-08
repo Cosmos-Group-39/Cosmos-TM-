@@ -16,7 +16,6 @@ Widget workflowsSearch(BuildContext context, Function(String) onSearch) {
       ],
     ),
     child: TextField(
-      controller: searchTextController,
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         hintText: 'Access code, Email or Phone number',

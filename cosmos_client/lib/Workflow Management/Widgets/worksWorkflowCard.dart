@@ -1,51 +1,50 @@
-import 'package:cosmos_client/Workflow%20Management/Screens/yourWorksWorkflows.dart';
 import 'package:flutter/material.dart';
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 
-class SubWorkflowCard extends StatefulWidget {
-  final Function(SubWorkflowModel) subwfonEdit;
-  final Function(String) subwfonDelete;
-  final SubWorkflowModel item;
+class WorksCard extends StatefulWidget {
+  final Function(WorksModel) workonEdit;
+  final Function(String) workonDelete;
+  final WorksModel item;
 
-  const SubWorkflowCard({
+  const WorksCard({
     Key? key,
     required this.item,
-    required this.subwfonDelete,
-    required this.subwfonEdit,
+    required this.workonDelete,
+    required this.workonEdit,
   }) : super(key: key);
 
   @override
-  State<SubWorkflowCard> createState() => _SubWorkflowCardState();
+  State<WorksCard> createState() => _WorksCardState();
 }
 
-class _SubWorkflowCardState extends State<SubWorkflowCard> {
-  TextEditingController _stitleController = TextEditingController();
+class _WorksCardState extends State<WorksCard> {
+  TextEditingController _worktitleController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _stitleController.text = widget.item.title;
+    _worktitleController.text = widget.item.title;
   }
 
   @override
   void dispose() {
-    _stitleController.dispose();
+    _worktitleController.dispose();
     super.dispose();
   }
 
-  void subwfeditCard() {
-    String title = _stitleController.text.trim();
+  void workeditCard() {
+    String title = _worktitleController.text.trim();
 
-    SubWorkflowModel subwf_editedItem = SubWorkflowModel(
-      swid: widget.item.swid,
+    WorksModel work_editedItem = WorksModel(
+      wwid: widget.item.wwid,
       title: title,
     );
 
-    widget.subwfonEdit(subwf_editedItem);
+    widget.workonEdit(work_editedItem);
   }
 
-  void deletesubWorkflow() {
+  void deleteWorks() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -66,7 +65,7 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
                 Padding(
                   padding: EdgeInsets.only(top: 20, left: 17),
                   child: Text(
-                    'You want to delete the SubWorkflow !',
+                    'You want to delete the Work !',
                     style: TextStyle(fontSize: 13),
                   ),
                 ),
@@ -76,7 +75,7 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
           actions: [
             TextButton(
               onPressed: () {
-                widget.subwfonDelete(widget.item.swid);
+                widget.workonDelete(widget.item.wwid);
                 Navigator.pop(context);
               },
               child: const Text('Delete'),
@@ -87,7 +86,7 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
     );
   }
 
-  void changeSubCard() {
+  void changeWorkCard() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -97,7 +96,7 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text(
-                  'Update Sub Workflow',
+                  'Update Work',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
                 ),
                 const SizedBox(height: 10),
@@ -108,9 +107,9 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
                 ),
                 const SizedBox(height: 10),
                 TextField(
-                  controller: _stitleController,
+                  controller: _worktitleController,
                   decoration: const InputDecoration(
-                    hintText: 'Sub Workflow Name',
+                    hintText: 'Work Name',
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -120,7 +119,7 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
           actions: [
             TextButton(
               onPressed: () {
-                subwfeditCard();
+                workeditCard();
                 Navigator.pop(context);
               },
               child: const Text('Confirm'),
@@ -135,10 +134,7 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(25),
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => WorksScreen()));
-      },
+      onTap: null, // works card on tap
       child: Card(
         elevation: 10,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
@@ -172,14 +168,14 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
                 flex: 1,
                 child: IconButton(
                   icon: const Icon(Icons.edit, color: kBackgroundColor),
-                  onPressed: () => changeSubCard(),
+                  onPressed: () => changeWorkCard(),
                 ),
               ),
               Flexible(
                 flex: 1,
                 child: IconButton(
                   icon: const Icon(Icons.delete, color: kBackgroundColor),
-                  onPressed: () => deletesubWorkflow(),
+                  onPressed: () => deleteWorks(),
                 ),
               ),
             ],
