@@ -3,6 +3,9 @@ import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Drawer.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Org_GridView.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Org_SearchBox.dart';
+import 'package:cosmos_client/UserManagement/Models/userModel.dart';
+import 'package:cosmos_client/UserManagement/Screens/userProfile.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:flutter/material.dart';
 
 class OrgMain extends StatefulWidget {
@@ -73,7 +76,8 @@ class _OrgMainState extends State<OrgMain> {
                 children: [
                   orgHomeText(context),
                   const SizedBox(height: 40),
-                  orgGridView(context)
+                  orgGridView(context),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),
@@ -88,9 +92,14 @@ class _OrgMainState extends State<OrgMain> {
         backgroundColor: kPrimaryColor,
         selectedItemColor: Colors.white,
         unselectedItemColor: kDefaultIconLightColor.withOpacity(0.5),
-        items: const [
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
+              icon: IconButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                  },
+                  icon: Icon(Icons.home_outlined)),
               activeIcon: Icon(Icons.home),
               label: 'Home'),
           BottomNavigationBarItem(

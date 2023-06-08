@@ -18,6 +18,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: SignupScreen());
+        home: OrgMain());
   }
 }
