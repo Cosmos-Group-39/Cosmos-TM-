@@ -1,8 +1,10 @@
 import 'package:cosmos_client/Constants.dart';
-
 import 'package:flutter/material.dart';
 
-Widget orgMemberSearch(BuildContext context) {
+typedef MemberSearchCallback = void Function(String query);
+
+Widget orgMemberSearch(
+    BuildContext context, MemberSearchCallback onSearch, bool showResults) {
   return Container(
     height: 50,
     width: MediaQuery.of(context).size.width,
@@ -15,18 +17,28 @@ Widget orgMemberSearch(BuildContext context) {
         boxShadow: const [
           BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
         ]),
-    child: TextField(
-      keyboardType: TextInputType.name,
-      decoration: InputDecoration(
-        hintText: 'Search Members...',
-        hintStyle: TextStyle(color: kPrimaryColor.withOpacity(0.5)),
-        enabledBorder: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        suffixIcon: const Icon(
-          Icons.search_rounded,
-          color: kPrimaryColor,
+    child: Row(
+      children: [
+        Expanded(
+          child: TextField(
+            keyboardType: TextInputType.name,
+            onChanged: onSearch,
+            decoration: InputDecoration(
+              hintText: 'Search Members...',
+              hintStyle: TextStyle(color: kPrimaryColor.withOpacity(0.5)),
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+            ),
+          ),
         ),
-      ),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.search_rounded,
+            color: kPrimaryColor,
+          ),
+        ),
+      ],
     ),
   );
 }

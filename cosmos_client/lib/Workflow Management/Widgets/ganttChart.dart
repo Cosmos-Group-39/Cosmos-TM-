@@ -24,8 +24,8 @@ class GanttChartPainter extends CustomPainter {
     final double chartHeight = size.height;
     final double taskHeight = chartHeight / tasks.length;
 
-    final Paint fillPaint = Paint()..color = Colors.blue;
-    final Paint borderPaint = Paint()..color = Colors.black;
+    final Paint fillPaint = Paint()..color = Colors.black;
+    final Paint borderPaint = Paint()..color = Colors.amber;
     final Paint textPaint = Paint()..color = Colors.black;
     final double textPadding = 4.0;
     final double barPadding = 8.0;

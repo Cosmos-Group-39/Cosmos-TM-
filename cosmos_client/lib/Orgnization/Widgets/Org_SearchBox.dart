@@ -1,5 +1,5 @@
 import 'package:cosmos_client/Constants.dart';
-import 'package:cosmos_client/Orgnization/Models/FormValidation.dart';
+import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
 import 'package:flutter/material.dart';
 
 class OrgSearch extends StatefulWidget {
@@ -11,7 +11,7 @@ class OrgSearch extends StatefulWidget {
 
 class _OrgSearchState extends State<OrgSearch> {
   TextEditingController _searchController = TextEditingController();
-  List<FormModel> cardsx = []; // Replace with your actual list of cards
+  List<OrganizationModel> cardsx = []; // Replace with your actual list of cards
 
   void _performSearch(String searchText) {
     setState(() {});
@@ -22,26 +22,34 @@ class _OrgSearchState extends State<OrgSearch> {
     super.initState();
     // Populate the _allCards list with your actual data
     cardsx = [
-      FormModel(
-          cardID: "1",
-          cardName: "Card A",
-          description: "Description of Card A",
-          profilePic: ''),
-      FormModel(
-          cardID: "2",
-          cardName: "Card B",
-          description: "Description of Card B",
-          profilePic: ''),
-      FormModel(
-          cardID: "3",
-          cardName: "Card C",
-          description: "Description of Card C",
-          profilePic: ''),
-      FormModel(
-          cardID: "4",
-          cardName: "Card D",
-          description: "Description of Card D",
-          profilePic: ''),
+      OrganizationModel(
+        cardID: "1",
+        cardName: "Card A",
+        description: "Description of Card A",
+        profilePic: '',
+        members: [],
+      ),
+      OrganizationModel(
+        cardID: "2",
+        cardName: "Card B",
+        description: "Description of Card B",
+        profilePic: '',
+        members: [],
+      ),
+      OrganizationModel(
+        cardID: "3",
+        cardName: "Card C",
+        description: "Description of Card C",
+        profilePic: '',
+        members: [],
+      ),
+      OrganizationModel(
+        cardID: "4",
+        cardName: "Card D",
+        description: "Description of Card D",
+        profilePic: '',
+        members: [],
+      ),
     ];
   }
 

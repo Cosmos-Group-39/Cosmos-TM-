@@ -1,97 +1,117 @@
 import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Members_Search.dart';
+import 'package:cosmos_client/Orgnization/Widgets/memberCard.dart';
 import 'package:flutter/material.dart';
 
 class OrgAddMembers extends StatefulWidget {
-  const OrgAddMembers({super.key});
+  const OrgAddMembers({Key? key}) : super(key: key);
 
   @override
   State<OrgAddMembers> createState() => _OrgAddMembersState();
 }
 
 class _OrgAddMembersState extends State<OrgAddMembers> {
-  //Admin or member selection
-  roleOrgmember() {
+  List<OrgMembersModel> allMembers = [
+    OrgMembersModel(memberId: '1', name: 'aaa', role: 'Member'),
+    OrgMembersModel(memberId: '2', name: 'aaa bbb', role: 'Admin'),
+    OrgMembersModel(memberId: '3', name: 'bbbb ccc', role: 'Member'),
+    OrgMembersModel(memberId: '1', name: 'bbb aac', role: 'Member'),
+    OrgMembersModel(memberId: '2', name: 'ddrf', role: 'Admin'),
+    OrgMembersModel(memberId: '3', name: 'zz ddaa', role: 'Member'),
+  ];
+
+  List<OrgMembersModel> filteredMembers = [];
+  List<OrgMembersModel> selectedMembers = [];
+
+  void searchMembers(String query) {
+    setState(() {
+      filteredMembers = allMembers
+          .where((member) =>
+              member.name.toLowerCase().contains(query.toLowerCase()) &&
+              !selectedMembers.contains(member))
+          .toList();
+    });
+  }
+
+  void removeMember(OrgMembersModel member) {
+    setState(() {
+      filteredMembers.add(member);
+      selectedMembers.remove(member);
+    });
+  }
+
+  void addMemberToScreen(OrgMembersModel member) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Icon(
-            Icons.person,
-            size: 60.0,
-            color: kPrimaryColor,
-          ),
-          content: const Column(
+          title: const Text('Add Member'),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                'Select Member Role ?',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              Text(member.name),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(kPrimaryColor),
+                ),
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context); // Close the dialog box
+                    selectedMembers.add(member);
+                    filteredMembers.remove(member);
+                  });
+                },
+                child: const Text('Add'),
               ),
             ],
           ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Admin'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Member'),
-                ),
-              ],
-            ),
-          ],
         );
       },
     );
   }
 
-  removeOrgmember() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Icon(
-            Icons.remove_circle,
-            size: 60.0,
-            color: Colors.deepOrange,
-          ),
-          content: const Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Are You Sure ?',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20, left: 17),
-                child: Text(
-                  'You want to remove this member !',
-                  style: TextStyle(fontSize: 13),
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
+  void removeSelectedMember(OrgMembersModel member) {
+    setState(() {
+      selectedMembers.remove(member);
+      filteredMembers.add(member);
+    });
+  }
+
+  List<Widget> getDisplayedCards() {
+    List<Widget> memcards = [];
+    memcards.add(const SizedBox(height: 20));
+    memcards.add(
+      const Text(
+        'Selected Members',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+          wordSpacing: 2,
+        ),
+      ),
     );
+    memcards.add(const SizedBox(height: 10));
+
+    for (final member in selectedMembers) {
+      memcards.add(
+        MemberCardWidget(
+          member: member,
+          onRemoveMember: () {
+            setState(() {
+              removeSelectedMember(member);
+            });
+          },
+          onCardPressed: () {},
+        ),
+      );
+    }
+
+    return memcards;
   }
 
   @override
@@ -108,66 +128,49 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
             children: [
               const SizedBox(height: 20),
               orgAddMmeberText(context),
-              orgMemberSearch(context),
-              Container(
-                color: kPrimaryColor.withOpacity(0.1),
-                height: MediaQuery.of(context).size.height -
-                    kToolbarHeight -
-                    24 -
-                    56,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  restorationId: 'sampleItemListView',
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      margin: const EdgeInsets.all(20),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: const LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [kPrimaryColor, kSecondaryColor])),
-                        height: 60,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            const FlutterLogo(),
-                            const SizedBox(width: 10),
-                            const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('Member Name',
-                                    style: TextStyle(
-                                        color: kBackgroundColor,
-                                        fontWeight: FontWeight.w800)),
-                                Text('Admin',
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        color: kBackgroundColor,
-                                        fontWeight: FontWeight.w100))
-                              ],
-                            ),
-                            const SizedBox(width: 50),
-                            IconButton(
-                                onPressed: roleOrgmember,
-                                icon: const Icon(Icons.more_vert,
-                                    color: kBackgroundColor)),
-                            IconButton(
-                                onPressed: removeOrgmember,
-                                icon: const Icon(Icons.close,
-                                    color: kBackgroundColor))
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+              orgMemberSearch(context, searchMembers, true),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(kPrimaryColor),
                 ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Search Results'),
+                        content: Container(
+                          width: double.maxFinite,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: filteredMembers.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final member = filteredMembers[index];
+                              return ListTile(
+                                title: Text(member.name),
+                                trailing: IconButton(
+                                  icon: const Icon(Icons.add),
+                                  onPressed: () {
+                                    setState(() {
+                                      Navigator.pop(
+                                          context); // Close the dialog box
+                                      addMemberToScreen(member);
+                                    });
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: const Text('Search'),
               ),
+              ...getDisplayedCards(),
             ],
           ),
         ),

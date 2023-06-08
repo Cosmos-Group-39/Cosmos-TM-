@@ -1,12 +1,12 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Orgnization/Screens/Org_HomePage.dart';
-import 'package:cosmos_client/Orgnization/Models/FormValidation.dart';
+import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
 import 'package:cosmos_client/Orgnization/Widgets/CustomCards.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
-List<FormModel> cardsx = [];
+List<OrganizationModel> cardsx = [];
 var uuid = const Uuid();
 
 class CreateCards extends StatefulWidget {
@@ -23,7 +23,7 @@ class _CreateCardsState extends State<CreateCards> {
   }
 
   //edit a card
-  void editCard(FormModel editedItem) {
+  void editCard(OrganizationModel editedItem) {
     setState(() {
       int index = cardsx.indexWhere((item) => item.cardID == editedItem.cardID);
       if (index != -1) {

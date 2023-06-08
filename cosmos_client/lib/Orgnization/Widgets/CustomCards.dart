@@ -2,14 +2,14 @@ import 'dart:io';
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Orgnization/Screens/Org_profile.dart';
 import 'package:cosmos_client/Orgnization/Screens/Your_Org.dart';
-import 'package:cosmos_client/Orgnization/Models/FormValidation.dart';
+import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Profile_Pic.dart';
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatefulWidget {
-  final Function(FormModel) onEdit;
+  final Function(OrganizationModel) onEdit;
   final Function(String) onDelete;
-  final FormModel item;
+  final OrganizationModel item;
 
   const CustomCard(
       {Key? key,
@@ -43,11 +43,12 @@ class _CustomCardState extends State<CustomCard> {
     String cardName = _cardNameController.text.trim();
     String description = _descriptionController.text.trim();
 
-    FormModel editedItem = FormModel(
+    OrganizationModel editedItem = OrganizationModel(
       cardID: widget.item.cardID,
       cardName: cardName,
       description: description,
       profilePic: newprofilePic,
+      members: [],
     );
 
     widget.onEdit(editedItem);
@@ -164,11 +165,12 @@ class _CustomCardState extends State<CustomCard> {
           context,
           MaterialPageRoute(
             builder: (context) => OrgPro(
-              item: FormModel(
+              item: OrganizationModel(
                 cardID: uuid.v1(),
                 cardName: widget.item.cardName,
                 description: widget.item.description,
                 profilePic: widget.item.profilePic,
+                members: [],
               ),
             ),
           ),

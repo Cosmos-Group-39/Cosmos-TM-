@@ -1,6 +1,6 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Orgnization/Screens/Your_Org.dart';
-import 'package:cosmos_client/Orgnization/Models/FormValidation.dart';
+import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
 import 'package:cosmos_client/Orgnization/Utils/api_services.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Profile_Pic.dart';
@@ -33,11 +33,12 @@ class _OrgFormState extends State<OrgForm> {
         );
 
         cardsx.add(
-          FormModel(
+          OrganizationModel(
             cardID: uuid.v1(),
             cardName: cardControllername.text,
             description: cardControllerDes.text,
             profilePic: profilePic,
+            members: [],
           ),
         );
 
