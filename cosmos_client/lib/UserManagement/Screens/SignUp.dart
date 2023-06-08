@@ -19,8 +19,8 @@ class _SignupScreenState extends State<SignupScreen> {
   String userId = Uuid().v4();
   DateTime picked = DateTime.now(); // Declare and initialize the variable here
 
-  String initialCountry = 'LK';
-  PhoneNumber phoneNumber = PhoneNumber(isoCode: 'LK');
+  // String initialCountry = 'LK';
+  // PhoneNumber phoneNumber = PhoneNumber(isoCode: 'LK');
 
   bool isLoginSelected = true;
 
@@ -237,31 +237,55 @@ class _SignupScreenState extends State<SignupScreen> {
 
   // Mobie Number
   Widget buildMobileNo() {
-    return InternationalPhoneNumberInput(
-      onInputChanged: (PhoneNumber mobile) {
-        // Validate number length
-        if (mobile.phoneNumber?.length == 9) {
-          setState(() {
-            phoneNumber = mobile;
-          });
-        }
-      },
-      selectorConfig: const SelectorConfig(
-        selectorType: PhoneInputSelectorType.DROPDOWN,
-        setSelectorButtonAsPrefixIcon: true,
-      ),
-      initialValue: phoneNumber,
-      countries: const ['US', 'CA', 'IN', 'LK'], // List of supported countries
-      textFieldController: mobileNumberController,
-      inputDecoration: const InputDecoration(
-        hintText: 'Enter your phone number',
+    return TextFormField(
+      controller: mobileNumberController,
+      decoration: const InputDecoration(
+        labelText: 'Enter your phone number',
         border: OutlineInputBorder(),
       ),
-      formatInput: true,
-      keyboardType: const TextInputType.numberWithOptions(signed: true),
-      onSaved: (PhoneNumber mobile) {},
+
+      // Validations
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter Mobile Number';
+        }
+
+        if (value.length != 10) {
+          return 'Invalid Mobile Number';
+        }
+
+        return null;
+      },
     );
   }
+
+  // // Mobie Number
+  // Widget buildMobileNo() {
+  //   return InternationalPhoneNumberInput(
+  //     onInputChanged: (PhoneNumber mobile) {
+  //       // Validate number length and null value
+  //       if (mobile.phoneNumber != null && mobile.phoneNumber!.length == 10) {
+  //         setState(() {
+  //           phoneNumber = mobile;
+  //         });
+  //       }
+  //     },
+  //     selectorConfig: const SelectorConfig(
+  //       selectorType: PhoneInputSelectorType.DROPDOWN,
+  //       setSelectorButtonAsPrefixIcon: true,
+  //     ),
+  //     initialValue: phoneNumber,
+  //     countries: const ['US', 'CA', 'IN', 'LK'], // List of supported countries
+  //     textFieldController: mobileNumberController,
+  //     inputDecoration: const InputDecoration(
+  //       hintText: 'Enter your phone number',
+  //       border: OutlineInputBorder(),
+  //     ),
+  //     formatInput: true,
+  //     keyboardType: const TextInputType.numberWithOptions(signed: true),
+  //     onSaved: (PhoneNumber mobile) {},
+  //   );
+  // }
 
   //Submit Form
   void submitForm() {
