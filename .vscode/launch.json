@@ -1,0 +1,29 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "cosmos_client",
+            "cwd": "cosmos_client",
+            "request": "launch",
+            "type": "dart",
+            "args": ["-d", "chrome","--web-port", "8081"],
+        },
+        {
+            "name": "cosmos_client (profile mode)",
+            "cwd": "cosmos_client",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "cosmos_client (release mode)",
+            "cwd": "cosmos_client",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
