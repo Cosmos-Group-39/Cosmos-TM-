@@ -1,5 +1,3 @@
-import 'dart:js_util';
-
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
