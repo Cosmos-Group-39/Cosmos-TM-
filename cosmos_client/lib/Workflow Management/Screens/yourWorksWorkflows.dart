@@ -1,3 +1,4 @@
+import 'package:cosmos_client/Chat/Screen/chat_group.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/yourSubWorkflow.dart';
 import 'package:cosmos_client/Workflow%20Management/Widgets/worksWorkflowCard.dart';
 import 'package:flutter/material.dart';
@@ -112,6 +113,25 @@ class _WorksScreenState extends State<WorksScreen> {
                       builder: (context) => CreatedSubWorkflows()));
             },
             icon: const Icon(Icons.arrow_back)),
+        actions: [
+          FloatingActionButton(
+            backgroundColor: kPrimaryColor,
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => GroupPage(
+                            name: '',
+                            userId: '',
+                          )));
+            },
+            child: const Icon(Icons.chat_bubble),
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(10.0), // Set the desired radius here
+            ),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,

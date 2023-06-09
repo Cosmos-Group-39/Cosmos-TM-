@@ -36,82 +36,82 @@ class ApiService {
     }
   }
 
-  // //edit an organization(form)
-  // Future<void> editOrganization({
-  //   required String organizationId,
-  //   required String name,
-  //   required String pic,
-  //   required String description,
-  // }) async {
-  //   final url = Uri.parse('$baseUrl/organizations/$organizationId');
-  //   final body = {
-  //     'name': name,
-  //     'pic': pic,
-  //     'description': description,
-  //   };
+  //edit an organization(form)
+  Future<void> editOrganization({
+    required String organizationId,
+    required String name,
+    required String pic,
+    required String description,
+  }) async {
+    final url = Uri.parse('$baseUrl/organizations/$organizationId');
+    final body = {
+      'name': name,
+      'pic': pic,
+      'description': description,
+    };
 
-  //   try {
-  //     final response = await http.put(url, body: jsonEncode(body));
-  //     if (response.statusCode == 200) {
-  //       // Organization edited successfully
-  //     } else {
-  //       // Error handling for failed request
-  //     }
-  //   } catch (e) {
-  //     // Error handling for network or API call exception
-  //   }
-  // }
+    try {
+      final response = await http.put(url, body: jsonEncode(body));
+      if (response.statusCode == 200) {
+        // Organization edited successfully
+      } else {
+        // Error handling for failed request
+      }
+    } catch (e) {
+      // Error handling for network or API call exception
+    }
+  }
 
-  // Future<void> deleteOrganization(String organizationId) async {
-  //   final url = Uri.parse('$baseUrl/organizations/$organizationId');
+  Future<void> deleteOrganization(String organizationId) async {
+    final url = Uri.parse('$baseUrl/organizations/$organizationId');
 
-  //   try {
-  //     final response = await http.delete(url);
-  //     if (response.statusCode == 200) {
-  //       // Organization deleted successfully
-  //     } else {
-  //       // Error handling for failed request
-  //     }
-  //   } catch (e) {
-  //     // Error handling for network or API call exception
-  //   }
-  // }
+    try {
+      final response = await http.delete(url);
+      if (response.statusCode == 200) {
+        // Organization deleted successfully
+      } else {
+        // Error handling for failed request
+      }
+    } catch (e) {
+      // Error handling for network or API call exception
+    }
+  }
 
-  // Future<void> addMemberToOrganization({
-  //   required String organizationId,
-  //   required String memberId,
-  // }) async {
-  //   final url = Uri.parse('$baseUrl/organizations/$organizationId/members');
-  //   final body = {'memberId': memberId};
+  Future<void> addMemberToOrganization({
+    required String organizationId,
+    required String memberId,
+  }) async {
+    final url = Uri.parse('$baseUrl/organizations/$organizationId/members');
+    final body = {'memberId': memberId};
 
-  //   try {
-  //     final response = await http.post(url, body: jsonEncode(body));
-  //     if (response.statusCode == 200) {
-  //       // Member added to the organization successfully
-  //     } else {
-  //       // Error handling for failed request
-  //     }
-  //   } catch (e) {
-  //     // Error handling for network or API call exception
-  //   }
-  // }
+    try {
+      final response = await http.post(url, body: jsonEncode(body));
+      if (response.statusCode == 200) {
+        // Member added to the organization successfully
+      } else {
+        // Error handling for failed request
+      }
+    } catch (e) {
+      // Error handling for network or API call exception
+    }
+  }
 
-  // Future<void> removeMemberFromOrganization({
-  //   required String organizationId,
-  //   required String memberId,
-  // }) async {
-  //   final url =
-  //       Uri.parse('$baseUrl/organizations/$organizationId/members/$memberId');
+  Future<void> removeMemberFromOrganization({
+    required String organizationId,
+    required String memberId,
+  }) async {
+    final url =
+        Uri.parse('$baseUrl/organizations/$organizationId/members/$memberId');
 
-  //   try {
-  //     final response = await http.delete(url);
-  //     if (response.statusCode == 200) {
-  //       // Member removed from the organization successfully
-  //     } else {
-  //       // Error handling for failed request
-  //     }
-  //   } catch (e) {
-  //     // Error handling for network or API call exception
-  //   }
-  // }
+    try {
+      final response = await http.delete(url);
+      if (response.statusCode == 200) {
+        // Member removed from the organization successfully
+      } else {
+        // Error handling for failed request
+      }
+    } catch (e) {
+      // Error handling for network or API call exception
+    }
+  }
 }

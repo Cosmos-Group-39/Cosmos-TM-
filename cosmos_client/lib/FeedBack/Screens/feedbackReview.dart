@@ -28,7 +28,6 @@ class _FeedbackReviewState extends State<FeedbackReview> {
       initialRating: _initialRating,
       unratedColor: Colors.grey,
       direction: Axis.horizontal,
-      glow: false,
       itemCount: 5,
       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
       itemBuilder: (context, index) {
@@ -74,9 +73,9 @@ class _FeedbackReviewState extends State<FeedbackReview> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Padding(
+      title: const Padding(
         padding: EdgeInsets.only(top: 10),
-        child: const Center(
+        child: Center(
           child: Text(
             'Rate Us',
             textAlign: TextAlign.center,

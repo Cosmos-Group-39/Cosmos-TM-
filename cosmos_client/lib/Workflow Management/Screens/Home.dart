@@ -1,3 +1,5 @@
+import 'dart:js_util';
+
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
@@ -69,7 +71,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: const Icon(Icons.send),
               ),
-              // Rest of the code...
+              const SizedBox(height: 40),
+              Divider(thickness: 2),
+              const SizedBox(height: 50),
+              Text(
+                'Create Workflow',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              const SizedBox(height: 40),
+              FloatingActionButton(
+                backgroundColor: kPrimaryColor,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NewWorkflowScreen()));
+                },
+                child: Icon(
+                  Icons.add,
+                  size: 30,
+                ),
+              )
             ],
           ),
         ),

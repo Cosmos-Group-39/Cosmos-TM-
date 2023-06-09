@@ -80,11 +80,10 @@ Widget orgGridView(BuildContext context) {
             child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.contact_support_sharp,
-                      color: kPrimaryColor, size: 50),
+                  Icon(Icons.feedback, color: kPrimaryColor, size: 50),
                   Padding(
                     padding: EdgeInsets.only(top: 20),
-                    child: Text('Contact Us',
+                    child: Text('Rate Us',
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -108,10 +107,10 @@ Widget orgGridView(BuildContext context) {
             child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.settings, color: kPrimaryColor, size: 50),
+                  Icon(Icons.help, color: kPrimaryColor, size: 50),
                   Padding(
                     padding: EdgeInsets.only(top: 20, left: 5, right: 5),
-                    child: Text('Settings',
+                    child: Text('Help & Tips',
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
