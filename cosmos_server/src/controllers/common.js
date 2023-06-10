@@ -11,7 +11,7 @@ module.exports.getAll = (req, res) => {
 
 //GET /common/:type/:id
 module.exports.populate = (req, res) => {
-    require(`../models/${req.params.type}`).findById(req.params.id).populate('users')
+    require(`../models/${req.params.type}`).findById(req.params.id)
         .then((workflows) => {
             res.json(workflows);
         })

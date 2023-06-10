@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cosmos_client">
+    <!-- Required to fetch data from the internet. -->
+
    <application
         android:label="cosmos_client"
         android:name="${applicationName}"
