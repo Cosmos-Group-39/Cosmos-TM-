@@ -1,4 +1,6 @@
 import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/UserManagement/Screens/LogInPassword.dart';
+import 'package:cosmos_client/UserManagement/Screens/SignUp.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/yourWorkflow.dart';
@@ -22,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CreatedWorkflows(),
+        builder: (context) => const CreatedWorkflows(),
       ),
     );
   }
@@ -33,15 +35,29 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.green,
+                Colors.blue,
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Image.asset(
-                  'Images/CosmosLogo.jpg',
-                  height: 200,
-                  width: 200,
+                child: Container(
+                  child: Image.asset(
+                    'images/cosmos.png',
+                    height: 200,
+                    width: 200,
+                  ),
                 ),
               ),
               const Padding(
@@ -49,10 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(
                   'Enter an access code, Email or Phone number',
                   style: TextStyle(
-                    fontSize: 15,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
-                  ),
+                      fontSize: 15,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ),
               workflowsSearch(context, searchWorkflows),
@@ -70,11 +86,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: const Icon(Icons.send),
               ),
               const SizedBox(height: 40),
-              Divider(thickness: 2),
+              const Divider(thickness: 2),
               const SizedBox(height: 50),
-              Text(
+              const Text(
                 'Create Workflow',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 40),
               FloatingActionButton(
@@ -83,13 +103,55 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => NewWorkflowScreen()));
+                          builder: (context) => const NewWorkflowScreen()));
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.add,
                   size: 30,
                 ),
-              )
+              ),
+              SizedBox(height: 110),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kPrimaryColor,
+                      minimumSize: const Size(100, 50),
+                      shadowColor: Colors.black,
+                      alignment: Alignment.center,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()));
+                    },
+                    child: const Text('LogIn'),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kPrimaryColor,
+                      minimumSize: const Size(100, 50),
+                      shadowColor: Colors.black,
+                      alignment: Alignment.center,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignupScreen()));
+                    },
+                    child: const Text('SignUp'),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

@@ -62,7 +62,7 @@ class _LoginotpState extends State<Loginotp> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Image.asset(
-                  'Images/CosmosLogo.jpg',
+                  'images/cosmos.png',
                   height: 250,
                   width: 250,
                 ),

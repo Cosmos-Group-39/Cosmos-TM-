@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_stripe/flutter_stripe.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class PaymentScreen extends StatefulWidget {
+  const PaymentScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _PaymentScreenState createState() => _PaymentScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _PaymentScreenState extends State<PaymentScreen> {
   Map<String, dynamic>? paymentIntent;
 
   @override

@@ -200,10 +200,8 @@ class _CreateCardsState extends State<CreateCards> {
               ),
               const Divider(thickness: 2),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Divider(thickness: 10),
-                  const SizedBox(width: 160),
                   Text(
                     (selectedValue ?? 'Filter Organizations'),
                     style: const TextStyle(

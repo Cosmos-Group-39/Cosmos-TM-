@@ -23,22 +23,24 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          // decoration: BoxDecoration(
-          //     gradient: LinearGradient(
-          //         begin: Alignment.topCenter,
-          //         end: Alignment.bottomCenter,
-          //         colors: [
-          //       kPrimaryColor.withOpacity(0.1),
-          //       kSecondaryColor.withOpacity(0.3)
-          //     ])),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.green,
+                Colors.blue,
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(height: 50),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(5.0),
                 child: Image.asset(
-                  'Images/CosmosLogo.jpg',
+                  'images/cosmos.png',
                   height: 250,
                   width: 250,
                 ),
@@ -51,6 +53,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       //swipe tiles of password
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                bottomLeft: Radius.circular(20)),
+                          ),
                           primary:
                               isLoginSelected ? kPrimaryColor : Colors.grey,
                           minimumSize: const Size(160, 50),
@@ -82,6 +89,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           minimumSize: const Size(160, 50),
                           shadowColor: Colors.black,
                           alignment: Alignment.center,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(20),
+                                bottomRight: Radius.circular(20)),
+                          ),
                         ),
                         onPressed: () {
                           Navigator.push(
@@ -114,7 +126,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: const InputDecoration(
                     icon: Icon(Icons.person),
                     labelText: 'Username',
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                   ),
 
                   //validations
@@ -134,7 +152,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: const InputDecoration(
                     labelText: 'Password',
                     icon: Icon(Icons.lock_sharp),
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                   ),
 
                   //validations
@@ -146,6 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
               ),
+              SizedBox(height: 3),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
@@ -153,7 +178,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     TextButton(
                       onPressed: () {},
-                      child: const Text('Forgot Your Password ?'),
+                      child: const Text(
+                        'Forgot Your Password ?',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, color: Colors.white60),
+                      ),
                     ),
                   ],
                 ),
@@ -171,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   'Confirm',
                   style: TextStyle(
                     fontSize: 15,
-                    letterSpacing: 1,
+                    letterSpacing: 2,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -193,7 +222,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           MaterialPageRoute(
                               builder: (context) => SignupScreen()));
                     },
-                    child: const Text('Sign Up'),
+                    child: const Text(
+                      'Sign Up',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w700),
+                    ),
                   ),
                 ],
               )
