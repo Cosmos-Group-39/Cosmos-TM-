@@ -1,9 +1,7 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/UserManagement/Screens/LogInPassword.dart';
 import 'package:cosmos_client/UserManagement/Screens/SignUp.dart';
-import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
-import 'package:cosmos_client/Workflow%20Management/Screens/yourWorkflow.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -19,9 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
@@ -34,12 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
               end: Alignment.bottomCenter,
             ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
                   child: Image.asset(
                     'images/cosmos.png',
                     height: 200,
@@ -47,57 +45,56 @@ class _HomeScreenState extends State<HomeScreen> {
                     filterQuality: FilterQuality.high,
                   ),
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'Enter an access code, Email or Phone number',
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    'Enter an access code, Email or Phone number',
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ),
+                workflowsSearch(),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kPrimaryColor,
+                    minimumSize: const Size(200, 50),
+                    shadowColor: Colors.black,
+                    alignment: Alignment.center,
+                  ),
+                  onPressed: () {},
+                  child: const Icon(Icons.send),
+                ),
+                const SizedBox(height: 40),
+                const Divider(thickness: 2),
+                const SizedBox(height: 50),
+                const Text(
+                  'Create Workflow',
                   style: TextStyle(
-                      fontSize: 15,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              workflowsSearch(),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
+                const SizedBox(height: 40),
+                FloatingActionButton(
                   backgroundColor: kPrimaryColor,
-                  minimumSize: const Size(200, 50),
-                  shadowColor: Colors.black,
-                  alignment: Alignment.center,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const NewWorkflowScreen()));
+                  },
+                  child: const Icon(
+                    Icons.add,
+                    size: 30,
+                  ),
                 ),
-                onPressed: () {},
-                child: const Icon(Icons.send),
-              ),
-              const SizedBox(height: 40),
-              const Divider(thickness: 2),
-              const SizedBox(height: 50),
-              const Text(
-                'Create Workflow',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 40),
-              FloatingActionButton(
-                backgroundColor: kPrimaryColor,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NewWorkflowScreen()));
-                },
-                child: const Icon(
-                  Icons.add,
-                  size: 30,
-                ),
-              ),
-              Expanded(
-                child: Row(
+                const SizedBox(height: 20),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
@@ -138,8 +135,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

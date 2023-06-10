@@ -7,27 +7,31 @@ class ApiService {
   //create an organization(form)
   Future<void> createOrganization({
     required String name,
-    required String pic,
+    // required String pic,
     required String description,
   }) async {
     final url = Uri.parse('$baseUrl');
-    final body = {
+    final x = {
       'name': name,
       // 'pic': pic,
       'description': description,
     };
 
-    print('Request Body: $body');
-
+    print({x: jsonEncode(x)});
+    var headers = {'Content-Type': 'application/json'};
+// Make the POST request var response = await http.post(url, headers: headers, body: body);
     try {
-      final response = await http.post(url, body: jsonEncode(body));
+      final response =
+          await http.post(url, headers: headers, body: jsonEncode(x));
       if (response.statusCode == 200) {
         // Organization created successfully
         final responseData = jsonDecode(response.body);
+        print(responseData);
         // Handle the response data as needed
       } else {
         // Error handling for failed request
         final errorData = jsonDecode(response.body);
+        print(errorData);
         // Handle the error data as needed
       }
     } catch (e) {
