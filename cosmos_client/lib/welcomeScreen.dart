@@ -26,6 +26,7 @@ class CosmosTM extends StatelessWidget {
                 'images/cosmos.png', // Replace with the actual image file name and extension
                 width: 300,
                 height: 300,
+                filterQuality: FilterQuality.high,
               ),
             ),
             SizedBox(height: 70),

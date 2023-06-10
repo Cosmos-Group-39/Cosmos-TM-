@@ -52,6 +52,10 @@ dependencies:
   gantt_chart: ^0.3.0
   im_stepper: ^1.0.1+1
   flutter_login: ^4.1.1
+  flutter_otp_text_field: ^1.1.1
+  flutter_searchbox: ^3.1.0
+  simple_search: ^0.1.0
+  easy_search_bar: ^2.5.0
 
 dev_dependencies:
   flutter_test:

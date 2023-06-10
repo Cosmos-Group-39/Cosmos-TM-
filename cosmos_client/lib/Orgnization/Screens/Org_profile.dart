@@ -15,6 +15,13 @@ class OrgPro extends StatefulWidget {
 
 class _OrgProState extends State<OrgPro> {
   File? _profilePic;
+  List<String> _reviews = [
+    'review 1',
+    'review 2',
+    'review 3',
+    'review 4',
+    'review 5',
+  ];
 
   @override
   void initState() {
@@ -74,6 +81,7 @@ class _OrgProState extends State<OrgPro> {
       ),
       body: SafeArea(
         child: Container(
+          width: MediaQuery.of(context).size.width,
           color: null,
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
@@ -115,12 +123,41 @@ class _OrgProState extends State<OrgPro> {
                       fontSize: 22,
                     )),
                 const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(widget.item.description,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      textAlign: TextAlign.center),
+                Container(
+                  height: MediaQuery.of(context).size.height / 4,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(widget.item.description,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        textAlign: TextAlign.center),
+                  ),
                 ),
+                const SizedBox(height: 20),
+                const Text('Reviews',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 22,
+                    )),
+                const SizedBox(height: 20),
+                Container(
+                  height: MediaQuery.of(context).size.height / 5,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView.builder(
+                    itemCount: _reviews
+                        .length, // Replace with the actual number of items in your list
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title: Text(_reviews[
+                            index]), // Replace with the content of each item in your list
+                        onTap: () {
+                          // Handle tile tap event
+                        },
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

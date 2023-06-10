@@ -3,7 +3,6 @@ import 'package:cosmos_client/UserManagement/Models/userModel.dart';
 import 'package:cosmos_client/UserManagement/Screens/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'dart:async';
 import 'package:uuid/uuid.dart';
 
@@ -51,7 +50,15 @@ class _SignupScreenState extends State<SignupScreen> {
 
         decoration: const InputDecoration(
           labelText: 'First Name',
-          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.person, color: Colors.white60),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          labelStyle: TextStyle(color: Colors.white60),
         ),
 
         // Validations
@@ -73,7 +80,15 @@ class _SignupScreenState extends State<SignupScreen> {
 
         decoration: const InputDecoration(
           labelText: 'Last Name',
-          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.person, color: Colors.white60),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          labelStyle: TextStyle(color: Colors.white60),
         ),
 
         // Validations
@@ -98,7 +113,15 @@ class _SignupScreenState extends State<SignupScreen> {
 
         decoration: const InputDecoration(
           labelText: 'Email',
-          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.email, color: Colors.white60),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          labelStyle: TextStyle(color: Colors.white60),
         ),
 
         // Validations
@@ -127,8 +150,16 @@ class _SignupScreenState extends State<SignupScreen> {
       controller: createPasswordController,
 
       decoration: const InputDecoration(
+        prefixIcon: Icon(Icons.lock_open, color: Colors.white60),
         labelText: '6-8 characters',
-        border: OutlineInputBorder(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        labelStyle: TextStyle(color: Colors.white60),
       ),
 
       // Validations
@@ -151,10 +182,17 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget buildConfirmPassword() {
     return TextFormField(
       controller: confirmPasswordController,
-
       decoration: const InputDecoration(
         labelText: 'min 6-8 characters',
-        border: OutlineInputBorder(),
+        prefixIcon: Icon(Icons.lock, color: Colors.white60),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        labelStyle: TextStyle(color: Colors.white60),
       ),
 
       // Validations
@@ -191,7 +229,15 @@ class _SignupScreenState extends State<SignupScreen> {
           controller: birthdayController,
           decoration: const InputDecoration(
             labelText: 'DD/MM/YYYY',
-            border: OutlineInputBorder(),
+            prefixIcon: Icon(Icons.edit_calendar, color: Colors.white60),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderSide: BorderSide(color: Colors.white),
+            ),
+            labelStyle: TextStyle(color: Colors.white60),
           ),
           // Validations
           validator: (value) {
@@ -241,7 +287,15 @@ class _SignupScreenState extends State<SignupScreen> {
       controller: mobileNumberController,
       decoration: const InputDecoration(
         labelText: 'Enter your phone number',
-        border: OutlineInputBorder(),
+        prefixIcon: Icon(Icons.phone, color: Colors.white60),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        labelStyle: TextStyle(color: Colors.white60),
       ),
 
       // Validations
@@ -315,130 +369,224 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Image.asset(
-                  'Images/CosmosLogo.jpg',
-                  height: 200,
-                  width: 200,
-                ),
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.green,
+                  Colors.blue,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
-
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'Create Account',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                  child: Image.asset(
+                    'images/cosmos.png',
+                    height: 200,
+                    width: 200,
+                    filterQuality: FilterQuality.high,
                   ),
                 ),
-              ),
 
-              const SizedBox(height: 25),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Text('Create Account',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        letterSpacing: 1.3,
+                        wordSpacing: 1.5,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black.withOpacity(0.5),
+                            offset: Offset(2, 2),
+                            blurRadius: 2,
+                          ),
+                        ],
+                      )),
+                ),
 
-              //Register form
-              Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      const Text('Name',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: [
-                            buildFirstName(),
-                            const SizedBox(width: 10),
-                            buildLastName(),
-                          ],
+                const SizedBox(height: 25),
+
+                //Register form
+                Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        Text('Name',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              letterSpacing: 1.3,
+                              wordSpacing: 1.5,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  offset: Offset(2, 2),
+                                  blurRadius: 2,
+                                ),
+                              ],
+                            )),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+                            children: [
+                              buildFirstName(),
+                              const SizedBox(width: 10),
+                              buildLastName(),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text('Create a password',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: buildCreatePassword(),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text('Confirm your password',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: buildConfirmPassword(),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text('Email',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: buildEmail(),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text('Birthday',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: buildBirthday(),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text('Mobile number',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: buildMobileNo(),
-                      ),
-                    ],
-                  )),
+                        const SizedBox(height: 20),
+                        Text('Create a password',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              letterSpacing: 1.3,
+                              wordSpacing: 1.5,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  offset: Offset(2, 2),
+                                  blurRadius: 2,
+                                ),
+                              ],
+                            )),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: buildCreatePassword(),
+                        ),
+                        const SizedBox(height: 20),
+                        Text('Confirm your password',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              letterSpacing: 1.3,
+                              wordSpacing: 1.5,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  offset: Offset(2, 2),
+                                  blurRadius: 2,
+                                ),
+                              ],
+                            )),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: buildConfirmPassword(),
+                        ),
+                        const SizedBox(height: 20),
+                        Text('Email',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              letterSpacing: 1.3,
+                              wordSpacing: 1.5,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  offset: Offset(2, 2),
+                                  blurRadius: 2,
+                                ),
+                              ],
+                            )),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: buildEmail(),
+                        ),
+                        const SizedBox(height: 20),
+                        Text('Birthday',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              letterSpacing: 1.3,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  offset: Offset(2, 2),
+                                  blurRadius: 2,
+                                ),
+                              ],
+                            )),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: buildBirthday(),
+                        ),
+                        const SizedBox(height: 20),
+                        Text('Mobile number',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              letterSpacing: 1.3,
+                              wordSpacing: 1.5,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  offset: Offset(2, 2),
+                                  blurRadius: 2,
+                                ),
+                              ],
+                            )),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: buildMobileNo(),
+                        ),
+                      ],
+                    )),
 
-              const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: kPrimaryColor,
-                  minimumSize: const Size(200, 50),
-                  shadowColor: Colors.black,
-                  alignment: Alignment.center,
-                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kPrimaryColor,
+                    minimumSize: const Size(200, 50),
+                    shadowColor: Colors.black,
+                    alignment: Alignment.center,
+                    elevation: 10,
+                  ),
 
-                //Call submitForm when the button is pressed
+                  //Call submitForm when the button is pressed
 
-                onPressed: submitForm,
+                  onPressed: submitForm,
 
-                child: const Text(
-                  'Confirm',
-                  style: TextStyle(
-                    fontSize: 15,
-                    letterSpacing: 1,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                  child: const Text(
+                    'Confirm',
+                    style: TextStyle(
+                      fontSize: 18,
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
 
-              const SizedBox(height: 20),
-            ],
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),

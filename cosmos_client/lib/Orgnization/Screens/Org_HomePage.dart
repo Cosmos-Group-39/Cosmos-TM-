@@ -6,6 +6,7 @@ import 'package:cosmos_client/Orgnization/Widgets/Org_SearchBox.dart';
 import 'package:cosmos_client/UserManagement/Models/userModel.dart';
 import 'package:cosmos_client/UserManagement/Screens/userProfile.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
+import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 
 class OrgMain extends StatefulWidget {
@@ -45,12 +46,9 @@ class _OrgMainState extends State<OrgMain> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.menu, color: kBackgroundColor),
-                          onPressed: () {
-                            Scaffold.of(context).openDrawer();
-                          },
-                        ),
+                        const IconButton(
+                            icon: Icon(Icons.menu, color: kBackgroundColor),
+                            onPressed: kDrawer),
                         const Text(
                           'Organizations',
                           style: TextStyle(
@@ -66,7 +64,12 @@ class _OrgMainState extends State<OrgMain> {
                         ),
                       ],
                     ),
-                    OrgSearch(),
+                    Image.asset(
+                      'images/cosmos.png',
+                      height: 150,
+                      width: 150,
+                      filterQuality: FilterQuality.high,
+                    ),
                   ],
                 )),
             Padding(
@@ -96,17 +99,19 @@ class _OrgMainState extends State<OrgMain> {
           BottomNavigationBarItem(
               icon: IconButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()));
                   },
-                  icon: Icon(Icons.home_outlined)),
-              activeIcon: Icon(Icons.home),
+                  icon: const Icon(Icons.home_outlined)),
+              activeIcon: const Icon(Icons.home),
               label: 'Home'),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
               icon: Icon(Icons.people_alt_outlined),
               activeIcon: Icon(Icons.people_alt),
               label: 'Organizations'),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
               icon: Icon(Icons.account_circle_outlined),
               activeIcon: Icon(Icons.account_circle_sharp),
               label: 'Profile'),
