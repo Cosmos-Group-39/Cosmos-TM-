@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Orgnization/Screens/Your_Org.dart';
 import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
-import 'package:cosmos_client/Orgnization/Utils/api_services.dart';
+import 'package:cosmos_client/Orgnization/Services/api_services.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Profile_Pic.dart';
 import 'package:flutter/material.dart';
@@ -68,9 +70,18 @@ class _OrgFormState extends State<OrgForm> {
     return TextFormField(
       controller: cardControllername,
       maxLength: 20,
+
       decoration: const InputDecoration(
         labelText: 'Enter Organization Name *',
-        border: OutlineInputBorder(),
+        prefixIcon: Icon(Icons.people, color: Colors.white60),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        labelStyle: TextStyle(color: Colors.white60),
       ),
       // Validations
       validator: (value) {
@@ -96,7 +107,15 @@ class _OrgFormState extends State<OrgForm> {
       maxLines: 5,
       decoration: const InputDecoration(
         labelText: 'Description*',
-        border: OutlineInputBorder(),
+        prefixIcon: Icon(Icons.description, color: Colors.white60),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        labelStyle: TextStyle(color: Colors.white60),
       ),
 
       // Validations
@@ -117,78 +136,120 @@ class _OrgFormState extends State<OrgForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Create New Organization',
-          style: TextStyle(fontSize: 20, letterSpacing: 0.4),
-        ),
-        centerTitle: true,
-        backgroundColor: kPrimaryColor,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(50),
-            bottomRight: Radius.circular(50),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Create New Organization',
+            style: kAppBarTitle,
           ),
+          centerTitle: true,
+          backgroundColor: kPrimaryColor,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back)),
         ),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: const BoxDecoration(color: kBackgroundColor),
-            child: SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 25),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.green,
+                  Colors.blue,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: Form(
                   key: formKeyorg,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      const SizedBox(height: 15),
-                      Center(child: orgFormText(context)),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: ProfilePictureWidget(
-                          onImageSelected: (String? imagePath) {
-                            setState(() {
-                              profilePic = imagePath ?? '';
-                            });
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 40.0),
-                        child: buildOrgNameField(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30.0),
-                        child: buildDescriptionField(),
-                      ),
-                      const Padding(padding: EdgeInsets.only(top: 40.0)),
-                      ElevatedButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: const Color(0xff213B6C),
-                          minimumSize: const Size(255.0, 50.0),
-                          shadowColor: Colors.black,
-                          alignment: Alignment.center,
-                        ),
-                        onPressed: submitForm,
-                        child: const Text(
-                          'Confirm',
-                          style: TextStyle(
-                            fontSize: 17,
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: ProfilePictureWidget(
+                            onImageSelected: (String? imagePath) {
+                              setState(() {
+                                profilePic = imagePath ?? '';
+                              });
+                            },
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 60),
+                        Text('Organization Name',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              letterSpacing: 1.3,
+                              wordSpacing: 1.5,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  offset: Offset(2, 2),
+                                  blurRadius: 2,
+                                ),
+                              ],
+                            )),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: buildOrgNameField(),
+                        ),
+                        const SizedBox(height: 20),
+                        Text('Organization Discription',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              letterSpacing: 1.3,
+                              wordSpacing: 1.5,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  offset: Offset(2, 2),
+                                  blurRadius: 2,
+                                ),
+                              ],
+                            )),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: buildDescriptionField(),
+                        ),
+                        const Padding(padding: EdgeInsets.only(top: 20.0)),
+                        ElevatedButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: kPrimaryColor,
+                            minimumSize: const Size(255.0, 50.0),
+                            shadowColor: Colors.black,
+                            alignment: Alignment.center,
+                            elevation: 10,
+                          ),
+                          onPressed: submitForm,
+                          child: const Text(
+                            'Confirm',
+                            style: TextStyle(
+                              fontSize: 17,
+                              letterSpacing: 1.3,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                      ],
+                    ),
                   ),
                 ),
               ),
