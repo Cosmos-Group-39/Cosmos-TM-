@@ -2,11 +2,7 @@ import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Drawer.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Org_GridView.dart';
-import 'package:cosmos_client/Orgnization/Widgets/Org_SearchBox.dart';
-import 'package:cosmos_client/UserManagement/Models/userModel.dart';
-import 'package:cosmos_client/UserManagement/Screens/userProfile.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
-import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 
 class OrgMain extends StatefulWidget {
@@ -19,10 +15,10 @@ class OrgMain extends StatefulWidget {
 class _OrgMainState extends State<OrgMain> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: kDrawer(),
-      body: SafeArea(
-        child: ListView(
+    return SafeArea(
+      child: Scaffold(
+        drawer: kDrawer(),
+        body: ListView(
           //whole screen.
           children: [
             Container(
@@ -49,13 +45,9 @@ class _OrgMainState extends State<OrgMain> {
                         const IconButton(
                             icon: Icon(Icons.menu, color: kBackgroundColor),
                             onPressed: kDrawer),
-                        const Text(
+                        Text(
                           'Organizations',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: kBackgroundColor,
-                              letterSpacing: 1),
+                          style: kAppBarTitle,
                         ),
                         IconButton(
                           icon: const Icon(Icons.notifications_sharp,
@@ -86,36 +78,36 @@ class _OrgMainState extends State<OrgMain> {
             ),
           ],
         ),
-      ),
 
-      // Bottom navigation bar
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1,
-        elevation: 10,
-        backgroundColor: kPrimaryColor,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: kDefaultIconLightColor.withOpacity(0.5),
-        items: [
-          BottomNavigationBarItem(
-              icon: IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
-                  },
-                  icon: const Icon(Icons.home_outlined)),
-              activeIcon: const Icon(Icons.home),
-              label: 'Home'),
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.people_alt_outlined),
-              activeIcon: Icon(Icons.people_alt),
-              label: 'Organizations'),
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined),
-              activeIcon: Icon(Icons.account_circle_sharp),
-              label: 'Profile'),
-        ],
+        // Bottom navigation bar
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: 1,
+          elevation: 10,
+          backgroundColor: kPrimaryColor,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: kDefaultIconLightColor.withOpacity(0.5),
+          items: [
+            BottomNavigationBarItem(
+                icon: IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomeScreen()));
+                    },
+                    icon: const Icon(Icons.home_outlined)),
+                activeIcon: const Icon(Icons.home),
+                label: 'Home'),
+            const BottomNavigationBarItem(
+                icon: Icon(Icons.people_alt_outlined),
+                activeIcon: Icon(Icons.people_alt),
+                label: 'Organizations'),
+            const BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle_outlined),
+                activeIcon: Icon(Icons.account_circle_sharp),
+                label: 'Profile'),
+          ],
+        ),
       ),
     );
   }

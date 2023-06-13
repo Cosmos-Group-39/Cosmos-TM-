@@ -6,12 +6,12 @@ import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Profile_Pic.dart';
 import 'package:flutter/material.dart';
 
-class CustomCard extends StatefulWidget {
+class OrgCard extends StatefulWidget {
   final Function(OrganizationModel) onEdit;
   final Function(String) onDelete;
   final OrganizationModel item;
 
-  const CustomCard(
+  const OrgCard(
       {Key? key,
       required this.item,
       required this.onDelete,
@@ -19,10 +19,10 @@ class CustomCard extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<CustomCard> createState() => _CustomCardState();
+  State<OrgCard> createState() => _OrgCardState();
 }
 
-class _CustomCardState extends State<CustomCard> {
+class _OrgCardState extends State<OrgCard> {
   TextEditingController _cardNameController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   late String newprofilePic;
@@ -60,37 +60,46 @@ class _CustomCardState extends State<CustomCard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: kAlertBoxBorderStyle,
           title: const Icon(
             Icons.delete,
             size: 60.0,
-            color: Colors.deepOrange,
+            color: Colors.green,
           ),
-          content: const SingleChildScrollView(
+          content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   'Are You Sure ?',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                  style: kAlertBoxTopicTextStyle,
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(top: 20, left: 17),
                   child: Text(
                     'You want to delete the Orgnization !',
-                    style: TextStyle(fontSize: 13),
+                    style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
                   ),
                 ),
               ],
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                widget.onDelete(widget.item.cardID);
-                Navigator.pop(context);
-              },
-              child: const Text('Delete'),
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  widget.onDelete(widget.item.cardID);
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Delete',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
             ),
+            const SizedBox(height: 10),
           ],
         );
       },
@@ -103,6 +112,7 @@ class _CustomCardState extends State<CustomCard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: kAlertBoxBorderStyle,
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -115,9 +125,10 @@ class _CustomCardState extends State<CustomCard> {
                 const Icon(
                   Icons.edit_document,
                   size: 60.0,
-                  color: Colors.deepOrange,
+                  color: Colors.green,
                 ),
                 const SizedBox(height: 10),
+                Divider(thickness: 3),
                 //update profile pic when it is need
                 ProfilePictureWidget(
                   onImageSelected: (String? imagePath) {
@@ -127,6 +138,7 @@ class _CustomCardState extends State<CustomCard> {
                   },
                 ),
                 const SizedBox(height: 8),
+                Divider(thickness: 3),
                 TextField(
                   controller: _cardNameController,
                   decoration: const InputDecoration(
@@ -143,13 +155,21 @@ class _CustomCardState extends State<CustomCard> {
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                editCard();
-                Navigator.pop(context);
-              },
-              child: const Text('confirm'),
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  editCard();
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Confirm',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
             ),
+            const SizedBox(height: 10),
           ],
         );
       },

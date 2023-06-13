@@ -73,14 +73,17 @@ class _OrgProState extends State<OrgPro> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        title: Text(widget.item.cardName),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: Container(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kPrimaryColor,
+          title: Text(
+            widget.item.cardName,
+            style: kAppBarTitle,
+          ),
+          centerTitle: true,
+        ),
+        body: Container(
           width: MediaQuery.of(context).size.width,
           color: null,
           margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -144,15 +147,11 @@ class _OrgProState extends State<OrgPro> {
                   height: MediaQuery.of(context).size.height / 5,
                   width: MediaQuery.of(context).size.width,
                   child: ListView.builder(
-                    itemCount: _reviews
-                        .length, // Replace with the actual number of items in your list
+                    itemCount: _reviews.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
-                        title: Text(_reviews[
-                            index]), // Replace with the content of each item in your list
-                        onTap: () {
-                          // Handle tile tap event
-                        },
+                        title: Text(_reviews[index]),
+                        onTap: () {},
                       );
                     },
                   ),

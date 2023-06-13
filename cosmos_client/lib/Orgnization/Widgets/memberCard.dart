@@ -27,6 +27,58 @@ class _MemberCardWidgetState extends State<MemberCardWidget> {
     isAdmin = widget.member.isAdmin;
   }
 
+//Remove Member Card
+  void removeMember() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: kAlertBoxBorderStyle,
+          title: const Icon(
+            Icons.remove_circle_outline_sharp,
+            size: 60.0,
+            color: Colors.green,
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Are You Sure ?',
+                  style: kAlertBoxTopicTextStyle,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 20, left: 17),
+                  child: Text(
+                    'You want to remove the Member !',
+                    style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle, //Elevated button style
+                onPressed: () {
+                  widget.onRemoveMember();
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Remove',
+                  style: kAlertBoxButtonTextStyle, //Elevated button Text style
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -98,7 +150,7 @@ class _MemberCardWidgetState extends State<MemberCardWidget> {
               ),
             ),
             IconButton(
-              onPressed: widget.onRemoveMember,
+              onPressed: removeMember,
               icon: const Icon(
                 Icons.close,
                 color: kBackgroundColor,

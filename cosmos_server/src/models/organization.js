@@ -21,6 +21,10 @@ const organizationSchema = new mongoose.Schema({
     description: {
         type: String,
     },
+    pic:{
+        type: File,
+        required: true
+    },
     reviews: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Review'

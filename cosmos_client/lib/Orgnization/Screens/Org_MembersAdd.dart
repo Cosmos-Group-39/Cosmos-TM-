@@ -47,27 +47,38 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add Member'),
+          shape: kAlertBoxBorderStyle,
+          title: Center(
+              child: Text(
+            'Add Member',
+            style: kAlertBoxTopicTextStyle,
+          )),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              Divider(thickness: 3),
+              const SizedBox(height: 5),
               Text(member.name),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(kPrimaryColor),
+              const SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  style: kAlertBoxButtonStyle, //Elevated button style
+                  onPressed: () {
+                    setState(() {
+                      Navigator.pop(context); // Close the dialog box
+                      selectedMembers.add(member);
+                      filteredMembers.remove(member);
+                    });
+                  },
+                  child: const Text(
+                    'Add',
+                    style:
+                        kAlertBoxButtonTextStyle, //Elevated button Text style
+                  ),
                 ),
-                onPressed: () {
-                  setState(() {
-                    Navigator.pop(context); // Close the dialog box
-                    selectedMembers.add(member);
-                    filteredMembers.remove(member);
-                  });
-                },
-                child: const Text('Add'),
               ),
+              const SizedBox(height: 5),
             ],
           ),
         );
@@ -90,8 +101,9 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
         'Selected Members',
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 16,
+          fontSize: 20,
           wordSpacing: 2,
+          letterSpacing: 1.5,
         ),
       ),
     );
@@ -116,14 +128,22 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Members'),
-        centerTitle: true,
-        backgroundColor: kPrimaryColor,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Add Members',
+            style: kAppBarTitle,
+          ),
+          centerTitle: true,
+          backgroundColor: kPrimaryColor,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back)),
+        ),
+        body: SingleChildScrollView(
           child: Column(
             children: [
               const SizedBox(height: 20),
@@ -132,6 +152,8 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
               const SizedBox(height: 20),
               ElevatedButton(
                 style: ButtonStyle(
+                  fixedSize: MaterialStatePropertyAll(Size(150, 45)),
+                  elevation: MaterialStatePropertyAll(10),
                   backgroundColor:
                       MaterialStateProperty.all<Color>(kPrimaryColor),
                 ),
@@ -140,7 +162,11 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: const Text('Search Results'),
+                        shape: kAlertBoxBorderStyle,
+                        title: Center(
+                          child: Text('Search Results',
+                              style: kAlertBoxTopicTextStyle),
+                        ),
                         content: Container(
                           width: double.maxFinite,
                           child: ListView.builder(
@@ -151,11 +177,13 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
                               return ListTile(
                                 title: Text(member.name),
                                 trailing: IconButton(
-                                  icon: const Icon(Icons.add),
+                                  icon: const Icon(
+                                    Icons.add,
+                                    color: Colors.green,
+                                  ),
                                   onPressed: () {
                                     setState(() {
-                                      Navigator.pop(
-                                          context); // Close the dialog box
+                                      Navigator.pop(context);
                                       addMemberToScreen(member);
                                     });
                                   },
@@ -168,8 +196,14 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
                     },
                   );
                 },
-                child: const Text('Search'),
+                child: const Text(
+                  'Search',
+                  style: kAlertBoxButtonTextStyle,
+                ),
               ),
+              SizedBox(height: 20),
+              Divider(thickness: 3),
+              SizedBox(height: 5),
               ...getDisplayedCards(),
             ],
           ),

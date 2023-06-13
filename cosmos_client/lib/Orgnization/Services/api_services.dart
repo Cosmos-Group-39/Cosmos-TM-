@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -7,13 +8,13 @@ class ApiService {
   //create an organization(form)
   Future<void> createOrganization({
     required String name,
-    // required String pic,
+    required String pic,
     required String description,
   }) async {
     final url = Uri.parse('$baseUrl');
     final x = {
       'name': name,
-      // 'pic': pic,
+      'pic': pic,
       'description': description,
     };
 

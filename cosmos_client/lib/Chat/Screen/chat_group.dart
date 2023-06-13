@@ -71,38 +71,50 @@ class _GroupPageState extends State<GroupPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: kAlertBoxBorderStyle,
           title: const Icon(
             Icons.backspace,
             size: 60.0,
-            color: Colors.deepOrange,
+            color: Colors.green,
           ),
-          content: const Column(
+          content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Center(
                 child: Text(
                   'Are You Sure ?',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                  style: kAlertBoxTopicTextStyle,
                 ),
               ),
-              Center(
+              const Center(
                 child: Padding(
                   padding: EdgeInsets.only(top: 20, left: 17),
                   child: Text(
                     'You want to clear the chat !',
-                    style: TextStyle(fontSize: 13),
+                    style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
                   ),
                 ),
               ),
             ],
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Clear'),
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle, //Elevated button style
+                onPressed: () {
+                  setState(() {
+                    listMsg.clear();
+                  });
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Clear',
+                  style: kAlertBoxButtonTextStyle, //Elevated button Text style
+                ),
+              ),
             ),
+            const SizedBox(height: 10),
           ],
         );
       },
@@ -140,6 +152,7 @@ class _GroupPageState extends State<GroupPage> {
       ),
       body: Column(
         children: [
+          SizedBox(height: 20),
           Expanded(
             child: ListView.builder(
                 itemCount: listMsg.length,

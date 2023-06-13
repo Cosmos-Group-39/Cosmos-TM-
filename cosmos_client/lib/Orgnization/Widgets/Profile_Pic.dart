@@ -40,8 +40,8 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget> {
           showModalBottomSheet(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(60),
-                topRight: Radius.circular(60),
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
               ),
             ),
             context: context,
@@ -52,7 +52,12 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget> {
                   children: <Widget>[
                     ListTile(
                       leading: const Icon(Icons.camera_alt),
-                      title: const Text('Take a picture'),
+                      title: const Text(
+                        'Take a picture',
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w700),
+                      ),
                       onTap: () {
                         pickImage(ImageSource.camera);
                         Navigator.of(context).pop();
@@ -61,7 +66,12 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget> {
                     Divider(color: kPrimaryColor.withOpacity(0.5)),
                     ListTile(
                       leading: const Icon(Icons.photo_library),
-                      title: const Text('Import from device'),
+                      title: const Text(
+                        'Import from device',
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w700),
+                      ),
                       onTap: () {
                         pickImage(ImageSource.gallery);
                         Navigator.of(context).pop();
@@ -80,7 +90,7 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget> {
           children: <Widget>[
             CircleAvatar(
               radius: 100,
-              backgroundColor: Colors.grey[300],
+              backgroundColor: Colors.grey[400],
               child: _imageFile == null
                   ? const Icon(Icons.camera_alt, size: 50, color: Colors.grey)
                   : Container(
@@ -98,8 +108,9 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget> {
               child: Text(
                 'Add a profile photo',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: kDefaultIconDarkColor,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
                 ),
               ),
             ),

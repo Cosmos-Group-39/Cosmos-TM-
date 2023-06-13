@@ -47,137 +47,135 @@ class _CreatedWorkflowsState extends State<CreatedWorkflows> {
   }
 
   //filter workflows
-  // showFilterDialog() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return Dialog(
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(10.0),
-  //         ),
-  //         child: Container(
-  //           padding: const EdgeInsets.all(20.0),
-  //           child: Column(
-  //             mainAxisSize: MainAxisSize.min,
-  //             children: [
-  //               const Center(
-  //                 child: Text(
-  //                   'Sort By',
-  //                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-  //                 ),
-  //               ),
-  //               const SizedBox(height: 10),
-  //               const Icon(
-  //                 Icons.sort,
-  //                 color: Colors.red,
-  //                 size: 70,
-  //               ),
-  //               const SizedBox(height: 10),
-  //               const Divider(thickness: 2),
-  //               Column(
-  //                 mainAxisAlignment: MainAxisAlignment.center,
-  //                 children: <Widget>[
-  //                   RadioListTile<String>(
-  //                     title: const Text('Name (A-Z)'),
-  //                     value: 'Name (A-Z)',
-  //                     groupValue: selectedValue,
-  //                     onChanged: handleRadioValueChange,
-  //                   ),
-  //                   RadioListTile<String>(
-  //                     title: const Text('Name (z-a)'),
-  //                     value: 'Name (Z-A)',
-  //                     groupValue: selectedValue,
-  //                     onChanged: handleRadioValueChange,
-  //                   ),
-  //                   RadioListTile<String>(
-  //                     title: const Text('Workflows (max-min)'),
-  //                     value: 'No of Workflows',
-  //                     groupValue: selectedValue,
-  //                     onChanged: handleRadioValueChange,
-  //                   ),
-  //                   RadioListTile<String>(
-  //                     title: const Text('Members (max-min)'),
-  //                     value: 'No of Members',
-  //                     groupValue: selectedValue,
-  //                     onChanged: handleRadioValueChange,
-  //                   ),
-  //                   RadioListTile<String>(
-  //                     title: const Text('Default'),
-  //                     value: 'Filter Organization',
-  //                     groupValue: selectedValue,
-  //                     onChanged: handleRadioValueChange,
-  //                   ),
-  //                   const SizedBox(height: 16),
-  //                 ],
-  //               ),
-  //               const Divider(thickness: 2),
-  //               const SizedBox(height: 10),
-  //               Row(
-  //                 mainAxisAlignment: MainAxisAlignment.end,
-  //                 children: [
-  //                   TextButton(
-  //                     onPressed: () {
-  //                       switch (selectedValue) {
-  //                         case 'Name (A-Z)':
-  //                           setState(() {
-  //                             cardsx.sort(
-  //                                 (a, b) => a.cardName.compareTo(b.cardName));
-  //                           });
-  //                           break;
-  //                         case 'Name (Z-A)':
-  //                           setState(() {
-  //                             cardsx.sort(
-  //                                 (a, b) => b.cardName.compareTo(a.cardName));
-  //                           });
-  //                           break;
-  //                         case 'No of Workflows':
-  //                           // setState(() {
-  //                           //   cardsx.sort((a, b) => b.workflows.length
-  //                           //       .compareTo(a.workflows.length));
-  //                           // });
-  //                           break;
-  //                         case 'No of Members':
-  //                           // Logic for 'Opt3'
-  //                           break;
-  //                         case 'Filter Organization':
-  //                           break;
-  //                         default:
-  //                           // Apply default filter logic
-  //                           break;
-  //                       }
-  //                       Navigator.of(context).pop();
-  //                     },
-  //                     child: const Text('Apply'),
-  //                   ),
-  //                   const SizedBox(width: 10),
-  //                   TextButton(
-  //                     onPressed: () {
-  //                       // Close the dialog without applying the filter
-  //                       Navigator.of(context).pop();
-  //                     },
-  //                     child: const Text('Cancel'),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
+  showFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              side: const BorderSide(color: kPrimaryColor, width: 5)),
+          child: Container(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: Text(
+                    'Sort By',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.3,
+                      wordSpacing: 1.5,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black.withOpacity(0.1),
+                          offset: Offset(2, 2),
+                          blurRadius: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Icon(
+                  Icons.sort,
+                  color: Colors.green,
+                  size: 70,
+                ),
+                const SizedBox(height: 10),
+                const Divider(thickness: 2),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    RadioListTile<String>(
+                      title: const Text('Name (A-Z)'),
+                      value: 'Name (A-Z)',
+                      groupValue: selectedValue,
+                      onChanged: handleRadioValueChange,
+                    ),
+                    RadioListTile<String>(
+                      title: const Text('Name (z-a)'),
+                      value: 'Name (Z-A)',
+                      groupValue: selectedValue,
+                      onChanged: handleRadioValueChange,
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                ),
+                const Divider(thickness: 2),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        switch (selectedValue) {
+                          case 'Name (A-Z)':
+                            setState(() {
+                              wfcards
+                                  .sort((a, b) => a.title.compareTo(b.title));
+                            });
+                            break;
+                          case 'Name (Z-A)':
+                            setState(() {
+                              wfcards
+                                  .sort((a, b) => b.title.compareTo(a.title));
+                            });
+                            break;
+
+                          default:
+                            // Apply default filter logic
+                            break;
+                        }
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Apply'),
+                    ),
+                    const SizedBox(width: 10),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Cancel'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        title: const Text('Created Workflows'),
+        title: Text('Created Workflows',
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+              letterSpacing: 1.3,
+              wordSpacing: 1.5,
+              shadows: [
+                Shadow(
+                  color: Colors.black.withOpacity(0.5),
+                  offset: Offset(2, 2),
+                  blurRadius: 2,
+                ),
+              ],
+            )),
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => NewWorkflowScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NewWorkflowScreen()));
             },
             icon: const Icon(Icons.arrow_back)),
       ),
@@ -194,24 +192,24 @@ class _CreatedWorkflowsState extends State<CreatedWorkflows> {
             children: [
               const SizedBox(height: 50),
               Center(
-                child: orgCreatedText(context),
+                child: WorkflowCreatedText(context),
               ),
               const Divider(thickness: 2),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Divider(thickness: 10),
-                  SizedBox(width: 160),
-                  // Text(
-                  //   (selectedValue ?? 'Filter Organizations'),
-                  //   style: const TextStyle(
-                  //       fontWeight: FontWeight.w500, color: Colors.blue),
-                  // ),
-                  // IconButton(
-                  //   onPressed: showFilterDialog,
-                  //   icon: const Icon(Icons.filter_alt),
-                  //   color: Colors.blue,
-                  // )
+                  const Divider(thickness: 10),
+                  const SizedBox(width: 160),
+                  Text(
+                    (selectedValue ?? 'Filter Workflows'),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500, color: Colors.blue),
+                  ),
+                  IconButton(
+                    onPressed: showFilterDialog,
+                    icon: const Icon(Icons.filter_alt),
+                    color: Colors.blue,
+                  )
                 ],
               ),
               const SizedBox(height: 30),

@@ -1,7 +1,10 @@
+import 'package:cosmos_client/Chat/Screen/chat_group.dart';
+import 'package:cosmos_client/Orgnization/Screens/Org_Form.dart';
 import 'package:cosmos_client/Orgnization/Screens/Org_HomePage.dart';
-import 'package:cosmos_client/Templates/Screens/LiveTracking.dart';
-import 'package:cosmos_client/UserManagement/Screens/LogInPassword.dart';
-import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
+import 'package:cosmos_client/Orgnization/Screens/Org_MembersAdd.dart';
+import 'package:cosmos_client/Orgnization/Screens/Your_Org.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/yourWorkflow.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,6 +22,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: HomeScreen());
+        home: OrgMain());
   }
 }

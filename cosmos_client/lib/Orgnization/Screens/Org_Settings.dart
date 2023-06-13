@@ -24,7 +24,10 @@ class _OrgSettingsState extends State<OrgSettings> {
           },
         ),
         backgroundColor: kPrimaryColor,
-        title: const Text('Help And Tips'),
+        title: Text(
+          'Help And Tips',
+          style: kAppBarTitle,
+        ),
         centerTitle: true,
       ),
       body: Container(

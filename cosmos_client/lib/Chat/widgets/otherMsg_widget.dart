@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class OtherMSgWidget extends StatelessWidget {
   final String sender;
@@ -6,6 +7,13 @@ class OtherMSgWidget extends StatelessWidget {
 
   const OtherMSgWidget({Key? key, required this.msg, required this.sender})
       : super(key: key);
+
+  String _getCurrentDateTime() {
+    final now = DateTime.now();
+    final rformattedDate = DateFormat('yyyy-MM-dd').format(now);
+    final rformattedTime = DateFormat('HH:mm').format(now);
+    return '$rformattedDate | $rformattedTime';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +50,13 @@ class OtherMSgWidget extends StatelessWidget {
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
+                ),
+                Text(
+                  _getCurrentDateTime(),
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.white),
                 ),
               ],
             ),

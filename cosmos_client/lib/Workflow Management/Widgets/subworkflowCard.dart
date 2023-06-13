@@ -45,66 +45,79 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
     widget.subwfonEdit(subwf_editedItem);
   }
 
+//Delete Subworkflow Card
   void deletesubWorkflow() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: kAlertBoxBorderStyle,
           title: const Icon(
             Icons.delete,
             size: 60.0,
-            color: Colors.deepOrange,
+            color: Colors.green,
           ),
-          content: const SingleChildScrollView(
+          content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   'Are You Sure ?',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                  style: kAlertBoxTopicTextStyle,
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(top: 20, left: 17),
                   child: Text(
                     'You want to delete the SubWorkflow !',
-                    style: TextStyle(fontSize: 13),
+                    style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
                   ),
                 ),
               ],
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                widget.subwfonDelete(widget.item.swid);
-                Navigator.pop(context);
-              },
-              child: const Text('Delete'),
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle, //Elevated button style
+                onPressed: () {
+                  widget.subwfonDelete(widget.item.swid);
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Delete',
+                  style: kAlertBoxButtonTextStyle, //Elevated button Text style
+                ),
+              ),
             ),
+            const SizedBox(height: 10),
           ],
         );
       },
     );
   }
 
+//Edit Subworkflow Card
   void changeSubCard() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: kAlertBoxBorderStyle,
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   'Update Sub Workflow',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                  style: kAlertBoxTopicTextStyle,
                 ),
+                const Divider(thickness: 3),
                 const SizedBox(height: 10),
                 const Icon(
                   Icons.edit_document,
                   size: 60.0,
-                  color: Colors.deepOrange,
+                  color: Colors.green,
                 ),
                 const SizedBox(height: 10),
                 TextField(
@@ -118,13 +131,20 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                subwfeditCard();
-                Navigator.pop(context);
-              },
-              child: const Text('Confirm'),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  subwfeditCard();
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Confirm',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
             ),
+            const SizedBox(height: 8)
           ],
         );
       },
@@ -136,8 +156,8 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
     return InkWell(
       borderRadius: BorderRadius.circular(25),
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => WorksScreen()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const WorksScreen()));
       },
       child: Card(
         elevation: 10,
@@ -167,7 +187,7 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
                   ),
                 ),
               ),
-              SizedBox(width: 60),
+              const SizedBox(width: 60),
               Flexible(
                 flex: 1,
                 child: IconButton(

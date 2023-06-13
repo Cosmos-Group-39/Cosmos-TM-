@@ -28,24 +28,26 @@ class _CreatedSubWorkflowsState extends State<CreatedSubWorkflows> {
     super.dispose();
   }
 
+  //Create Sub Workflow
   void createSubWorkflow() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: kAlertBoxBorderStyle,
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   'Create Sub Workflow',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                  style: kAlertBoxTopicTextStyle,
                 ),
                 const SizedBox(height: 10),
                 const Icon(
                   Icons.add,
                   size: 60.0,
-                  color: Colors.deepOrange,
+                  color: Colors.green,
                 ),
                 const SizedBox(height: 10),
                 TextField(
@@ -59,23 +61,31 @@ class _CreatedSubWorkflowsState extends State<CreatedSubWorkflows> {
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                String title = _subwfController.text.trim();
-                String swid = uuid.v4();
-                SubWorkflowModel subwf_newItem = SubWorkflowModel(
-                  swid: swid,
-                  title: title,
-                );
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle, //Elevated button style
+                onPressed: () {
+                  String title = _subwfController.text.trim();
+                  String swid = uuid.v4();
+                  SubWorkflowModel subwf_newItem = SubWorkflowModel(
+                    swid: swid,
+                    title: title,
+                  );
 
-                setState(() {
-                  subwfcards.add(subwf_newItem);
-                });
+                  setState(() {
+                    subwfcards.add(subwf_newItem);
+                  });
 
-                Navigator.pop(context);
-              },
-              child: const Text('Create'),
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Create',
+                  style: kAlertBoxButtonTextStyle, //Elevated button Text style
+                ),
+              ),
             ),
+            const SizedBox(height: 10),
           ],
         );
       },

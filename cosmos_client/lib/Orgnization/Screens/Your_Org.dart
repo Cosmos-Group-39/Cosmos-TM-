@@ -2,7 +2,7 @@ import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Orgnization/Screens/Org_HomePage.dart';
 import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
-import 'package:cosmos_client/Orgnization/Widgets/CustomCards.dart';
+import 'package:cosmos_client/Orgnization/Widgets/orgCards.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -54,24 +54,22 @@ class _CreateCardsState extends State<CreateCards> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
+          shape: kAlertBoxBorderStyle,
           child: Container(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Center(
+                Center(
                   child: Text(
                     'Sort By',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    style: kAlertBoxTopicTextStyle,
                   ),
                 ),
                 const SizedBox(height: 10),
                 const Icon(
                   Icons.sort,
-                  color: Colors.red,
+                  color: Colors.green,
                   size: 70,
                 ),
                 const SizedBox(height: 10),
@@ -174,7 +172,10 @@ class _CreateCardsState extends State<CreateCards> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        title: const Text('Created Organizations'),
+        title: Text(
+          'Created Organizations',
+          style: kAppBarTitle,
+        ),
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
@@ -219,7 +220,7 @@ class _CreateCardsState extends State<CreateCards> {
                 child: Column(
                     children: cardsx
                         .map(
-                          (item) => CustomCard(
+                          (item) => OrgCard(
                             item: item,
                             onEdit: editCard,
                             onDelete: deleteCard,
