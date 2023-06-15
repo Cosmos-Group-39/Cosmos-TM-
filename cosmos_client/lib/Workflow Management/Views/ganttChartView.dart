@@ -17,7 +17,6 @@ class GanttChartWorksScreen extends StatefulWidget {
 
 class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
   List<WorksModel> workcards = [];
-  int x = 0;
   Uuid uuid = Uuid();
   TextEditingController _workController = TextEditingController();
 
@@ -37,19 +36,20 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: kAlertBoxBorderStyle,
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   'Create Work',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                  style: kAlertBoxTopicTextStyle,
                 ),
                 const SizedBox(height: 10),
                 const Icon(
                   Icons.add,
                   size: 60.0,
-                  color: Colors.deepOrange,
+                  color: Colors.green,
                 ),
                 const SizedBox(height: 10),
                 TextField(
@@ -63,24 +63,32 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                String title = _workController.text.trim();
-                String wwid = uuid.v4();
-                WorksModel work_newItem = WorksModel(
-                  wwid: wwid,
-                  title: title,
-                );
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  String title = _workController.text.trim();
+                  String wwid = uuid.v4();
+                  WorksModel work_newItem = WorksModel(
+                    wwid: wwid,
+                    title: title,
+                  );
 
-                setState(() {
-                  workcards.add(work_newItem);
-                });
+                  setState(() {
+                    workcards.add(work_newItem);
+                  });
 
-                Navigator.pop(context);
-                _workController.clear();
-              },
-              child: const Text('Create'),
+                  Navigator.pop(context);
+                  _workController.clear();
+                },
+                child: const Text(
+                  'Create',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
             ),
+            const SizedBox(height: 10),
           ],
         );
       },
@@ -106,7 +114,10 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        title: const Text('Works'),
+        title: Text(
+          'Works',
+          style: kAppBarTitle,
+        ),
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
@@ -128,11 +139,11 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                             userId: '',
                           )));
             },
-            child: const Icon(Icons.chat_bubble),
             shape: RoundedRectangleBorder(
               borderRadius:
                   BorderRadius.circular(10.0), // Set the desired radius here
             ),
+            child: const Icon(Icons.chat_bubble),
           )
         ],
       ),
@@ -152,7 +163,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                   fontSize: 20,
                   color: Colors.black),
             ),
-            SizedBox(height: 25),
+            const SizedBox(height: 25),
             buildGanttChartView(),
             const SizedBox(height: 15),
             Expanded(
@@ -180,7 +191,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
         startDate: DateTime(2022, 6, 7),
         dayWidth: 30,
         eventHeight: 30,
-        stickyAreaWidth: 200,
+        stickyAreaWidth: 150,
         showStickyArea: true,
         showDays: true,
         startOfTheWeek: WeekDay.sunday,

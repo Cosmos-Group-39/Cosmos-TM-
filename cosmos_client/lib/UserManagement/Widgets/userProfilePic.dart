@@ -41,8 +41,8 @@ class _UserProfilePictureWidgetState extends State<UserProfilePictureWidget> {
           showModalBottomSheet(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(60),
-                topRight: Radius.circular(60),
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
               ),
             ),
             context: context,

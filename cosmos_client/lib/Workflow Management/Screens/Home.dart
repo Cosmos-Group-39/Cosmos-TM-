@@ -45,15 +45,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     filterQuality: FilterQuality.high,
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     'Enter an access code, Email or Phone number',
                     style: TextStyle(
-                        fontSize: 15,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                      fontSize: 16,
+                      letterSpacing: 0.9,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black.withOpacity(0.4),
+                          offset: Offset(2, 2),
+                          blurRadius: 1,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 workflowsSearch(),
@@ -66,7 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     alignment: Alignment.center,
                   ),
                   onPressed: () {},
-                  child: const Icon(Icons.send),
+                  child: const Icon(
+                    Icons.send,
+                    color: Colors.white70,
+                  ),
                 ),
                 const SizedBox(height: 40),
                 const Divider(thickness: 2),
@@ -91,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: const Icon(
                     Icons.add,
                     size: 30,
+                    color: Colors.white70,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -113,7 +125,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialPageRoute(
                                 builder: (context) => LoginScreen()));
                       },
-                      child: const Text('LogIn'),
+                      child: const Text(
+                        'LogIn',
+                        style: TextStyle(
+                          color: Colors.white70,
+                        ),
+                      ),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -131,7 +148,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialPageRoute(
                                 builder: (context) => SignupScreen()));
                       },
-                      child: const Text('SignUp'),
+                      child: const Text(
+                        'SignUp',
+                        style: TextStyle(
+                          color: Colors.white70,
+                        ),
+                      ),
                     ),
                   ],
                 ),

@@ -16,7 +16,6 @@ class CalenderWorksScreen extends StatefulWidget {
 
 class _CalenderWorksScreenState extends State<CalenderWorksScreen> {
   List<WorksModel> workcards = [];
-  int x = 0;
   Uuid uuid = Uuid();
   TextEditingController _workController = TextEditingController();
 
@@ -36,21 +35,22 @@ class _CalenderWorksScreenState extends State<CalenderWorksScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: kAlertBoxBorderStyle,
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   'Create Work',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                  style: kAlertBoxTopicTextStyle,
                 ),
                 const SizedBox(height: 10),
                 const Icon(
                   Icons.add,
                   size: 60.0,
-                  color: Colors.deepOrange,
+                  color: Colors.green,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
                 TextField(
                   controller: _workController,
                   decoration: const InputDecoration(
@@ -62,24 +62,32 @@ class _CalenderWorksScreenState extends State<CalenderWorksScreen> {
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                String title = _workController.text.trim();
-                String wwid = uuid.v4();
-                WorksModel work_newItem = WorksModel(
-                  wwid: wwid,
-                  title: title,
-                );
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  String title = _workController.text.trim();
+                  String wwid = uuid.v4();
+                  WorksModel work_newItem = WorksModel(
+                    wwid: wwid,
+                    title: title,
+                  );
 
-                setState(() {
-                  workcards.add(work_newItem);
-                });
+                  setState(() {
+                    workcards.add(work_newItem);
+                  });
 
-                Navigator.pop(context);
-                _workController.clear();
-              },
-              child: const Text('Create'),
+                  Navigator.pop(context);
+                  _workController.clear();
+                },
+                child: const Text(
+                  'Create',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
             ),
+            const SizedBox(height: 10),
           ],
         );
       },
@@ -102,71 +110,87 @@ class _CalenderWorksScreenState extends State<CalenderWorksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        title: const Text('Works'),
-        centerTitle: true,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CreatedSubWorkflows()));
-            },
-            icon: const Icon(Icons.arrow_back)),
-        actions: [
-          FloatingActionButton(
-            backgroundColor: kPrimaryColor,
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => GroupPage(
-                            name: '',
-                            userId: '',
-                          )));
-            },
-            child: const Icon(Icons.chat_bubble),
-            shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(10.0), // Set the desired radius here
-            ),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: kPrimaryColor,
-        onPressed: () => createWorks(),
-        child: const Icon(Icons.add),
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            const Text(
-              'End Semester Exam',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.black),
-            ),
-            SizedBox(height: 25),
-            Container(height: 550, child: buildCalendarWidget()),
-            const SizedBox(height: 15),
-            Expanded(
-              child: ListView.builder(
-                itemCount: workcards.length,
-                itemBuilder: (context, index) {
-                  return CalenderWorksCard(
-                    item: workcards[index],
-                    workonDelete: (wwid) => deleteWorks(wwid),
-                    workonEdit: (editedItem) => editWorks(editedItem),
-                  );
-                },
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kPrimaryColor,
+          title: Text(
+            'Works',
+            style: kAppBarTitle,
+          ),
+          centerTitle: true,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreatedSubWorkflows()));
+              },
+              icon: const Icon(Icons.arrow_back)),
+          actions: [
+            FloatingActionButton(
+              backgroundColor: kPrimaryColor,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => GroupPage(
+                              name: '',
+                              userId: '',
+                            )));
+              },
+              child: const Icon(Icons.chat_bubble),
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(10.0), // Set the desired radius here
+              ),
+            )
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: kPrimaryColor,
+          onPressed: () => createWorks(),
+          child: const Icon(Icons.add),
+        ),
+        body: Container(
+          height: MediaQuery.of(context).size.height -
+              kToolbarHeight -
+              MediaQuery.of(context).padding.top -
+              MediaQuery.of(context).padding.bottom,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  const Text(
+                    'End Semester Exam',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.black),
+                  ),
+                  SizedBox(height: 25),
+                  Container(height: 550, child: buildCalendarWidget()),
+                  const SizedBox(height: 15),
+                  Container(
+                    height: 300,
+                    child: Expanded(
+                      child: ListView.builder(
+                        itemCount: workcards.length,
+                        itemBuilder: (context, index) {
+                          return CalenderWorksCard(
+                            item: workcards[index],
+                            workonDelete: (wwid) => deleteWorks(wwid),
+                            workonEdit: (editedItem) => editWorks(editedItem),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -235,6 +259,10 @@ class _CalenderWorksScreenState extends State<CalenderWorksScreen> {
               return const SizedBox();
             },
           ),
+          // // Event loader to provide the events for each day
+          // eventLoader: (day) {
+          //   return _events[day] ?? [];
+          // },
         ),
         const SizedBox(height: 10),
         Text(

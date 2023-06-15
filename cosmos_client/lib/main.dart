@@ -1,10 +1,6 @@
-import 'package:cosmos_client/Chat/Screen/chat_group.dart';
-import 'package:cosmos_client/Orgnization/Screens/Org_Form.dart';
-import 'package:cosmos_client/Orgnization/Screens/Org_HomePage.dart';
-import 'package:cosmos_client/Orgnization/Screens/Org_MembersAdd.dart';
-import 'package:cosmos_client/Orgnization/Screens/Your_Org.dart';
-import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
-import 'package:cosmos_client/Workflow%20Management/Screens/yourWorkflow.dart';
+import 'package:cosmos_client/Templates/Screens/LiveTracking.dart';
+import 'package:cosmos_client/UserManagement/Screens/SignUp.dart';
+import 'package:cosmos_client/welcomeScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,16 +8,18 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Cosmos(TM)',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-        ),
-        home: OrgMain());
+      title: 'Cosmos(TM)',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: CosmosTM(),
+    );
   }
 }

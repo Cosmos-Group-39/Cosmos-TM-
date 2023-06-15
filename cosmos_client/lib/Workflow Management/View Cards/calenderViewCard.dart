@@ -40,70 +40,84 @@ class _CalenderWorksCardState extends State<CalenderWorksCard> {
       wwid: widget.item.wwid,
       title: title,
     );
-
     widget.workonEdit(work_editedItem);
   }
 
+  //Delete Calender Card
   void deleteWorks() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: kAlertBoxBorderStyle,
           title: const Icon(
             Icons.delete,
             size: 60.0,
-            color: Colors.deepOrange,
+            color: Colors.green,
           ),
-          content: const SingleChildScrollView(
+          content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   'Are You Sure ?',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                  style: kAlertBoxTopicTextStyle,
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(top: 20, left: 17),
                   child: Text(
                     'You want to delete the Work !',
-                    style: TextStyle(fontSize: 13),
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                widget.workonDelete(widget.item.wwid);
-                Navigator.pop(context);
-              },
-              child: const Text('Delete'),
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  widget.workonDelete(widget.item.wwid);
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Delete',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
             ),
+            const SizedBox(height: 10),
           ],
         );
       },
     );
   }
 
+  //Update Calender Card
   void changeWorkCard() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: kAlertBoxBorderStyle,
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   'Update Work',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                  style: kAlertBoxTopicTextStyle,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 const Icon(
                   Icons.edit_document,
                   size: 60.0,
-                  color: Colors.deepOrange,
+                  color: Colors.green,
                 ),
                 const SizedBox(height: 10),
                 TextField(
@@ -117,13 +131,21 @@ class _CalenderWorksCardState extends State<CalenderWorksCard> {
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                workeditCard();
-                Navigator.pop(context);
-              },
-              child: const Text('Confirm'),
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  workeditCard();
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Confirm',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
             ),
+            const SizedBox(height: 10),
           ],
         );
       },

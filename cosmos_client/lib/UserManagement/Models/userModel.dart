@@ -1,22 +1,34 @@
 class UserModel {
-  String id;
-  String name;
+  String? id;
+  String firstName;
+  String lastName;
   String email;
+  String mobile;
   String password;
   String? address;
   DateTime dob;
-  String mobile;
   String? profilePic;
-  bool active;
+  bool isDeleted = false;
+  String subcription;
+  List<String>? workflows;
+  List<String>? organizations;
+  List<String>? reviews;
+  //Firebase token
 
-  UserModel(
-      {required this.name,
-      required this.password,
-      required this.email,
-      required this.active,
-      required this.dob,
-      required this.mobile,
-      required this.id,
-      required this.profilePic,
-      required this.address});
+  UserModel({
+    this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.mobile,
+    required this.password,
+    this.address,
+    required this.dob,
+    this.profilePic,
+    required this.isDeleted,
+    required this.subcription,
+    this.workflows,
+    this.organizations,
+    this.reviews,
+  });
 }

@@ -15,7 +15,6 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final formKey = GlobalKey<FormState>();
-  String userId = Uuid().v4();
   DateTime picked = DateTime.now(); // Declare and initialize the variable here
 
   // String initialCountry = 'LK';
@@ -347,15 +346,14 @@ class _SignupScreenState extends State<SignupScreen> {
       formKey.currentState!.save();
 
       UserModel userModel = UserModel(
-        id: userId,
-        name: firstNController.text + " " + lastNController.text,
+        firstName: firstNController.text,
+        lastName: lastNController.text,
         email: emailController.text,
         password: confirmPasswordController.text,
         dob: picked,
         mobile: mobileNumberController.text,
-        active: false, // Set the initial active status as false
-        profilePic: '',
-        address: '',
+        isDeleted: false,
+        subcription: 'free',
       );
 
       Navigator.push(
@@ -371,6 +369,13 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+            backgroundColor: Colors.green,
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back))),
         body: SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,

@@ -16,7 +16,8 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  TextEditingController _nameController = TextEditingController();
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
   TextEditingController _pemailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _pbirthdayController = TextEditingController();
@@ -26,7 +27,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   bool isPremiumSelected = false;
   late String formattedDob;
   final formKey = GlobalKey<FormState>();
-  String userId = Uuid().v4();
   DateTime picked = DateTime.now();
   bool isPasswordVisible = false;
   String updatedName = '';
@@ -53,9 +53,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   void initState() {
     super.initState();
     final DateFormat dateFormat = DateFormat('dd-MM-yyyy');
-    formattedDob =
-        dateFormat.format(widget.userModel.dob); // Format the dob without time
-    _nameController.text = widget.userModel.name;
+    formattedDob = dateFormat.format(widget.userModel.dob);
+    _firstNameController.text = widget.userModel.firstName;
+    _lastNameController.text = widget.userModel.lastName;
     _pemailController.text = widget.userModel.email;
     _passwordController.text = widget.userModel.password;
     _pbirthdayController.text = formattedDob;
@@ -63,18 +63,41 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     _addressController.text = "";
   }
 
-  Widget editFullName() {
+  Widget editFirstName() {
     return Expanded(
       child: TextFormField(
-        controller: _nameController,
+        controller: _firstNameController,
         decoration: const InputDecoration(
           prefixIcon: Icon(Icons.person),
           suffixIcon: Icon(Icons.create),
-          border: OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
         ),
         validator: (value) {
           if (value!.isEmpty) {
             return 'Please enter First Name';
+          }
+          return null;
+        },
+      ),
+    );
+  }
+
+  Widget editLastName() {
+    return Expanded(
+      child: TextFormField(
+        controller: _lastNameController,
+        decoration: const InputDecoration(
+          prefixIcon: Icon(Icons.person),
+          suffixIcon: Icon(Icons.create),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+        ),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please enter Last Name';
           }
           return null;
         },
@@ -100,7 +123,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             },
           ),
           suffixIcon: const Icon(Icons.create),
-          border: const OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
         ),
         validator: (value) {
           if (value!.isEmpty) {
@@ -123,7 +148,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         decoration: const InputDecoration(
           prefixIcon: Icon(Icons.email),
           suffixIcon: Icon(Icons.create),
-          border: OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
         ),
         validator: (value) {
           if (value!.isEmpty) {
@@ -151,7 +178,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         decoration: const InputDecoration(
           prefixIcon: Icon(Icons.phone),
           suffixIcon: Icon(Icons.create),
-          border: OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
         ),
         validator: (value) {
           if (value!.isEmpty) {
@@ -183,7 +212,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.calendar_month),
               suffixIcon: Icon(Icons.create),
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+              ),
             ),
             validator: (value) {
               if (value!.isEmpty) {
@@ -233,7 +264,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         decoration: const InputDecoration(
           prefixIcon: Icon(Icons.location_on),
           suffixIcon: Icon(Icons.create),
-          border: OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
         ),
       ),
     );
@@ -242,25 +275,31 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   void submitEditedForm() {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-
-      setState(() {
-        updatedName = _nameController.text;
-        updatedEmail = _pemailController.text;
-      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        title: const Text('User Profile'),
-        centerTitle: true,
-        leading: IconButton(onPressed: null, icon: Icon(Icons.menu)),
-      ),
-      body: SafeArea(
-        child: Container(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kPrimaryColor,
+          title: Text(
+            'User Profile',
+            style: kAppBarTitle,
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        body: Container(
           color: null,
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
@@ -278,7 +317,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  updatedName.isNotEmpty ? updatedName : widget.userModel.name,
+                  '${widget.userModel.firstName}  ${widget.userModel.lastName}',
                   style: const TextStyle(
                     letterSpacing: 3,
                     fontStyle: FontStyle.italic,
@@ -301,17 +340,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.amber),
-                    fixedSize:
-                        MaterialStateProperty.all<Size>(const Size(150, 50)),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.amber),
+                      fixedSize:
+                          MaterialStateProperty.all<Size>(const Size(150, 50)),
+                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                       ),
-                    ),
-                  ),
-                  onPressed: null,
+                      elevation: MaterialStatePropertyAll(10)),
+                  onPressed: () {}, //payment
                   child: const Text(
                     'Premium',
                     style: TextStyle(
@@ -341,20 +380,33 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
-                            const Text('Full Name',
+                            const Text('First Name',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(fontWeight: FontWeight.w600)),
                             const SizedBox(width: 10),
-                            editFullName(),
+                            editFirstName(),
                           ],
                         ),
                       ),
                       const SizedBox(height: 20),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Row(
+                          children: [
+                            const Text('Last Name',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(fontWeight: FontWeight.w600)),
+                            const SizedBox(width: 10),
+                            editLastName(),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
                             const Text('Password',
@@ -367,10 +419,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                       const SizedBox(height: 20),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
-                            const Text('Email',
+                            const Text('Email        ',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(fontWeight: FontWeight.w600)),
                             const SizedBox(width: 10),
@@ -380,10 +432,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                       const SizedBox(height: 20),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
-                            const Text('Birthday',
+                            const Text('Birthday   ',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(fontWeight: FontWeight.w600)),
                             const SizedBox(width: 10),
@@ -393,10 +445,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                       const SizedBox(height: 20),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
-                            const Text('Mobile Number',
+                            const Text('Mobile      ',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(fontWeight: FontWeight.w600)),
                             const SizedBox(width: 10),
@@ -406,10 +458,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                       const SizedBox(height: 20),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
-                            const Text('Address',
+                            const Text('Address    ',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(fontWeight: FontWeight.w600)),
                             const SizedBox(width: 10),

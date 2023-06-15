@@ -224,10 +224,7 @@ class _LoginotpState extends State<Loginotp> {
                                 'Code entered is $verificationCode',
                                 style: TextStyle(fontWeight: FontWeight.w700),
                               ),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  side: const BorderSide(
-                                      color: kPrimaryColor, width: 5)),
+                              shape: kAlertBoxBorderStyle,
                             );
                           });
                     }, // end onSubmit
