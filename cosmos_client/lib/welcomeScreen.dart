@@ -34,8 +34,10 @@ class CosmosTM extends StatelessWidget {
               SizedBox(height: 70),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()));
                 },
                 style: ElevatedButton.styleFrom(
                   fixedSize: const Size(250, 50),

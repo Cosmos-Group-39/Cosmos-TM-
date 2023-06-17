@@ -1,15 +1,15 @@
-import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
+class ReviewModel {
+  String? id;
+  int rating;
+  String? description;
+  String reviewer;
+  String organization;
 
-class FeedbackModel {
-  String reviewerID;
-  String rating;
-  String description;
-  List<OrganizationModel> oid;
-
-  FeedbackModel({
-    required this.reviewerID,
+  ReviewModel({
+    this.id,
     required this.rating,
-    required this.description,
-    required this.oid,
+    this.description,
+    required this.reviewer,
+    required this.organization,
   });
 }

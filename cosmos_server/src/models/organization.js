@@ -22,8 +22,8 @@ const organizationSchema = new mongoose.Schema({
         type: String,
     },
     pic:{
-        type: File,
-        required: true
+        type: String,
+        
     },
     reviews: [{
         type: mongoose.Schema.Types.ObjectId,

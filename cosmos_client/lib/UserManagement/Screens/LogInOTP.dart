@@ -2,7 +2,6 @@ import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/UserManagement/Screens/LogInPassword.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
 class Loginotp extends StatefulWidget {
@@ -50,7 +49,7 @@ class _LoginotpState extends State<Loginotp> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController cardControlleremail = TextEditingController();
+    TextEditingController emailController = TextEditingController();
 
     return SafeArea(
       child: Scaffold(
@@ -158,7 +157,7 @@ class _LoginotpState extends State<Loginotp> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
-                    controller: cardControlleremail,
+                    controller: emailController,
                     decoration: const InputDecoration(
                       labelText: 'Email',
                       icon: Icon(Icons.email, color: Colors.white60),

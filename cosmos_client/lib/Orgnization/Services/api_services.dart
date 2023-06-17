@@ -1,21 +1,20 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:8080/api/common/organization';
+  static const String baseUrl = 'http://localhost:8062/api/common/organization';
 
   //create an organization(form)
   Future<void> createOrganization({
     required String name,
-    required String pic,
+    String? pic,
     required String description,
   }) async {
-    final url = Uri.parse('$baseUrl');
+    final url = Uri.parse(baseUrl);
     final x = {
-      'name': name,
-      'pic': pic,
-      'description': description,
+      "name": name,
+      "pic": pic,
+      "description": description,
     };
 
     print({x: jsonEncode(x)});

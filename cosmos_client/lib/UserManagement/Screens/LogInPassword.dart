@@ -15,15 +15,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController cardControllerusername = TextEditingController();
-    TextEditingController cardControllerpassword = TextEditingController();
+    TextEditingController usernameController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.green,
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: Icon(Icons.arrow_back),
           ),
         ),
@@ -42,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const SizedBox(height: 20),
                 Padding(
@@ -133,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
-                    controller: cardControllerusername,
+                    controller: usernameController,
                     decoration: const InputDecoration(
                       icon: Icon(Icons.person, color: Colors.white60),
                       labelText: 'Username',
@@ -160,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
-                    controller: cardControllerpassword,
+                    controller: passwordController,
                     decoration: const InputDecoration(
                       labelText: 'Password',
                       icon: Icon(Icons.lock_sharp, color: Colors.white60),

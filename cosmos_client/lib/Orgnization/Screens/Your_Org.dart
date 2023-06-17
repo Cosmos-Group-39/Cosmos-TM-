@@ -25,11 +25,11 @@ class _CreateCardsState extends State<CreateCards> {
   //edit a card
   void editCard(OrganizationModel editedItem) {
     setState(() {
-      int index = cardsx.indexWhere((item) => item.cardID == editedItem.cardID);
+      int index = cardsx.indexWhere((item) => item.id == editedItem.id);
       if (index != -1) {
-        cardsx[index].cardName = editedItem.cardName;
+        cardsx[index].name = editedItem.name;
         cardsx[index].description = editedItem.description;
-        cardsx[index].profilePic = editedItem.profilePic;
+        cardsx[index].pic = editedItem.pic;
       }
     });
   }
@@ -37,7 +37,7 @@ class _CreateCardsState extends State<CreateCards> {
   //delete a card
   void deleteCard(String cardID) {
     setState(() {
-      cardsx.removeWhere((item) => item.cardID == cardID);
+      cardsx.removeWhere((item) => item.id == cardID);
     });
   }
 
@@ -120,14 +120,12 @@ class _CreateCardsState extends State<CreateCards> {
                         switch (selectedValue) {
                           case 'Name (A-Z)':
                             setState(() {
-                              cardsx.sort(
-                                  (a, b) => a.cardName.compareTo(b.cardName));
+                              cardsx.sort((a, b) => a.name.compareTo(b.name));
                             });
                             break;
                           case 'Name (Z-A)':
                             setState(() {
-                              cardsx.sort(
-                                  (a, b) => b.cardName.compareTo(a.cardName));
+                              cardsx.sort((a, b) => b.name.compareTo(a.name));
                             });
                             break;
                           case 'No of Workflows':

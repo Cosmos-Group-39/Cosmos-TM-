@@ -153,6 +153,7 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
           onPressed: () => createWorks(),
           child: const Icon(Icons.add),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         body: Container(
           height: MediaQuery.of(context).size.height -
               kToolbarHeight -

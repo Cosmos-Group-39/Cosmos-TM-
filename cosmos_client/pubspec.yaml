@@ -56,6 +56,7 @@ dependencies:
   flutter_searchbox: ^3.1.0
   simple_search: ^0.1.0
   easy_search_bar: ^2.5.0
+  swipe_screen: ^1.1.2
 
 dev_dependencies:
   flutter_test:

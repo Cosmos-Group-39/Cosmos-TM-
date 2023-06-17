@@ -14,12 +14,12 @@ class OrgAddMembers extends StatefulWidget {
 
 class _OrgAddMembersState extends State<OrgAddMembers> {
   List<OrgMembersModel> allMembers = [
-    OrgMembersModel(memberId: '1', name: 'aaa', role: 'Member'),
-    OrgMembersModel(memberId: '2', name: 'aaa bbb', role: 'Admin'),
-    OrgMembersModel(memberId: '3', name: 'bbbb ccc', role: 'Member'),
-    OrgMembersModel(memberId: '1', name: 'bbb aac', role: 'Member'),
-    OrgMembersModel(memberId: '2', name: 'ddrf', role: 'Admin'),
-    OrgMembersModel(memberId: '3', name: 'zz ddaa', role: 'Member'),
+    OrgMembersModel(userId: '1', name: 'aaa', isAdmin: false),
+    OrgMembersModel(userId: '2', name: 'aaa bbb', isAdmin: false),
+    OrgMembersModel(userId: '3', name: 'bbbb ccc', isAdmin: false),
+    OrgMembersModel(userId: '1', name: 'bbb aac', isAdmin: false),
+    OrgMembersModel(userId: '2', name: 'ddrf', isAdmin: false),
+    OrgMembersModel(userId: '3', name: 'zz ddaa', isAdmin: false),
   ];
 
   List<OrgMembersModel> filteredMembers = [];

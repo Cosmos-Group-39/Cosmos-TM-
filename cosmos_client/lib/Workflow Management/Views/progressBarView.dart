@@ -152,6 +152,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
           onPressed: () => createWorks(),
           child: const Icon(Icons.add),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         body: Container(
           padding: const EdgeInsets.all(20),
           child: Column(

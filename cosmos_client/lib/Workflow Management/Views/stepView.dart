@@ -1,4 +1,5 @@
 import 'package:cosmos_client/Workflow%20Management/View%20Cards/stepViewCard.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:cosmos_client/Chat/Screen/chat_group.dart';
@@ -149,8 +150,12 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,
         onPressed: () => createWorks(),
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: kDefaultIconLightColor,
+        ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       body: Container(
         padding: const EdgeInsets.all(20),
         child: Column(

@@ -40,14 +40,14 @@ class _OrgCardState extends State<OrgCard> {
   }
 
   void editCard() {
-    String cardName = _cardNameController.text.trim();
+    String name = _cardNameController.text.trim();
     String description = _descriptionController.text.trim();
 
     OrganizationModel editedItem = OrganizationModel(
-      cardID: widget.item.cardID,
-      cardName: cardName,
+      id: widget.item.id,
+      name: name,
       description: description,
-      profilePic: newprofilePic,
+      pic: newprofilePic,
       members: [],
     );
 
@@ -90,7 +90,7 @@ class _OrgCardState extends State<OrgCard> {
               child: ElevatedButton(
                 style: kAlertBoxButtonStyle,
                 onPressed: () {
-                  widget.onDelete(widget.item.cardID);
+                  widget.onDelete(widget.item.id!);
                   Navigator.pop(context);
                 },
                 child: const Text(
@@ -133,7 +133,7 @@ class _OrgCardState extends State<OrgCard> {
                 ProfilePictureWidget(
                   onImageSelected: (String? imagePath) {
                     setState(() {
-                      newprofilePic = imagePath ?? widget.item.profilePic;
+                      newprofilePic = (imagePath ?? widget.item.pic)!;
                     });
                   },
                 ),
@@ -186,10 +186,10 @@ class _OrgCardState extends State<OrgCard> {
           MaterialPageRoute(
             builder: (context) => OrgPro(
               item: OrganizationModel(
-                cardID: uuid.v1(),
-                cardName: widget.item.cardName,
+                id: uuid.v1(),
+                name: widget.item.name,
                 description: widget.item.description,
-                profilePic: widget.item.profilePic,
+                pic: widget.item.pic,
                 members: [],
               ),
             ),
@@ -216,14 +216,14 @@ class _OrgCardState extends State<OrgCard> {
               const SizedBox(width: 10),
               CircleAvatar(
                 radius: 35,
-                backgroundImage: widget.item.profilePic != ''
-                    ? FileImage(File(widget.item.profilePic))
+                backgroundImage: widget.item.pic != ''
+                    ? FileImage(File(widget.item.pic!))
                     : null,
               ),
               const SizedBox(width: 10),
               Flexible(
                 child: Text(
-                  widget.item.cardName,
+                  widget.item.name,
                   style: const TextStyle(
                     fontSize: 16,
                     color: kBackgroundColor,

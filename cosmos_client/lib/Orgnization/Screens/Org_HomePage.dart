@@ -17,7 +17,7 @@ class _OrgMainState extends State<OrgMain> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: kDrawer(),
+        drawer: kDrawer(context),
         body: ListView(
           //whole screen.
           children: [
@@ -39,23 +39,28 @@ class _OrgMainState extends State<OrgMain> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const IconButton(
+                    Builder(builder: (context) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
                             icon: Icon(Icons.menu, color: kBackgroundColor),
-                            onPressed: kDrawer),
-                        Text(
-                          'Organizations',
-                          style: kAppBarTitle,
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.notifications_sharp,
-                              color: kBackgroundColor),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
+                            onPressed: () {
+                              Scaffold.of(context).openDrawer();
+                            },
+                          ),
+                          Text(
+                            'Organizations',
+                            style: kAppBarTitle,
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.notifications_sharp,
+                                color: kBackgroundColor),
+                            onPressed: () {},
+                          ),
+                        ],
+                      );
+                    }),
                     Image.asset(
                       'images/cosmos.png',
                       height: 150,

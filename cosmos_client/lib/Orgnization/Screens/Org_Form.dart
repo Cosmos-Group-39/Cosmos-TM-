@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Orgnization/Screens/Your_Org.dart';
 import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
 import 'package:cosmos_client/Orgnization/Services/api_services.dart';
-import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Profile_Pic.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +17,7 @@ class _OrgFormState extends State<OrgForm> {
   ApiService apiService = ApiService();
   TextEditingController cardControllername = TextEditingController();
   TextEditingController cardControllerDes = TextEditingController();
-  late String profilePic;
+  String pic = '';
 
   void submitForm() async {
     if (formKeyorg.currentState!.validate()) {
@@ -30,17 +27,16 @@ class _OrgFormState extends State<OrgForm> {
       try {
         await apiService.createOrganization(
           name: cardControllername.text,
-          pic: profilePic, // Provide the appropriate value for pic
+          pic: pic,
           description: cardControllerDes.text,
         );
 
         cardsx.add(
           OrganizationModel(
-            cardID: uuid.v1(),
-            cardName: cardControllername.text,
+            id: uuid.v1(),
+            name: cardControllername.text,
             description: cardControllerDes.text,
-            profilePic: profilePic,
-            members: [],
+            pic: pic,
           ),
         );
 
@@ -61,7 +57,7 @@ class _OrgFormState extends State<OrgForm> {
 
   void _resetProfilePicture() {
     setState(() {
-      profilePic = '';
+      pic = '';
     });
   }
 
@@ -180,7 +176,7 @@ class _OrgFormState extends State<OrgForm> {
                           child: ProfilePictureWidget(
                             onImageSelected: (String? imagePath) {
                               setState(() {
-                                profilePic = imagePath ?? '';
+                                pic = imagePath ?? '';
                               });
                             },
                           ),

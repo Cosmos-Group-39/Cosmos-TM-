@@ -26,7 +26,7 @@ class _OrgProState extends State<OrgPro> {
   @override
   void initState() {
     super.initState();
-    _profilePic = File(widget.item.profilePic);
+    _profilePic = File(widget.item.pic!);
   }
 
   // void delOrg() {
@@ -78,7 +78,7 @@ class _OrgProState extends State<OrgPro> {
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
           title: Text(
-            widget.item.cardName,
+            widget.item.name,
             style: kAppBarTitle,
           ),
           centerTitle: true,
