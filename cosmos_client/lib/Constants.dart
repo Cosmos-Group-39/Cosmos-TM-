@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+//Base URL
+const String baseUrl = 'http://localhost:8062/api';
+
+//payments
+String SECRET_KEY =
+    "sk_test_51Mgl36DXFk3tkknrl2DxC3ogKFQdlm7ZcHntKldMLxay1Ki4dtP081vOWv5WxbAk2Q2CZlyHJ0xdDAqqw3CDoP0400YGaVnmRq";
+
 //Colors.
 const kPrimaryColor = Color(0xff213B6C);
 const kSecondaryColor = Color.fromARGB(255, 24, 74, 166);
@@ -13,10 +20,6 @@ const double kDefaultPadding = 45.0;
 const double kTextPadding = 15.0;
 const double kTextLPadding = 148.0;
 const double kSmallPadding = 15.0;
-
-//payments
-String SECRET_KEY =
-    "sk_test_51Mgl36DXFk3tkknrl2DxC3ogKFQdlm7ZcHntKldMLxay1Ki4dtP081vOWv5WxbAk2Q2CZlyHJ0xdDAqqw3CDoP0400YGaVnmRq";
 
 //Texts
 WorkflowCreatedText(BuildContext context) {

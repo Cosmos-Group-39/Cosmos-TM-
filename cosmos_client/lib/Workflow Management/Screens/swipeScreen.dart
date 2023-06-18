@@ -43,7 +43,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
   }
 
   void _goToNextPage() {
-    if (_currentPage < 2) {
+    if (_currentPage < 7) {
       _pageController.nextPage(
         duration: Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -53,75 +53,74 @@ class _SwipeScreenState extends State<SwipeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          PageView(
-            controller: _pageController,
-            onPageChanged: _onPageChanged,
-            children: [
-              Container(
-                color: Colors.blue,
-                child: const Center(
-                  child: Text(
-                    'Screen 1',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24.0,
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            PageView(
+              controller: _pageController,
+              onPageChanged: _onPageChanged,
+              children: [
+                Container(
+                  color: Colors.blue,
+                  child: Center(
+                    child: FloatingActionButton.large(
+                      onPressed: () {},
+                      child: Icon(Icons.add, size: 50),
                     ),
                   ),
                 ),
-              ),
-              CalenderViewScreen(),
-              StepViewWorksScreen(),
-              ProgressBarWorksScreen(),
-              GanttChartWorksScreen(),
-              PieChartWorksScreen(),
-              ChartViewWorksScreen(),
-            ],
-          ),
-          Positioned(
-            bottom: 5,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildDot(0),
-                _buildDot(1),
-                _buildDot(2),
-                _buildDot(3),
-                _buildDot(4),
-                _buildDot(5),
-                _buildDot(6),
-                _buildDot(7),
+                CalenderViewScreen(),
+                StepViewWorksScreen(),
+                ProgressBarWorksScreen(),
+                GanttChartWorksScreen(),
+                PieChartWorksScreen(),
+                ChartViewWorksScreen(),
               ],
             ),
-          ),
-          Positioned(
-            bottom: -10,
-            left: 50,
-            right: 50,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            Positioned(
+              bottom: 5,
+              left: 0,
+              right: 0,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    color: Colors.blue,
-                    onPressed: _goToPreviousPage,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.arrow_forward),
-                    color: Colors.blue,
-                    onPressed: _goToNextPage,
-                  ),
+                  _buildDot(0),
+                  _buildDot(1),
+                  _buildDot(2),
+                  _buildDot(3),
+                  _buildDot(4),
+                  _buildDot(5),
+                  _buildDot(6),
+                  _buildDot(7),
                 ],
               ),
             ),
-          ),
-        ],
+            Positioned(
+              bottom: -10,
+              left: 50,
+              right: 50,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      color: Colors.blue,
+                      onPressed: _goToPreviousPage,
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.arrow_forward),
+                      color: Colors.blue,
+                      onPressed: _goToNextPage,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
