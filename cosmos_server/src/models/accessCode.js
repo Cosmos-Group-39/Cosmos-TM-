@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const accessCodeSchema = new mongoose.Schema({
-    workflows: {
+    workflow: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Workflow',
         required: true
