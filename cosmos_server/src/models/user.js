@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  name: {
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
     type: String,
     required: true
   },
@@ -21,12 +25,13 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   dob: {
-    type: Date
+    type: Date,
+    required: true
   },
   profilePic: {
     type: String,
   },
-  active: {
+  isDeleted: {
     type: Boolean,
     required: true,
     default: false
