@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //Base URL
-const String baseUrls = 'http://localhost:8062/api';
+const String baseUrls = 'http://localhost:8080/api';
 
 //payments
 String SECRET_KEY =

@@ -19,28 +19,56 @@ class SwipeScreen extends StatefulWidget {
 
 class _SwipeScreenState extends State<SwipeScreen> {
   _SwipeScreenState();
-  static SubWorkflowModel subWorkflowModel =
-      SubWorkflowModel(subid: '123', title: '123456', view: '');
+
   late PageController _pageController;
   int _currentPage = 0;
   String? _selectedTemplate;
-  List<Widget> views = [
-    CalenderViewScreen(subworkflow: subWorkflowModel),
-    const StepViewWorksScreen(),
-    const ProgressBarWorksScreen(),
-    const GanttChartWorksScreen(),
-    const PieChartWorksScreen(),
-    const ChartViewWorksScreen(),
-  ];
 
-  List<SubWorkflowModel> subWorkflows = [];
+  List<Widget> views = [];
+  List<dynamic> subWorkflows = [];
+
+  createViews() {
+    subWorkflows.map((elem) {
+      print('hi');
+      String a = 'stepView';
+      switch (a) {
+        case 'stepView':
+          print('object');
+          views.add(StepViewWorksScreen(
+              subworkflow: elem, workflowName: widget.workflow['title']));
+          break;
+        case 'progressBar':
+          views.add(ProgressBarWorksScreen(
+              subworkflow: elem, workflowName: widget.workflow['title']));
+          break;
+        case 'ganttChart':
+          views.add(GanttChartWorksScreen(
+              subworkflow: elem, workflowName: widget.workflow['title']));
+          break;
+        case 'calendar':
+          views.add(CalenderViewScreen(
+              subworkflow: elem, workflowName: widget.workflow['title']));
+          break;
+        case 'chartView':
+          views.add(ChartViewWorksScreen(
+              subworkflow: elem, workflowName: widget.workflow['title']));
+          break;
+        case 'pieChart':
+          views.add(PieChartWorksScreen(
+              subworkflow: elem, workflowName: widget.workflow['title']));
+          break;
+        default:
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
     subWorkflows = widget.workflow['subWorkflows'];
-    print(subWorkflows);
+    createViews();
+    print(views.length);
   }
 
   @override

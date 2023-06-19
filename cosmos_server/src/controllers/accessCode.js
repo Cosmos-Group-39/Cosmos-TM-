@@ -2,7 +2,6 @@ const Workflow = require('../models/workflow');
 const AccessCode = require('../models/accessCode');
 
 module.exports.accessCode = (req, res) => {
-    console.log("hi")
     AccessCode.findOne({ code: req.params.accCode })
         .then((accessCode) => {
             if (accessCode) {
