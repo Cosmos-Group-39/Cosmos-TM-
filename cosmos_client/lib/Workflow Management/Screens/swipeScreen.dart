@@ -25,12 +25,12 @@ class _SwipeScreenState extends State<SwipeScreen> {
   int _currentPage = 0;
   String? _selectedTemplate;
   List<Widget> views = [
-    CalenderViewScreen(subworkflow: subWorkflowModel),
-    const StepViewWorksScreen(),
-    const ProgressBarWorksScreen(),
-    const GanttChartWorksScreen(),
-    const PieChartWorksScreen(),
-    const ChartViewWorksScreen(),
+    CalenderViewScreen(subworkflow: subWorkflowModel, workflowName: 'hi'),
+    StepViewWorksScreen(subworkflow: subWorkflowModel, workflowName: 'hi'),
+    ProgressBarWorksScreen(subworkflow: subWorkflowModel, workflowName: 'hi'),
+    GanttChartWorksScreen(subworkflow: subWorkflowModel, workflowName: 'hi'),
+    PieChartWorksScreen(subworkflow: subWorkflowModel, workflowName: 'hi'),
+    ChartViewWorksScreen(subworkflow: subWorkflowModel, workflowName: 'hi'),
   ];
 
   List<SubWorkflowModel> subWorkflows = [];
