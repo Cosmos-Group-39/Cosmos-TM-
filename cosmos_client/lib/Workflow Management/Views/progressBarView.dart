@@ -122,14 +122,8 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
             style: kAppBarTitle,
           ),
           centerTitle: true,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CreatedSubWorkflows()));
-              },
-              icon: const Icon(Icons.arrow_back)),
+          leading:
+              IconButton(onPressed: null, icon: const Icon(Icons.arrow_back)),
           actions: [
             FloatingActionButton(
               backgroundColor: kPrimaryColor,
@@ -155,7 +149,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
           onPressed: () => createWorks(),
           child: const Icon(Icons.add),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: Container(
           padding: const EdgeInsets.all(20),
           child: Column(

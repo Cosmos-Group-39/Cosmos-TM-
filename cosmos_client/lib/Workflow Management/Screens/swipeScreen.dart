@@ -251,8 +251,9 @@ class _SwipeScreenState extends State<SwipeScreen> {
               right: 0,
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                ...subWorkflows
-                    .map((element) => _buildDot(subWorkflows.indexOf(element))),
+                _buildDot(0),
+                ...subWorkflows.map(
+                    (element) => _buildDot(subWorkflows.indexOf(element) + 1)),
               ]),
             ),
             Positioned(
