@@ -11,6 +11,17 @@ const subWorkflow = require('../models/subWorkflow');
 //     });
 // };
 
+module.exports.getSubWorkflows = (req, res) => {
+      subWorkflow.findById(req.params.id)
+        .then((subWorkflows) => {
+          res.status(200).json({ id: subWorkflow._id })
+        })
+        .catch((error) => {
+          res.status(500).json({ error: 'Internal Server Error' });
+        });
+    };
+    
+
 
 
 

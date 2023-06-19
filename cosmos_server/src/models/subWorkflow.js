@@ -13,9 +13,11 @@ const workSchema = new mongoose.Schema({
         required: true,
         default: false
     },
-    deadline: {
+    startTime: {
         type: Date,
-        required: true,
+    },
+    endTime: {
+        type: Date,
     },
     labels: [{
         type: mongoose.Schema.Types.ObjectId,

@@ -30,7 +30,6 @@ const workflowSchema = new mongoose.Schema({
     }],
     users: {
         type: [accessSchema],
-        required: true
     },
     accessCodes: [{
         type: mongoose.Schema.Types.ObjectId,
