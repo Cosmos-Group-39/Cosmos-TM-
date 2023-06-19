@@ -9,7 +9,7 @@ import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:uuid/uuid.dart';
 
 class ChartViewWorksScreen extends StatefulWidget {
-  SubWorkflowModel subworkflow;
+  dynamic subworkflow;
   final String workflowName;
   ChartViewWorksScreen(
       {super.key, required this.subworkflow, required this.workflowName});
@@ -120,7 +120,7 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
           title: Text(
-            'Workflow Name',
+            widget.workflowName,
             style: kAppBarTitle,
           ),
           centerTitle: true,
@@ -168,7 +168,7 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
             child: Column(
               children: [
                 Text(
-                  widget.subworkflow.title,
+                  widget.subworkflow['title'],
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,

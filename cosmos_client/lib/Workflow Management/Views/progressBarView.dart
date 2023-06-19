@@ -7,7 +7,7 @@ import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:uuid/uuid.dart';
 
 class ProgressBarWorksScreen extends StatefulWidget {
-  SubWorkflowModel subworkflow;
+  dynamic subworkflow;
   final String workflowName;
   ProgressBarWorksScreen(
       {super.key, required this.subworkflow, required this.workflowName});
@@ -161,7 +161,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
           child: Column(
             children: [
               Text(
-                widget.subworkflow.title,
+                widget.subworkflow['title'],
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,

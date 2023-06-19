@@ -8,7 +8,7 @@ import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:uuid/uuid.dart';
 
 class PieChartWorksScreen extends StatefulWidget {
-  SubWorkflowModel subworkflow;
+  dynamic subworkflow;
   final String workflowName;
   PieChartWorksScreen(
       {super.key, required this.subworkflow, required this.workflowName});
@@ -162,7 +162,7 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
           child: Column(
             children: [
               Text(
-                widget.subworkflow.title,
+                widget.subworkflow['title'],
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,

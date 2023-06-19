@@ -9,7 +9,7 @@ import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:uuid/uuid.dart';
 
 class GanttChartWorksScreen extends StatefulWidget {
-  SubWorkflowModel subworkflow;
+  dynamic subworkflow;
   final String workflowName;
   GanttChartWorksScreen(
       {super.key, required this.subworkflow, required this.workflowName});
@@ -119,7 +119,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         title: Text(
-          'Works',
+          widget.workflowName,
           style: kAppBarTitle,
         ),
         centerTitle: true,
@@ -162,7 +162,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
         child: Column(
           children: [
             Text(
-              widget.subworkflow.title,
+              widget.subworkflow['title'],
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
