@@ -41,6 +41,8 @@ class _WorkflowCardState extends State<WorkflowCard> {
     WorkflowModel wfeditedItem = WorkflowModel(
       wid: widget.item.wid,
       title: title,
+      active: true,
+      type: 'free',
     );
 
     widget.wfonEdit(wfeditedItem);
@@ -82,7 +84,7 @@ class _WorkflowCardState extends State<WorkflowCard> {
               child: ElevatedButton(
                 style: kAlertBoxButtonStyle, //Elevated button style
                 onPressed: () {
-                  widget.wfonDelete(widget.item.wid);
+                  widget.wfonDelete(widget.item.wid!);
                   Navigator.pop(context);
                 },
                 child: const Text(

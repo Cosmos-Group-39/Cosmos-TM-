@@ -10,16 +10,22 @@ List<WorkflowModel> wfcards = [];
 var uuid = const Uuid();
 
 class CreatedWorkflows extends StatefulWidget {
-  const CreatedWorkflows({Key? key}) : super(key: key);
+  final dynamic workflow;
+  const CreatedWorkflows({Key? key, this.workflow}) : super(key: key);
 
   @override
-  State<CreatedWorkflows> createState() => _CreatedWorkflowsState();
+  State<CreatedWorkflows> createState() => _CreatedWorkflowsState(workflow);
 }
 
 class _CreatedWorkflowsState extends State<CreatedWorkflows> {
+  final dynamic workflow;
+
+  _CreatedWorkflowsState(this.workflow);
+
   @override
   void initState() {
     super.initState();
+    print(workflow);
   }
 
   //Edit workflow Name

@@ -3,8 +3,11 @@ import 'package:cosmos_client/Orgnization/Widgets/Drawer.dart';
 import 'package:cosmos_client/UserManagement/Screens/LogInPassword.dart';
 import 'package:cosmos_client/UserManagement/Screens/SignUp.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/swipeScreen.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/yourWorkflow.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,12 +17,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController searchTextController = TextEditingController();
+  TextEditingController _searchTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.green,
+        ),
         drawer: kDrawer(context),
         body: Container(
           width: MediaQuery.of(context).size.width,
@@ -38,26 +44,36 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.all(10.0),
-                //   child: Image.asset(
-                //     'images/cosmos.png',
-                //     height: 200,
-                //     width: 200,
-                //     filterQuality: FilterQuality.high,
-                //   ),
-                // ),
-
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Image.asset(
+                    'images/cosmos.png',
+                    height: 200,
+                    width: 200,
+                    filterQuality: FilterQuality.high,
+                  ),
+                ),
                 workflowsSearch(),
-                const SizedBox(height: 20),
+                // const SizedBox(height: 10),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kPrimaryColor,
-                    minimumSize: const Size(200, 50),
+                    minimumSize: const Size(150, 50),
                     shadowColor: Colors.black,
                     alignment: Alignment.center,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Dio()
+                        .get(
+                            '$baseUrls/accesscode/${_searchTextController.text}')
+                        .then((value) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SwipeScreen(workflow: value.data)));
+                    }).catchError((value) => print(value));
+                  },
                   child: const Icon(
                     Icons.send,
                     color: Colors.white70,
@@ -141,6 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
+                SizedBox(height: 5)
               ],
             ),
           ),
@@ -151,22 +168,41 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget workflowsSearch() {
     return Container(
-        height: 50,
-        width: MediaQuery.of(context).size.width,
-        alignment: Alignment.center,
-        margin: const EdgeInsets.only(top: 45, bottom: 45, left: 25, right: 25),
-        padding: const EdgeInsets.symmetric(horizontal: 11),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: const [
-            BoxShadow(
-                color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))
-          ],
+      height: 50,
+      width: MediaQuery.of(context).size.width,
+      alignment: Alignment.center,
+      margin: const EdgeInsets.only(top: 45, bottom: 30, left: 25, right: 25),
+      padding: const EdgeInsets.symmetric(horizontal: 11),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))
+        ],
+      ),
+      child: TextField(
+        controller: _searchTextController,
+        decoration: const InputDecoration(
+          prefixIcon: Icon(Icons.search),
+          hintText: '    Access Code..',
+          border: InputBorder.none,
         ),
-        child: TextField(
-          controller: searchTextController,
-          decoration: null,
-        ));
+      ),
+    );
   }
+
+  // //Access Code Validations
+  // bool _validate() {
+  //   setState(() {
+  //     errorText = ''; // Clear the error text initially
+  //   });
+  //   if (enteredText.isEmpty) {
+  //     setState(() {
+  //       errorText = 'Access code is required.';
+  //     });
+  //     return false;
+  //   }
+
+  //   return true;
+  // }
 }

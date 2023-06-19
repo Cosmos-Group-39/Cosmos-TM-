@@ -15,7 +15,7 @@ class PieChartWorksScreen extends StatefulWidget {
 }
 
 class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
-  List<WorksModel> workcards = [];
+  List<WorkModel> workcards = [];
   Uuid uuid = const Uuid();
   TextEditingController _workController = TextEditingController();
 
@@ -68,10 +68,11 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
                 style: kAlertBoxButtonStyle,
                 onPressed: () {
                   String title = _workController.text.trim();
-                  String wwid = uuid.v4();
-                  WorksModel work_newItem = WorksModel(
-                    wwid: wwid,
+                  String workid = uuid.v4();
+                  WorkModel work_newItem = WorkModel(
+                    workid: workid,
                     title: title,
+                    active: true,
                   );
 
                   setState(() {
@@ -94,16 +95,16 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
     );
   }
 
-  void deleteWorks(String wwid) {
+  void deleteWorks(String workid) {
     setState(() {
-      workcards.removeWhere((element) => element.wwid == wwid);
+      workcards.removeWhere((element) => element.workid == workid);
     });
   }
 
-  void editWorks(WorksModel editedItem) {
+  void editWorks(WorkModel editedItem) {
     setState(() {
-      int index =
-          workcards.indexWhere((element) => element.wwid == editedItem.wwid);
+      int index = workcards
+          .indexWhere((element) => element.workid == editedItem.workid);
       workcards[index] = editedItem;
     });
   }
@@ -176,7 +177,7 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
                   itemBuilder: (context, index) {
                     return PieChartWorksCard(
                       item: workcards[index],
-                      workonDelete: (wwid) => deleteWorks(wwid),
+                      workonDelete: (workid) => deleteWorks(workid),
                       workonEdit: (editedItem) => editWorks(editedItem),
                     );
                   },

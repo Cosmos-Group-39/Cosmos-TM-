@@ -14,7 +14,7 @@ class WorksScreen extends StatefulWidget {
 }
 
 class _WorksScreenState extends State<WorksScreen> {
-  List<WorksModel> workcards = [];
+  List<WorkModel> workcards = [];
   Uuid uuid = Uuid();
   TextEditingController _workController = TextEditingController();
 
@@ -34,19 +34,20 @@ class _WorksScreenState extends State<WorksScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: kAlertBoxBorderStyle,
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   'Create Work',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                  style: kAlertBoxTopicTextStyle,
                 ),
                 const SizedBox(height: 10),
                 const Icon(
                   Icons.add,
                   size: 60.0,
-                  color: Colors.deepOrange,
+                  color: Colors.green,
                 ),
                 const SizedBox(height: 10),
                 TextField(
@@ -64,9 +65,10 @@ class _WorksScreenState extends State<WorksScreen> {
               onPressed: () {
                 String title = _workController.text.trim();
                 String wwid = uuid.v4();
-                WorksModel work_newItem = WorksModel(
-                  wwid: wwid,
+                WorkModel work_newItem = WorkModel(
+                  workid: wwid,
                   title: title,
+                  active: true,
                 );
 
                 setState(() {
@@ -84,16 +86,16 @@ class _WorksScreenState extends State<WorksScreen> {
     );
   }
 
-  void deleteWorks(String wwid) {
+  void deleteWorks(String workid) {
     setState(() {
-      workcards.removeWhere((element) => element.wwid == wwid);
+      workcards.removeWhere((element) => element.workid == workid);
     });
   }
 
-  void editWorks(WorksModel editedItem) {
+  void editWorks(WorkModel editedItem) {
     setState(() {
-      int index =
-          workcards.indexWhere((element) => element.wwid == editedItem.wwid);
+      int index = workcards
+          .indexWhere((element) => element.workid == editedItem.workid);
       workcards[index] = editedItem;
     });
   }

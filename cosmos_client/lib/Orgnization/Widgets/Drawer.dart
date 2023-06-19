@@ -106,7 +106,7 @@ Widget kDrawer(BuildContext context) {
             const ListTile(
               leading: Icon(Icons.settings, color: kBackgroundColor),
               title: Text(
-                'Your Profile',
+                'Settings',
                 style: TextStyle(
                   color: kBackgroundColor,
                   letterSpacing: 1,

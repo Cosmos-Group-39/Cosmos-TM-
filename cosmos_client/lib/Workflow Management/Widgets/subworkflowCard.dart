@@ -38,8 +38,9 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
     String title = _stitleController.text.trim();
 
     SubWorkflowModel subwf_editedItem = SubWorkflowModel(
-      swid: widget.item.swid,
+      subid: widget.item.subid,
       title: title,
+      view: '',
     );
 
     widget.subwfonEdit(subwf_editedItem);
@@ -81,7 +82,7 @@ class _SubWorkflowCardState extends State<SubWorkflowCard> {
               child: ElevatedButton(
                 style: kAlertBoxButtonStyle, //Elevated button style
                 onPressed: () {
-                  widget.subwfonDelete(widget.item.swid);
+                  widget.subwfonDelete(widget.item.subid!);
                   Navigator.pop(context);
                 },
                 child: const Text(

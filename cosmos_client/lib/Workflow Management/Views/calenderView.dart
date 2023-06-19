@@ -1,7 +1,11 @@
+import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderViewScreen extends StatefulWidget {
+  SubWorkflowModel subworkflow;
+
+  CalenderViewScreen({super.key, required this.subworkflow});
   @override
   _CalenderViewScreenState createState() => _CalenderViewScreenState();
 }
@@ -18,7 +22,7 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calendar'),
+        title: Text(widget.subworkflow.title),
       ),
       body: buildCalendarWidget(),
     );

@@ -393,202 +393,234 @@ class _SignupScreenState extends State<SignupScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                  padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Image.asset(
                     'images/cosmos.png',
-                    height: 200,
-                    width: 200,
+                    height: 180,
+                    width: 180,
                     filterQuality: FilterQuality.high,
                   ),
                 ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 0.95,
+                      decoration: BoxDecoration(
+                        color: Colors.white60,
+                        borderRadius: BorderRadius.circular(25),
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 6,
+                              offset: Offset(0, 2))
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 5),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Text('Create Account',
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  letterSpacing: 1.3,
+                                  wordSpacing: 1.5,
+                                  shadows: [
+                                    Shadow(
+                                      color: Colors.black.withOpacity(0.5),
+                                      offset: Offset(2, 2),
+                                      blurRadius: 2,
+                                    ),
+                                  ],
+                                )),
+                          ),
 
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Text('Create Account',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        letterSpacing: 1.3,
-                        wordSpacing: 1.5,
-                        shadows: [
-                          Shadow(
-                            color: Colors.black.withOpacity(0.5),
-                            offset: Offset(2, 2),
-                            blurRadius: 2,
+                          const SizedBox(height: 25),
+
+                          //Register form
+                          Form(
+                              key: formKey,
+                              child: Column(
+                                children: [
+                                  Text('Name',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                        letterSpacing: 1.3,
+                                        wordSpacing: 1.5,
+                                        shadows: [
+                                          Shadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            offset: Offset(2, 2),
+                                            blurRadius: 2,
+                                          ),
+                                        ],
+                                      )),
+                                  const SizedBox(height: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: Row(
+                                      children: [
+                                        buildFirstName(),
+                                        const SizedBox(width: 10),
+                                        buildLastName(),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Text('Create a password',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                        letterSpacing: 1.3,
+                                        wordSpacing: 1.5,
+                                        shadows: [
+                                          Shadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            offset: Offset(2, 2),
+                                            blurRadius: 2,
+                                          ),
+                                        ],
+                                      )),
+                                  const SizedBox(height: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: buildCreatePassword(),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Text('Confirm your password',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                        letterSpacing: 1.3,
+                                        wordSpacing: 1.5,
+                                        shadows: [
+                                          Shadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            offset: Offset(2, 2),
+                                            blurRadius: 2,
+                                          ),
+                                        ],
+                                      )),
+                                  const SizedBox(height: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: buildConfirmPassword(),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Text('Email',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                        letterSpacing: 1.3,
+                                        wordSpacing: 1.5,
+                                        shadows: [
+                                          Shadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            offset: Offset(2, 2),
+                                            blurRadius: 2,
+                                          ),
+                                        ],
+                                      )),
+                                  const SizedBox(height: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: buildEmail(),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Text('Birthday',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                        letterSpacing: 1.3,
+                                        shadows: [
+                                          Shadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            offset: Offset(2, 2),
+                                            blurRadius: 2,
+                                          ),
+                                        ],
+                                      )),
+                                  const SizedBox(height: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: buildBirthday(),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Text('Mobile number',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                        letterSpacing: 1.3,
+                                        wordSpacing: 1.5,
+                                        shadows: [
+                                          Shadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            offset: Offset(2, 2),
+                                            blurRadius: 2,
+                                          ),
+                                        ],
+                                      )),
+                                  const SizedBox(height: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: buildMobileNo(),
+                                  ),
+                                ],
+                              )),
+
+                          const SizedBox(height: 20),
+
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: kPrimaryColor,
+                              minimumSize: const Size(200, 50),
+                              shadowColor: Colors.black,
+                              alignment: Alignment.center,
+                              elevation: 10,
+                            ),
+
+                            //Call submitForm when the button is pressed
+
+                            onPressed: submitForm,
+
+                            child: const Text(
+                              'Confirm',
+                              style: TextStyle(
+                                fontSize: 18,
+                                letterSpacing: 1,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ],
-                      )),
-                ),
-
-                const SizedBox(height: 25),
-
-                //Register form
-                Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        Text('Name',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              letterSpacing: 1.3,
-                              wordSpacing: 1.5,
-                              shadows: [
-                                Shadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  offset: Offset(2, 2),
-                                  blurRadius: 2,
-                                ),
-                              ],
-                            )),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            children: [
-                              buildFirstName(),
-                              const SizedBox(width: 10),
-                              buildLastName(),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text('Create a password',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              letterSpacing: 1.3,
-                              wordSpacing: 1.5,
-                              shadows: [
-                                Shadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  offset: Offset(2, 2),
-                                  blurRadius: 2,
-                                ),
-                              ],
-                            )),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: buildCreatePassword(),
-                        ),
-                        const SizedBox(height: 20),
-                        Text('Confirm your password',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              letterSpacing: 1.3,
-                              wordSpacing: 1.5,
-                              shadows: [
-                                Shadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  offset: Offset(2, 2),
-                                  blurRadius: 2,
-                                ),
-                              ],
-                            )),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: buildConfirmPassword(),
-                        ),
-                        const SizedBox(height: 20),
-                        Text('Email',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              letterSpacing: 1.3,
-                              wordSpacing: 1.5,
-                              shadows: [
-                                Shadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  offset: Offset(2, 2),
-                                  blurRadius: 2,
-                                ),
-                              ],
-                            )),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: buildEmail(),
-                        ),
-                        const SizedBox(height: 20),
-                        Text('Birthday',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              letterSpacing: 1.3,
-                              shadows: [
-                                Shadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  offset: Offset(2, 2),
-                                  blurRadius: 2,
-                                ),
-                              ],
-                            )),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: buildBirthday(),
-                        ),
-                        const SizedBox(height: 20),
-                        Text('Mobile number',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              letterSpacing: 1.3,
-                              wordSpacing: 1.5,
-                              shadows: [
-                                Shadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  offset: Offset(2, 2),
-                                  blurRadius: 2,
-                                ),
-                              ],
-                            )),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: buildMobileNo(),
-                        ),
-                      ],
-                    )),
-
-                const SizedBox(height: 20),
-
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kPrimaryColor,
-                    minimumSize: const Size(200, 50),
-                    shadowColor: Colors.black,
-                    alignment: Alignment.center,
-                    elevation: 10,
-                  ),
-
-                  //Call submitForm when the button is pressed
-
-                  onPressed: submitForm,
-
-                  child: const Text(
-                    'Confirm',
-                    style: TextStyle(
-                      fontSize: 18,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 20),
               ],
             ),

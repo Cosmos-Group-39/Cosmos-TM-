@@ -3,9 +3,9 @@ import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 
 class ChartViewWorksCard extends StatefulWidget {
-  final Function(WorksModel) workonEdit;
+  final Function(WorkModel) workonEdit;
   final Function(String) workonDelete;
-  final WorksModel item;
+  final WorkModel item;
 
   const ChartViewWorksCard({
     Key? key,
@@ -36,9 +36,10 @@ class _ChartViewWorksCardState extends State<ChartViewWorksCard> {
   void workeditCard() {
     String title = _worktitleController.text.trim();
 
-    WorksModel work_editedItem = WorksModel(
-      wwid: widget.item.wwid,
+    WorkModel work_editedItem = WorkModel(
+      workid: widget.item.workid,
       title: title,
+      active: true,
     );
 
     widget.workonEdit(work_editedItem);
@@ -79,7 +80,7 @@ class _ChartViewWorksCardState extends State<ChartViewWorksCard> {
               child: ElevatedButton(
                 style: kAlertBoxButtonStyle,
                 onPressed: () {
-                  widget.workonDelete(widget.item.wwid);
+                  widget.workonDelete(widget.item.workid!);
                   Navigator.pop(context);
                 },
                 child: const Text(

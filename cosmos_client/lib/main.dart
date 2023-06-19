@@ -1,7 +1,6 @@
-import 'package:cosmos_client/Orgnization/Screens/Org_HomePage.dart';
+import 'package:cosmos_client/UserManagement/Screens/LogInPassword.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/swipeScreen.dart';
-import 'package:cosmos_client/welcomeScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: CosmosTM(),
+      home: HomeScreen(),
     );
   }
 }

@@ -16,7 +16,7 @@ class ChartViewWorksScreen extends StatefulWidget {
 }
 
 class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
-  List<WorksModel> workcards = [];
+  List<WorkModel> workcards = [];
   Uuid uuid = const Uuid();
   TextEditingController _workController = TextEditingController();
 
@@ -69,10 +69,11 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
                 style: kAlertBoxButtonStyle,
                 onPressed: () {
                   String title = _workController.text.trim();
-                  String wwid = uuid.v4();
-                  WorksModel work_newItem = WorksModel(
-                    wwid: wwid,
+                  String workid = uuid.v4();
+                  WorkModel work_newItem = WorkModel(
+                    workid: workid,
                     title: title,
+                    active: true,
                   );
 
                   setState(() {
@@ -95,16 +96,16 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
     );
   }
 
-  void deleteWorks(String wwid) {
+  void deleteWorks(String workid) {
     setState(() {
-      workcards.removeWhere((element) => element.wwid == wwid);
+      workcards.removeWhere((element) => element.workid == workid);
     });
   }
 
-  void editWorks(WorksModel editedItem) {
+  void editWorks(WorkModel editedItem) {
     setState(() {
-      int index =
-          workcards.indexWhere((element) => element.wwid == editedItem.wwid);
+      int index = workcards
+          .indexWhere((element) => element.workid == editedItem.workid);
       workcards[index] = editedItem;
     });
   }

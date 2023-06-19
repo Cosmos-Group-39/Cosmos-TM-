@@ -53,6 +53,7 @@ class _LoginotpState extends State<Loginotp> {
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(backgroundColor: Colors.green),
         body: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height,
@@ -72,194 +73,223 @@ class _LoginotpState extends State<Loginotp> {
               children: [
                 const SizedBox(height: 20),
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Image.asset(
                     'images/cosmos.png',
-                    height: 250,
-                    width: 250,
+                    height: 200,
+                    width: 200,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary:
-                                isLoginSelected ? Colors.grey : kPrimaryColor,
-                            minimumSize: const Size(160, 50),
-                            shadowColor: Colors.black,
-                            alignment: Alignment.center,
-                            elevation: 10,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20)),
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              isLoginSelected = false;
-                            });
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginScreen()));
-                          },
-                          child: const Text(
-                            'PASSWORD',
-                            style: TextStyle(
-                              fontSize: 15,
-                              letterSpacing: 1,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 1.8,
+                      decoration: BoxDecoration(
+                        color: Colors.white60,
+                        borderRadius: BorderRadius.circular(25),
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 6,
+                              offset: Offset(0, 2))
+                        ],
                       ),
-                      Expanded(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary:
-                                isLoginSelected ? kPrimaryColor : Colors.grey,
-                            minimumSize: const Size(160, 50),
-                            shadowColor: Colors.black,
-                            alignment: Alignment.center,
-                            elevation: 10,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20),
-                                  bottomRight: Radius.circular(20)),
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              isLoginSelected = true;
-                            });
-                          },
-                          child: const Text(
-                            'OTP',
-                            style: TextStyle(
-                              fontSize: 15,
-                              letterSpacing: 1,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 15),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: TextFormField(
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      icon: Icon(Icons.email, color: Colors.white60),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      labelStyle: TextStyle(color: Colors.white60),
-                    ),
-                    //validations
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter Email';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kPrimaryColor,
-                    minimumSize: const Size(150, 50),
-                    shadowColor: Colors.black,
-                    alignment: Alignment.center,
-                    elevation: 10,
-                    shape: const RoundedRectangleBorder(),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    'SEND',
-                    style: TextStyle(
-                      fontSize: 15,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: OtpTextField(
-                    numberOfFields: 5,
-                    borderColor: Colors.white60,
-                    //set to true to show as box or false to show as dash
-                    showFieldAsBox: true,
-                    //runs when a code is typed in
-                    onCodeChanged: (String code) {
-                      //handle validation or checks here
-                    },
-                    //runs when every textfield is filled
-                    onSubmit: (String verificationCode) {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text("Verification Code"),
-                              content: Text(
-                                'Code entered is $verificationCode',
-                                style: TextStyle(fontWeight: FontWeight.w700),
+                      child: Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: isLoginSelected
+                                        ? Colors.grey
+                                        : kPrimaryColor,
+                                    minimumSize: const Size(160, 50),
+                                    shadowColor: Colors.black,
+                                    alignment: Alignment.center,
+                                    elevation: 10,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          bottomLeft: Radius.circular(20)),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      isLoginSelected = false;
+                                    });
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                LoginScreen()));
+                                  },
+                                  child: const Text(
+                                    'PASSWORD',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      letterSpacing: 1,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ),
-                              shape: kAlertBoxBorderStyle,
-                            );
-                          });
-                    }, // end onSubmit
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: resendTimer > 0
-                          ? null
-                          : () {
-                              setState(() {
-                                resendTimer = 60;
-                                startResendTimer();
-                              });
-                            },
-                      child: Text(
-                        'Resend OTP',
-                        style: TextStyle(
-                          color: resendTimer > 0 ? Colors.white60 : Colors.red,
-                          decoration: resendTimer > 0
-                              ? TextDecoration.none
-                              : TextDecoration.underline,
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: isLoginSelected
+                                        ? kPrimaryColor
+                                        : Colors.grey,
+                                    minimumSize: const Size(160, 50),
+                                    shadowColor: Colors.black,
+                                    alignment: Alignment.center,
+                                    elevation: 10,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(20),
+                                          bottomRight: Radius.circular(20)),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      isLoginSelected = true;
+                                    });
+                                  },
+                                  child: const Text(
+                                    'OTP',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      letterSpacing: 1,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
+                        const SizedBox(height: 15),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: TextFormField(
+                            controller: emailController,
+                            decoration: const InputDecoration(
+                              labelText: 'Email',
+                              icon: Icon(Icons.email, color: Colors.white60),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              labelStyle: TextStyle(color: Colors.white60),
+                            ),
+                            //validations
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter Email';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: kPrimaryColor,
+                            minimumSize: const Size(150, 50),
+                            shadowColor: Colors.black,
+                            alignment: Alignment.center,
+                            elevation: 10,
+                            shape: const RoundedRectangleBorder(),
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            'SEND',
+                            style: TextStyle(
+                              fontSize: 15,
+                              letterSpacing: 1,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: OtpTextField(
+                            numberOfFields: 5,
+                            borderColor: Colors.white60,
+                            //set to true to show as box or false to show as dash
+                            showFieldAsBox: true,
+                            //runs when a code is typed in
+                            onCodeChanged: (String code) {
+                              //handle validation or checks here
+                            },
+                            //runs when every textfield is filled
+                            onSubmit: (String verificationCode) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text("Verification Code"),
+                                      content: Text(
+                                        'Code entered is $verificationCode',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      shape: kAlertBoxBorderStyle,
+                                    );
+                                  });
+                            }, // end onSubmit
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: resendTimer > 0
+                                  ? null
+                                  : () {
+                                      setState(() {
+                                        resendTimer = 60;
+                                        startResendTimer();
+                                      });
+                                    },
+                              child: Text(
+                                'Resend OTP',
+                                style: TextStyle(
+                                  color: resendTimer > 0
+                                      ? Colors.white60
+                                      : Colors.red,
+                                  decoration: resendTimer > 0
+                                      ? TextDecoration.none
+                                      : TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              resendTimer > 0 ? ' ($resendTimer)' : '',
+                              style: TextStyle(
+                                color:
+                                    resendTimer > 0 ? Colors.white : Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ]),
                     ),
-                    Text(
-                      resendTimer > 0 ? ' ($resendTimer)' : '',
-                      style: TextStyle(
-                        color: resendTimer > 0 ? Colors.white : Colors.red,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),

@@ -57,6 +57,7 @@ dependencies:
   simple_search: ^0.1.0
   easy_search_bar: ^2.5.0
   swipe_screen: ^1.1.2
+  dio: ^5.2.1+1
 
 dev_dependencies:
   flutter_test:

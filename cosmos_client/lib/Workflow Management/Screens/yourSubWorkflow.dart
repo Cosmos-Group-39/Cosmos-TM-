@@ -67,10 +67,11 @@ class _CreatedSubWorkflowsState extends State<CreatedSubWorkflows> {
                 style: kAlertBoxButtonStyle, //Elevated button style
                 onPressed: () {
                   String title = _subwfController.text.trim();
-                  String swid = uuid.v4();
+                  String subid = uuid.v4();
                   SubWorkflowModel subwf_newItem = SubWorkflowModel(
-                    swid: swid,
+                    subid: subid,
                     title: title,
+                    view: '',
                   );
 
                   setState(() {
@@ -92,16 +93,16 @@ class _CreatedSubWorkflowsState extends State<CreatedSubWorkflows> {
     );
   }
 
-  void deleteSubWorkflow(String swid) {
+  void deleteSubWorkflow(String subid) {
     setState(() {
-      subwfcards.removeWhere((element) => element.swid == swid);
+      subwfcards.removeWhere((element) => element.subid == subid);
     });
   }
 
   void editSubWorkflow(SubWorkflowModel editedItem) {
     setState(() {
       int index =
-          subwfcards.indexWhere((element) => element.swid == editedItem.swid);
+          subwfcards.indexWhere((element) => element.subid == editedItem.subid);
       subwfcards[index] = editedItem;
     });
   }

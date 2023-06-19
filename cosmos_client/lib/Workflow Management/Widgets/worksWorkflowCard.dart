@@ -3,9 +3,9 @@ import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 
 class WorksCard extends StatefulWidget {
-  final Function(WorksModel) workonEdit;
+  final Function(WorkModel) workonEdit;
   final Function(String) workonDelete;
-  final WorksModel item;
+  final WorkModel item;
 
   const WorksCard({
     Key? key,
@@ -36,9 +36,10 @@ class _WorksCardState extends State<WorksCard> {
   void workeditCard() {
     String title = _worktitleController.text.trim();
 
-    WorksModel work_editedItem = WorksModel(
-      wwid: widget.item.wwid,
+    WorkModel work_editedItem = WorkModel(
+      workid: widget.item.workid,
       title: title,
+      active: true,
     );
 
     widget.workonEdit(work_editedItem);
@@ -75,7 +76,7 @@ class _WorksCardState extends State<WorksCard> {
           actions: [
             TextButton(
               onPressed: () {
-                widget.workonDelete(widget.item.wwid);
+                widget.workonDelete(widget.item.workid!);
                 Navigator.pop(context);
               },
               child: const Text('Delete'),
@@ -91,19 +92,20 @@ class _WorksCardState extends State<WorksCard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: kAlertBoxBorderStyle,
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   'Update Work',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                  style: kAlertBoxTopicTextStyle,
                 ),
                 const SizedBox(height: 10),
                 const Icon(
                   Icons.edit_document,
                   size: 60.0,
-                  color: Colors.deepOrange,
+                  color: Colors.green,
                 ),
                 const SizedBox(height: 10),
                 TextField(

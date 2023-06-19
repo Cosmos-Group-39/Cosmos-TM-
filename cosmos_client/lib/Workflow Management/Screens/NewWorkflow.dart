@@ -45,6 +45,8 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
       wfcards.add(WorkflowModel(
         wid: uuid.v4(),
         title: workflowNameController.text,
+        active: true,
+        type: 'free',
       ));
 
       Navigator.push(
