@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderViewScreen extends StatefulWidget {
-  SubWorkflowModel subworkflow;
+  dynamic subworkflow;
   final String workflowName;
   CalenderViewScreen(
       {super.key, required this.subworkflow, required this.workflowName});
@@ -33,7 +33,7 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
   Widget buildCalendarWidget() {
     return Column(
       children: [
-        Text(widget.subworkflow.title),
+        Text(widget.subworkflow['title']),
         TableCalendar(
           firstDay: DateTime.utc(2020, 1, 1),
           lastDay: DateTime.utc(2030, 12, 31),

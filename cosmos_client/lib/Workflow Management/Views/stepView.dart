@@ -9,7 +9,7 @@ import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:uuid/uuid.dart';
 
 class StepViewWorksScreen extends StatefulWidget {
-  SubWorkflowModel subworkflow;
+  dynamic subworkflow;
   final String workflowName;
   StepViewWorksScreen(
       {super.key, required this.subworkflow, required this.workflowName});
@@ -167,7 +167,7 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                widget.subworkflow.title,
+                widget.subworkflow['title'],
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,
