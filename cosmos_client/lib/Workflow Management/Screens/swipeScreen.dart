@@ -28,38 +28,42 @@ class _SwipeScreenState extends State<SwipeScreen> {
   List<dynamic> subWorkflows = [];
 
   createViews() {
-    subWorkflows.map((elem) {
-      print('hi');
-      String a = 'stepView';
-      switch (a) {
+    for (int i = 0; i < subWorkflows.length; i++) {
+      switch (subWorkflows[i]['view']) {
         case 'stepView':
           print('object');
           views.add(StepViewWorksScreen(
-              subworkflow: elem, workflowName: widget.workflow['title']));
+              subworkflow: subWorkflows[i],
+              workflowName: widget.workflow['title']));
           break;
         case 'progressBar':
           views.add(ProgressBarWorksScreen(
-              subworkflow: elem, workflowName: widget.workflow['title']));
+              subworkflow: subWorkflows[i],
+              workflowName: widget.workflow['title']));
           break;
         case 'ganttChart':
           views.add(GanttChartWorksScreen(
-              subworkflow: elem, workflowName: widget.workflow['title']));
+              subworkflow: subWorkflows[i],
+              workflowName: widget.workflow['title']));
           break;
         case 'calendar':
           views.add(CalenderViewScreen(
-              subworkflow: elem, workflowName: widget.workflow['title']));
+              subworkflow: subWorkflows[i],
+              workflowName: widget.workflow['title']));
           break;
         case 'chartView':
           views.add(ChartViewWorksScreen(
-              subworkflow: elem, workflowName: widget.workflow['title']));
+              subworkflow: subWorkflows[i],
+              workflowName: widget.workflow['title']));
           break;
         case 'pieChart':
           views.add(PieChartWorksScreen(
-              subworkflow: elem, workflowName: widget.workflow['title']));
+              subworkflow: subWorkflows[i],
+              workflowName: widget.workflow['title']));
           break;
         default:
       }
-    });
+    }
   }
 
   @override
