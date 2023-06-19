@@ -14,13 +14,11 @@ class SwipeScreen extends StatefulWidget {
   const SwipeScreen({Key? key, this.workflow}) : super(key: key);
 
   @override
-  _SwipeScreenState createState() => _SwipeScreenState(workflow);
+  _SwipeScreenState createState() => _SwipeScreenState();
 }
 
 class _SwipeScreenState extends State<SwipeScreen> {
-  final dynamic workflow;
-
-  _SwipeScreenState(this.workflow);
+  _SwipeScreenState();
   static SubWorkflowModel subWorkflowModel =
       SubWorkflowModel(subid: '123', title: '123456', view: '');
   late PageController _pageController;
@@ -35,13 +33,14 @@ class _SwipeScreenState extends State<SwipeScreen> {
     const ChartViewWorksScreen(),
   ];
 
-  List<String> subWorkflows = ['1', '2', '3', '4', '5', '6', '7'];
+  List<SubWorkflowModel> subWorkflows = [];
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
-    print(workflow);
+    subWorkflows = widget.workflow['subWorkflows'];
+    print(subWorkflows);
   }
 
   @override

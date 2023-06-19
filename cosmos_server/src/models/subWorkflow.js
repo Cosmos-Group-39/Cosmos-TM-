@@ -44,7 +44,7 @@ const subWorkflowSchema = new mongoose.Schema({
     works: [workSchema],
     view: {
         type: String,
-        enum: ['stepView', 'progressBar', 'ganttChart', 'calendar'],
+        enum: ['stepView', 'progressBar', 'ganttChart', 'calendar', 'chartView'],
         required: true,
     },
     labels: [{
