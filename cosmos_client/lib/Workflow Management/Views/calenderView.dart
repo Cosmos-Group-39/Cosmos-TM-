@@ -4,8 +4,10 @@ import 'package:table_calendar/table_calendar.dart';
 
 class CalenderViewScreen extends StatefulWidget {
   SubWorkflowModel subworkflow;
+  final String workflowName;
+  CalenderViewScreen(
+      {super.key, required this.subworkflow, required this.workflowName});
 
-  CalenderViewScreen({super.key, required this.subworkflow});
   @override
   _CalenderViewScreenState createState() => _CalenderViewScreenState();
 }
@@ -22,7 +24,7 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.subworkflow.title),
+        title: Text(widget.workflowName),
       ),
       body: buildCalendarWidget(),
     );
@@ -31,6 +33,7 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
   Widget buildCalendarWidget() {
     return Column(
       children: [
+        Text(widget.subworkflow.title),
         TableCalendar(
           firstDay: DateTime.utc(2020, 1, 1),
           lastDay: DateTime.utc(2030, 12, 31),

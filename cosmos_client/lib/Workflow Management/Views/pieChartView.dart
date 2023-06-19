@@ -8,7 +8,10 @@ import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:uuid/uuid.dart';
 
 class PieChartWorksScreen extends StatefulWidget {
-  const PieChartWorksScreen({Key? key}) : super(key: key);
+  SubWorkflowModel subworkflow;
+  final String workflowName;
+  PieChartWorksScreen(
+      {super.key, required this.subworkflow, required this.workflowName});
 
   @override
   State<PieChartWorksScreen> createState() => _PieChartWorksScreenState();
@@ -116,7 +119,7 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
           title: Text(
-            'Works',
+            widget.workflowName,
             style: kAppBarTitle,
           ),
           centerTitle: true,
@@ -158,8 +161,8 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              const Text(
-                'Daily Expenses',
+              Text(
+                widget.subworkflow.title,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
