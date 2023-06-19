@@ -31,7 +31,6 @@ class _SwipeScreenState extends State<SwipeScreen> {
     for (int i = 0; i < subWorkflows.length; i++) {
       switch (subWorkflows[i]['view']) {
         case 'stepView':
-          print('object');
           views.add(StepViewWorksScreen(
               subworkflow: subWorkflows[i],
               workflowName: widget.workflow['title']));
