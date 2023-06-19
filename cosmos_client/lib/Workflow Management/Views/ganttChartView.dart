@@ -9,7 +9,10 @@ import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:uuid/uuid.dart';
 
 class GanttChartWorksScreen extends StatefulWidget {
-  const GanttChartWorksScreen({Key? key}) : super(key: key);
+  SubWorkflowModel subworkflow;
+  final String workflowName;
+  GanttChartWorksScreen(
+      {super.key, required this.subworkflow, required this.workflowName});
 
   @override
   State<GanttChartWorksScreen> createState() => _GanttChartWorksScreenState();
@@ -158,8 +161,8 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const Text(
-              'Cosmos Project',
+            Text(
+              widget.subworkflow.title,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,

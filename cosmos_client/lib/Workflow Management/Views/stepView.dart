@@ -9,7 +9,10 @@ import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:uuid/uuid.dart';
 
 class StepViewWorksScreen extends StatefulWidget {
-  const StepViewWorksScreen({Key? key}) : super(key: key);
+  SubWorkflowModel subworkflow;
+  final String workflowName;
+  StepViewWorksScreen(
+      {super.key, required this.subworkflow, required this.workflowName});
 
   @override
   State<StepViewWorksScreen> createState() => _StepViewWorksScreenState();
@@ -116,7 +119,7 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         title: Text(
-          'Works',
+          widget.workflowName,
           style: kAppBarTitle,
         ),
         centerTitle: true,
@@ -161,10 +164,10 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'Application Tracking',
+                widget.subworkflow.title,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,

@@ -7,7 +7,10 @@ import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:uuid/uuid.dart';
 
 class ProgressBarWorksScreen extends StatefulWidget {
-  const ProgressBarWorksScreen({Key? key}) : super(key: key);
+  SubWorkflowModel subworkflow;
+  final String workflowName;
+  ProgressBarWorksScreen(
+      {super.key, required this.subworkflow, required this.workflowName});
 
   @override
   State<ProgressBarWorksScreen> createState() => _ProgressBarWorksScreenState();
@@ -115,7 +118,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
           title: Text(
-            'Works',
+            widget.workflowName,
             style: kAppBarTitle,
           ),
           centerTitle: true,
@@ -157,8 +160,8 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              const Text(
-                'Camera Order',
+              Text(
+                widget.subworkflow.title,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
