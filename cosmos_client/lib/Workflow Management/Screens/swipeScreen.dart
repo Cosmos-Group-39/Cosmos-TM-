@@ -71,11 +71,13 @@ class _SwipeScreenState extends State<SwipeScreen> {
   }
 
   void deleteSubworkflow(dynamic subWorflow) {
-    print('${subWorflow['_id']}');
     Dio()
         .delete('$baseUrls/common/subWorkflow/${subWorflow['_id']}')
         .then((res) {
-      print(res.data);
+      int index =
+          subWorkflows.indexWhere((item) => item['_id'] == res.data['_id']);
+      subWorkflows.removeAt(index);
+      views.removeAt(index);
       Dio().patch('$baseUrls/common/workflow', data: {
         '_id': widget.workflow['_id'],
         '\$pull': {"subWorkflows": res.data['_id']}
@@ -100,8 +102,11 @@ class _SwipeScreenState extends State<SwipeScreen> {
             subworkflow: subworkflow, workflowName: widget.workflow['title']));
         break;
       case 'calendar':
-        views.add(CalenderViewScreen(
-            subworkflow: subworkflow, workflowName: widget.workflow['title']));
+        views.add(
+            CalenderViewScreen(
+                subworkflow: subworkflow,
+                workflowName: widget.workflow['title']),
+            onDelete: deleteSubworkflow);
         break;
       case 'chartView':
         views.add(ChartViewWorksScreen(
