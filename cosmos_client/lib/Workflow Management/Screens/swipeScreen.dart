@@ -48,7 +48,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
     '    Step View',
   ];
 
-  Future<void> createSubworkflow() async {
+  void createSubworkflow() {
     Map<String, dynamic> jsonObject = {
       'title': _subworkflowNameController.text,
       'description': _subworkflowDescriptonController.text,
@@ -57,12 +57,17 @@ class _SwipeScreenState extends State<SwipeScreen> {
       'labels': [],
     };
 
-    Response res =
-        await Dio().post('$baseUrls/common/subWorkflow', data: jsonObject);
-    print(res);
-    subWorkflows.add(res.data);
-    createViews(res.data);
-    print(views.length);
+    Dio().post('$baseUrls/common/subWorkflow', data: jsonObject).then((res) {
+      subWorkflows.add(res.data);
+      createViews(res.data);
+      Dio().patch('$baseUrls/common/subWorkflow', data: {
+        '_id': widget.workflow['_id'],
+        '\$push': {"subWorkflows": res.data['_id']}
+      }).then((value) {
+        print("Done");
+      }).catchError((error) => print(error));
+    }).catchError((error) => print(error));
+    ;
   }
 
   createViews(dynamic subworkflow) {
