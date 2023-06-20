@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 workflowsSearch(),
-                // const SizedBox(height: 2),
+                const SizedBox(height: 2),
                 Text(
                   errorMessage,
                   style: TextStyle(
@@ -89,9 +89,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   SwipeScreen(workflow: value.data)));
                     }).catchError((value) {
                       setState(() {
-                        errorMessage = 'Value not found';
+                        errorMessage = 'Invalid Access Code';
                       });
-                      print(value);
+                      // print(value);
                     });
                   },
                   child: const Icon(
