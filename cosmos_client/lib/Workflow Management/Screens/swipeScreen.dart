@@ -60,14 +60,28 @@ class _SwipeScreenState extends State<SwipeScreen> {
     Dio().post('$baseUrls/common/subWorkflow', data: jsonObject).then((res) {
       subWorkflows.add(res.data);
       createViews(res.data);
-      Dio().patch('$baseUrls/common/subWorkflow', data: {
+      Dio().patch('$baseUrls/common/workflow', data: {
         '_id': widget.workflow['_id'],
         '\$push': {"subWorkflows": res.data['_id']}
       }).then((value) {
-        print("Done");
+        print("Added");
       }).catchError((error) => print(error));
     }).catchError((error) => print(error));
-    ;
+  }
+
+  void deleteSubworkflow(dynamic subWorflow) {
+    print('${subWorflow['_id']}');
+    Dio()
+        .delete('$baseUrls/common/subWorkflow/${subWorflow['_id']}')
+        .then((res) {
+      print(res.data);
+      Dio().patch('$baseUrls/common/workflow', data: {
+        '_id': widget.workflow['_id'],
+        '\$pull': {"subWorkflows": res.data['_id']}
+      }).then((value) {
+        print("Deleted");
+      }).catchError((error) => print(error));
+    }).catchError((error) => print(error));
   }
 
   createViews(dynamic subworkflow) {

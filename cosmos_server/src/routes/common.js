@@ -7,5 +7,6 @@ router.get('/:type', common.getAll);
 router.get('/:type/:id', common.getOne);
 router.post('/:type', common.create);
 router.patch('/:type', common.update);
+router.delete('/:type/:id', common.remove);
 
 module.exports = router;

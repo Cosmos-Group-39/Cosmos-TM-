@@ -44,6 +44,19 @@ module.exports.update = (req, res) => {
         });
 };
 
+module.exports.remove = (req, res) => {
+    require(`../models/${req.params.type}`).findByIdAndDelete(req.params.id)
+        .then((item) => {
+            res.status(200).json(item)
+        })
+        .catch((error) => {
+            res.status(500).json({ error: 'Internal Server Error' });
+        });
+};
+
+
+
+
 /*Send the patch in format
 {
     {
