@@ -98,8 +98,9 @@ class _MemberCardWidgetState extends State<MemberCardWidget> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const FlutterLogo(),
-            const SizedBox(width: 10),
+            const SizedBox(width: 15),
+            const CircleAvatar(),
+            const SizedBox(width: 20),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

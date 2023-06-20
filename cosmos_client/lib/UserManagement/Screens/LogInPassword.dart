@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Container(
                       height: MediaQuery.of(context).size.height / 1.8,
                       decoration: BoxDecoration(
-                        color: Colors.white60,
+                        color: Colors.white70,
                         borderRadius: BorderRadius.circular(25),
                         boxShadow: const [
                           BoxShadow(
@@ -156,8 +156,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: TextFormField(
                               controller: usernameController,
                               decoration: const InputDecoration(
-                                icon: Icon(Icons.person, color: Colors.white60),
-                                labelText: 'Username',
+                                icon: Icon(Icons.person),
+                                labelText: 'Username / Email',
                                 border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20)),
@@ -165,9 +165,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20)),
-                                  borderSide: BorderSide(color: Colors.white),
+                                  // borderSide: BorderSide(color: Colors.white),
                                 ),
-                                labelStyle: TextStyle(color: Colors.white60),
+                                // labelStyle: TextStyle(color: Colors.white60),
                               ),
 
                               //validations
@@ -186,8 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               controller: passwordController,
                               decoration: const InputDecoration(
                                 labelText: 'Password',
-                                icon: Icon(Icons.lock_sharp,
-                                    color: Colors.white60),
+                                icon: Icon(Icons.lock_sharp),
                                 border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20)),
@@ -195,9 +194,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20)),
-                                  borderSide: BorderSide(color: Colors.white),
+                                  // borderSide: BorderSide(color: Colors.white),
                                 ),
-                                labelStyle: TextStyle(color: Colors.white60),
+                                // labelStyle: TextStyle(color: Colors.white60),
                               ),
 
                               //validations
@@ -219,9 +218,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onPressed: () {},
                                   child: const Text(
                                     'Forgot Your Password ?',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white60),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
                                   ),
                                 ),
                               ],
@@ -268,7 +266,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: const Text(
                                   'Sign Up',
                                   style: TextStyle(
-                                      color: Colors.white,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 1.4),
                                 ),

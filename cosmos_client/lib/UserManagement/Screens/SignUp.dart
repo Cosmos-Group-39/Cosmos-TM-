@@ -49,15 +49,15 @@ class _SignupScreenState extends State<SignupScreen> {
 
         decoration: const InputDecoration(
           labelText: 'First Name',
-          prefixIcon: Icon(Icons.person, color: Colors.white60),
+          prefixIcon: Icon(Icons.person),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
-            borderSide: BorderSide(color: Colors.white),
+            // borderSide: BorderSide(color: Colors.white),
           ),
-          labelStyle: TextStyle(color: Colors.white60),
+          // labelStyle: TextStyle(color: Colors.white60),
         ),
 
         // Validations
@@ -79,15 +79,15 @@ class _SignupScreenState extends State<SignupScreen> {
 
         decoration: const InputDecoration(
           labelText: 'Last Name',
-          prefixIcon: Icon(Icons.person, color: Colors.white60),
+          prefixIcon: Icon(Icons.person),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
-            borderSide: BorderSide(color: Colors.white),
+            // borderSide: BorderSide(color: Colors.white),
           ),
-          labelStyle: TextStyle(color: Colors.white60),
+          // labelStyle: TextStyle(color: Colors.white60),
         ),
 
         // Validations
@@ -112,15 +112,15 @@ class _SignupScreenState extends State<SignupScreen> {
 
         decoration: const InputDecoration(
           labelText: 'Email',
-          prefixIcon: Icon(Icons.email, color: Colors.white60),
+          prefixIcon: Icon(Icons.email),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
-            borderSide: BorderSide(color: Colors.white),
+            // borderSide: BorderSide(color: Colors.white),
           ),
-          labelStyle: TextStyle(color: Colors.white60),
+          // labelStyle: TextStyle(color: Colors.white60),
         ),
 
         // Validations
@@ -149,16 +149,16 @@ class _SignupScreenState extends State<SignupScreen> {
       controller: createPasswordController,
 
       decoration: const InputDecoration(
-        prefixIcon: Icon(Icons.lock_open, color: Colors.white60),
+        prefixIcon: Icon(Icons.lock_open),
         labelText: '6-8 characters',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          borderSide: BorderSide(color: Colors.white),
+          // borderSide: BorderSide(color: Colors.white),
         ),
-        labelStyle: TextStyle(color: Colors.white60),
+        // labelStyle: TextStyle(color: Colors.white60),
       ),
 
       // Validations
@@ -183,15 +183,15 @@ class _SignupScreenState extends State<SignupScreen> {
       controller: confirmPasswordController,
       decoration: const InputDecoration(
         labelText: 'min 6-8 characters',
-        prefixIcon: Icon(Icons.lock, color: Colors.white60),
+        prefixIcon: Icon(Icons.lock),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          borderSide: BorderSide(color: Colors.white),
+          // borderSide: BorderSide(color: Colors.white),
         ),
-        labelStyle: TextStyle(color: Colors.white60),
+        // labelStyle: TextStyle(color: Colors.white60),
       ),
 
       // Validations
@@ -228,15 +228,15 @@ class _SignupScreenState extends State<SignupScreen> {
           controller: birthdayController,
           decoration: const InputDecoration(
             labelText: 'DD/MM/YYYY',
-            prefixIcon: Icon(Icons.edit_calendar, color: Colors.white60),
+            prefixIcon: Icon(Icons.edit_calendar),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(20)),
-              borderSide: BorderSide(color: Colors.white),
+              // borderSide: BorderSide(color: Colors.white),
             ),
-            labelStyle: TextStyle(color: Colors.white60),
+            // labelStyle: TextStyle(color: Colors.white60),
           ),
           // Validations
           validator: (value) {
@@ -286,15 +286,15 @@ class _SignupScreenState extends State<SignupScreen> {
       controller: mobileNumberController,
       decoration: const InputDecoration(
         labelText: 'Enter your phone number',
-        prefixIcon: Icon(Icons.phone, color: Colors.white60),
+        prefixIcon: Icon(Icons.phone),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          borderSide: BorderSide(color: Colors.white),
+          // borderSide: BorderSide(color: Colors.white),
         ),
-        labelStyle: TextStyle(color: Colors.white60),
+        // labelStyle: TextStyle(color: Colors.white60),
       ),
 
       // Validations
@@ -403,11 +403,11 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Container(
-                      height: MediaQuery.of(context).size.height / 0.95,
+                      height: MediaQuery.of(context).size.height / 0.79,
                       decoration: BoxDecoration(
-                        color: Colors.white60,
+                        color: Colors.white70,
                         borderRadius: BorderRadius.circular(25),
                         boxShadow: const [
                           BoxShadow(
@@ -417,8 +417,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         ],
                       ),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const SizedBox(height: 5),
+                          const SizedBox(height: 10),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             child: Text('Create Account',
@@ -426,15 +427,14 @@ class _SignupScreenState extends State<SignupScreen> {
                                   fontSize: 25,
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   letterSpacing: 1.3,
                                   wordSpacing: 1.5,
                                   shadows: [
                                     Shadow(
-                                      color: Colors.black.withOpacity(0.5),
-                                      offset: Offset(2, 2),
-                                      blurRadius: 2,
-                                    ),
+                                        color: Colors.black.withOpacity(0.2),
+                                        offset: Offset(2, 2),
+                                        blurRadius: 2),
                                   ],
                                 )),
                           ),
@@ -450,7 +450,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white,
+                                        color: Colors.black87,
                                         letterSpacing: 1.3,
                                         wordSpacing: 1.5,
                                         shadows: [
@@ -479,7 +479,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white,
+                                        color: Colors.black87,
                                         letterSpacing: 1.3,
                                         wordSpacing: 1.5,
                                         shadows: [
@@ -502,7 +502,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white,
+                                        color: Colors.black87,
                                         letterSpacing: 1.3,
                                         wordSpacing: 1.5,
                                         shadows: [
@@ -520,12 +520,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                         horizontal: 20),
                                     child: buildConfirmPassword(),
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 15),
                                   Text('Email',
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white,
+                                        color: Colors.black87,
                                         letterSpacing: 1.3,
                                         wordSpacing: 1.5,
                                         shadows: [
@@ -548,7 +548,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white,
+                                        color: Colors.black87,
                                         letterSpacing: 1.3,
                                         shadows: [
                                           Shadow(
@@ -570,7 +570,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white,
+                                        color: Colors.black87,
                                         letterSpacing: 1.3,
                                         wordSpacing: 1.5,
                                         shadows: [
@@ -616,6 +616,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             ),
                           ),
+                          const SizedBox(height: 8),
                         ],
                       ),
                     ),

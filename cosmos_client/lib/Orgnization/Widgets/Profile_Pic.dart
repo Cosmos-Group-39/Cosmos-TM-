@@ -110,7 +110,7 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget> {
                 style: TextStyle(
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),

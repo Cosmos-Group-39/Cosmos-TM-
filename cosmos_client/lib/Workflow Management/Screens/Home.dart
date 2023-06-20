@@ -18,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _searchTextController = TextEditingController();
+  String errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 workflowsSearch(),
-                // const SizedBox(height: 10),
+                // const SizedBox(height: 2),
+                Text(
+                  errorMessage,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(height: 10),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kPrimaryColor,
@@ -63,6 +72,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     alignment: Alignment.center,
                   ),
                   onPressed: () {
+                    if (_searchTextController.text.isEmpty) {
+                      setState(() {
+                        errorMessage = 'Please enter a value';
+                      });
+                      return;
+                    }
                     Dio()
                         .get(
                             '$baseUrls/accesscode/${_searchTextController.text}')
@@ -72,7 +87,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   SwipeScreen(workflow: value.data)));
-                    }).catchError((value) => print(value));
+                    }).catchError((value) {
+                      setState(() {
+                        errorMessage = 'Value not found';
+                      });
+                      print(value);
+                    });
                   },
                   child: const Icon(
                     Icons.send,
@@ -171,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
       height: 50,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
-      margin: const EdgeInsets.only(top: 45, bottom: 30, left: 25, right: 25),
+      margin: const EdgeInsets.only(top: 45, left: 25, right: 25),
       padding: const EdgeInsets.symmetric(horizontal: 11),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -180,13 +200,20 @@ class _HomeScreenState extends State<HomeScreen> {
           BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))
         ],
       ),
-      child: TextField(
-        controller: _searchTextController,
-        decoration: const InputDecoration(
-          prefixIcon: Icon(Icons.search),
-          hintText: '    Access Code..',
-          border: InputBorder.none,
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Center(
+            child: TextField(
+              controller: _searchTextController,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: '    Access Code..',
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

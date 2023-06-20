@@ -63,70 +63,76 @@ class _OrgFormState extends State<OrgForm> {
 
   //Org Name
   Widget buildOrgNameField() {
-    return TextFormField(
-      controller: cardControllername,
-      maxLength: 20,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: TextFormField(
+        controller: cardControllername,
+        maxLength: 20,
 
-      decoration: const InputDecoration(
-        labelText: 'Enter Organization Name *',
-        prefixIcon: Icon(Icons.people, color: Colors.white60),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+        decoration: const InputDecoration(
+          labelText: 'Enter Organization Name *',
+          prefixIcon: Icon(Icons.people),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            // borderSide: BorderSide(color: Colors.white),
+          ),
+          // labelStyle: TextStyle(color: Colors.white60),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          borderSide: BorderSide(color: Colors.white),
-        ),
-        labelStyle: TextStyle(color: Colors.white60),
+        // Validations
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please enter your organization name';
+          }
+          if (value.length < 2) {
+            return 'Name must be at least 2 characters long';
+          }
+          if (value.length > 20) {
+            return 'Name must be less than 20 characters long';
+          }
+          return null;
+        },
       ),
-      // Validations
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter your organization name';
-        }
-        if (value.length < 2) {
-          return 'Name must be at least 2 characters long';
-        }
-        if (value.length > 20) {
-          return 'Name must be less than 20 characters long';
-        }
-        return null;
-      },
     );
   }
 
   //org description
   Widget buildDescriptionField() {
-    return TextFormField(
-      controller: cardControllerDes,
-      maxLength: 1000,
-      maxLines: 5,
-      decoration: const InputDecoration(
-        labelText: 'Description*',
-        prefixIcon: Icon(Icons.description, color: Colors.white60),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: TextFormField(
+        controller: cardControllerDes,
+        maxLength: 1000,
+        maxLines: 5,
+        decoration: const InputDecoration(
+          labelText: 'Description*',
+          prefixIcon: Icon(Icons.description),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            // borderSide: BorderSide(color: Colors.white),
+          ),
+          // labelStyle: TextStyle(color: Colors.white60),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          borderSide: BorderSide(color: Colors.white),
-        ),
-        labelStyle: TextStyle(color: Colors.white60),
-      ),
 
-      // Validations
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter a description';
-        }
-        if (value.length < 2) {
-          return 'Description must be at least 2 characters long';
-        }
-        if (value.length > 1000) {
-          return 'Description must be less than 1000 characters long';
-        }
-        return null;
-      },
+        // Validations
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please enter a description';
+          }
+          if (value.length < 2) {
+            return 'Description must be at least 2 characters long';
+          }
+          if (value.length > 1000) {
+            return 'Description must be less than 1000 characters long';
+          }
+          return null;
+        },
+      ),
     );
   }
 
@@ -140,7 +146,7 @@ class _OrgFormState extends State<OrgForm> {
             style: kAppBarTitle,
           ),
           centerTitle: true,
-          backgroundColor: kPrimaryColor,
+          backgroundColor: Colors.green,
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -161,15 +167,25 @@ class _OrgFormState extends State<OrgForm> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(12.0),
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
                 child: Form(
                   key: formKeyorg,
-                  child: SingleChildScrollView(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height / 1.0,
+                    decoration: BoxDecoration(
+                      color: Colors.white70,
+                      borderRadius: BorderRadius.circular(25),
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 6,
+                            offset: Offset(0, 2))
+                      ],
+                    ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0),
@@ -181,44 +197,41 @@ class _OrgFormState extends State<OrgForm> {
                             },
                           ),
                         ),
-                        const SizedBox(height: 60),
+                        const SizedBox(height: 40),
                         Text('Organization Name',
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                              color: Colors.black87,
                               letterSpacing: 1.3,
                               wordSpacing: 1.5,
                               shadows: [
                                 Shadow(
-                                  color: Colors.black.withOpacity(0.3),
+                                  color: Colors.black.withOpacity(0.1),
                                   offset: Offset(2, 2),
                                   blurRadius: 2,
                                 ),
                               ],
                             )),
-                        const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0),
                           child: buildOrgNameField(),
                         ),
-                        const SizedBox(height: 20),
                         Text('Organization Discription',
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                              color: Colors.black87,
                               letterSpacing: 1.3,
                               wordSpacing: 1.5,
                               shadows: [
                                 Shadow(
-                                  color: Colors.black.withOpacity(0.3),
+                                  color: Colors.black.withOpacity(0.1),
                                   offset: Offset(2, 2),
                                   blurRadius: 2,
                                 ),
                               ],
                             )),
-                        const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0),
                           child: buildDescriptionField(),
@@ -227,7 +240,7 @@ class _OrgFormState extends State<OrgForm> {
                         ElevatedButton(
                           style: TextButton.styleFrom(
                             backgroundColor: kPrimaryColor,
-                            minimumSize: const Size(255.0, 50.0),
+                            minimumSize: const Size(200.0, 50.0),
                             shadowColor: Colors.black,
                             alignment: Alignment.center,
                             elevation: 10,

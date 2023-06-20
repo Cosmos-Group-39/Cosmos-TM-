@@ -1,3 +1,4 @@
+import 'package:cosmos_client/Orgnization/Screens/Org_Form.dart';
 import 'package:cosmos_client/UserManagement/Screens/LogInPassword.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/swipeScreen.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      home: OrgForm(),
     );
   }
 }

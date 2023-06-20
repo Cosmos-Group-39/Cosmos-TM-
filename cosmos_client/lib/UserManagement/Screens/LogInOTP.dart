@@ -86,7 +86,7 @@ class _LoginotpState extends State<Loginotp> {
                     child: Container(
                       height: MediaQuery.of(context).size.height / 1.8,
                       decoration: BoxDecoration(
-                        color: Colors.white60,
+                        color: Colors.white70,
                         borderRadius: BorderRadius.circular(25),
                         boxShadow: const [
                           BoxShadow(
@@ -124,7 +124,7 @@ class _LoginotpState extends State<Loginotp> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                LoginScreen()));
+                                                const LoginScreen()));
                                   },
                                   child: const Text(
                                     'PASSWORD',
@@ -180,7 +180,7 @@ class _LoginotpState extends State<Loginotp> {
                             controller: emailController,
                             decoration: const InputDecoration(
                               labelText: 'Email',
-                              icon: Icon(Icons.email, color: Colors.white60),
+                              icon: Icon(Icons.email),
                               border: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
@@ -188,9 +188,9 @@ class _LoginotpState extends State<Loginotp> {
                               focusedBorder: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
-                                borderSide: BorderSide(color: Colors.white),
+                                // borderSide: BorderSide(color: Colors.white),
                               ),
-                              labelStyle: TextStyle(color: Colors.white60),
+                              // labelStyle: TextStyle(color: Colors.white60),
                             ),
                             //validations
                             validator: (value) {
@@ -226,8 +226,8 @@ class _LoginotpState extends State<Loginotp> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: OtpTextField(
-                            numberOfFields: 5,
-                            borderColor: Colors.white60,
+                            numberOfFields: 6,
+
                             //set to true to show as box or false to show as dash
                             showFieldAsBox: true,
                             //runs when a code is typed in
@@ -240,10 +240,10 @@ class _LoginotpState extends State<Loginotp> {
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
-                                      title: Text("Verification Code"),
+                                      title: const Text("Verification Code"),
                                       content: Text(
                                         'Code entered is $verificationCode',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.w700),
                                       ),
                                       shape: kAlertBoxBorderStyle,
@@ -269,8 +269,8 @@ class _LoginotpState extends State<Loginotp> {
                                 'Resend OTP',
                                 style: TextStyle(
                                   color: resendTimer > 0
-                                      ? Colors.white60
-                                      : Colors.red,
+                                      ? Colors.black54
+                                      : Colors.red[600],
                                   decoration: resendTimer > 0
                                       ? TextDecoration.none
                                       : TextDecoration.underline,
@@ -280,8 +280,9 @@ class _LoginotpState extends State<Loginotp> {
                             Text(
                               resendTimer > 0 ? ' ($resendTimer)' : '',
                               style: TextStyle(
-                                color:
-                                    resendTimer > 0 ? Colors.white : Colors.red,
+                                color: resendTimer > 0
+                                    ? Colors.blue[800]
+                                    : Colors.red,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
