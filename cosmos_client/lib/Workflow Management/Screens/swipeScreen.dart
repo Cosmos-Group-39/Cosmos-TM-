@@ -71,7 +71,6 @@ class _SwipeScreenState extends State<SwipeScreen> {
     _pageController = PageController();
     subWorkflows = widget.workflow['subWorkflows'];
     createViews();
-    print(views.length);
   }
 
   @override
@@ -144,6 +143,25 @@ class _SwipeScreenState extends State<SwipeScreen> {
                               child: TextField(
                                 decoration: InputDecoration(
                                   labelText: 'Enter a Subworkflow Name',
+                                  fillColor: Colors.blue[50],
+                                  filled: true,
+                                  border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(16.0),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  labelText: 'Enter a Subworkflow Discription',
                                   fillColor: Colors.blue[50],
                                   filled: true,
                                   border: const OutlineInputBorder(

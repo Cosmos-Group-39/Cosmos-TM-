@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: OrgForm(),
+      home: HomeScreen(),
     );
   }
 }
