@@ -59,15 +59,18 @@ class _SwipeScreenState extends State<SwipeScreen> {
     };
 
     Dio().post('$baseUrls/common/subWorkflow', data: jsonObject).then((res) {
-      subWorkflows.add(res.data);
+      subWorkflows.insert(0, res.data);
       createViews(res.data);
       Dio().patch('$baseUrls/common/workflow', data: {
         '_id': widget.workflow['_id'],
         '\$push': {"subWorkflows": res.data['_id']}
       }).then((value) {
         print("Added");
-      }).catchError((error) => print(error));
-    }).catchError((error) => print(error));
+        //clear function
+        _goToNextPage();
+      }).catchError(
+          (error) => print(error)); // subworkflow couldn't link to workflow
+    }).catchError((error) => print(error)); //subworkflow can't be create
   }
 
   void deleteSubworkflow(dynamic subWorflow) {
@@ -83,8 +86,9 @@ class _SwipeScreenState extends State<SwipeScreen> {
         '\$pull': {"subWorkflows": res.data['_id']}
       }).then((value) {
         print("Deleted");
-      }).catchError((error) => print(error));
-    }).catchError((error) => print(error));
+        _goToPreviousPage();
+      }).catchError((error) => print(error)); //about link
+    }).catchError((error) => print(error)); // can't be delete
   }
 
   createViews(dynamic subworkflow) {
@@ -102,11 +106,14 @@ class _SwipeScreenState extends State<SwipeScreen> {
             subworkflow: subworkflow, workflowName: widget.workflow['title']));
         break;
       case 'calendar':
-        views.add(
-            CalenderViewScreen(
-                subworkflow: subworkflow,
-                workflowName: widget.workflow['title']),
-            onDelete: deleteSubworkflow);
+        views.insert(
+          0,
+          CalenderViewScreen(
+            subworkflow: subworkflow,
+            workflowName: widget.workflow['title'],
+            onDelete: deleteSubworkflow,
+          ),
+        );
         break;
       case 'chartView':
         views.add(ChartViewWorksScreen(

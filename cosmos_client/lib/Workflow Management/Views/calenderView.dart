@@ -5,8 +5,12 @@ import 'package:table_calendar/table_calendar.dart';
 class CalenderViewScreen extends StatefulWidget {
   dynamic subworkflow;
   final String workflowName;
+  final Function(dynamic) onDelete;
   CalenderViewScreen(
-      {super.key, required this.subworkflow, required this.workflowName});
+      {super.key,
+      required this.subworkflow,
+      required this.workflowName,
+      required this.onDelete});
 
   @override
   _CalenderViewScreenState createState() => _CalenderViewScreenState();
@@ -33,7 +37,18 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
   Widget buildCalendarWidget() {
     return Column(
       children: [
-        Text(widget.subworkflow['title']),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const SizedBox(width: 15),
+            Text(widget.subworkflow['title']),
+            IconButton(
+                onPressed: () {
+                  widget.onDelete(widget.subworkflow);
+                },
+                icon: Icon(Icons.delete))
+          ],
+        ),
         TableCalendar(
           firstDay: DateTime.utc(2020, 1, 1),
           lastDay: DateTime.utc(2030, 12, 31),
