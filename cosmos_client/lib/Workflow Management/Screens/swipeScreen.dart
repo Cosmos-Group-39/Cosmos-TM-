@@ -26,6 +26,23 @@ class _SwipeScreenState extends State<SwipeScreen> {
 
   List<Widget> views = [];
   List<dynamic> subWorkflows = [];
+  List<String> templates = [
+    'calendar',
+    'ganttChart',
+    'chartView',
+    'pieChart'
+        'progressBar',
+    'stepView',
+  ];
+
+  List<String> templateDisplay = [
+    '    Calender View',
+    '    Gantt Chart View',
+    '    Chart View',
+    '    Pie Chart View',
+    '    ProgressBar View',
+    '    Step View',
+  ];
 
   createViews() {
     for (int i = 0; i < subWorkflows.length; i++) {
@@ -215,18 +232,15 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                     value: _selectedTemplate,
                                     onChanged: (String? newValue) {
                                       setState(() {
-                                        _selectedTemplate = newValue;
+                                        _selectedTemplate = newValue != null
+                                            ? templates[templateDisplay
+                                                .indexOf(newValue)]
+                                            : '';
                                       });
                                     },
-                                    items: <String>[
-                                      '    Calender View',
-                                      '    Gantt Chart View',
-                                      '    Chart View',
-                                      '    Pie Chart View',
-                                      '    ProgressBar View',
-                                      '    Step View',
-                                    ].map<DropdownMenuItem<String>>(
-                                        (String value) {
+                                    items: templateDisplay
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
                                         child: Text(
