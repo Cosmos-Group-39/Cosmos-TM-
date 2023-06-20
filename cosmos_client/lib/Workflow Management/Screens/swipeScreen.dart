@@ -8,6 +8,7 @@ import 'package:cosmos_client/Workflow%20Management/Views/progressBarView.dart';
 import 'package:cosmos_client/Workflow%20Management/Views/stepView.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 class SwipeScreen extends StatefulWidget {
   final dynamic workflow;
@@ -46,6 +47,23 @@ class _SwipeScreenState extends State<SwipeScreen> {
     '    ProgressBar View',
     '    Step View',
   ];
+
+  createSubworkflow() {
+    Map<String, dynamic> jsonObject = {
+      '_id': '647f301f0b223c7d9f21acde',
+      'title': _subworkflowNameController.text,
+      'description': _subworkflowDescriptonController.text,
+      'works': [],
+      'view': templates[templateDisplay.indexOf(_selectedTemplate!)],
+      'labels': [],
+      '__v': 0,
+    };
+
+    subWorkflows.add(json.encode(jsonObject));
+    print(subWorkflows[2]);
+    views.add(GanttChartWorksScreen(
+        subworkflow: jsonObject, workflowName: 'workflowName'));
+  }
 
   createViews() {
     for (int i = 0; i < subWorkflows.length; i++) {
@@ -91,6 +109,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
     _pageController = PageController();
     subWorkflows = widget.workflow['subWorkflows'];
     createViews();
+    print(subWorkflows);
   }
 
   @override
@@ -262,11 +281,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                       elevation: 10,
                                     ),
                                     onPressed: () {
-                                      print(_subworkflowNameController.text);
-                                      print(_subworkflowDescriptonController
-                                          .text);
-                                      print(templates[templateDisplay
-                                          .indexOf(_selectedTemplate!)]);
+                                      createSubworkflow();
                                     },
                                     child: const Icon(
                                       Icons.arrow_forward,
