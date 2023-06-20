@@ -18,6 +18,9 @@ class SwipeScreen extends StatefulWidget {
 }
 
 class _SwipeScreenState extends State<SwipeScreen> {
+  TextEditingController _subworkflowNameController = TextEditingController();
+  TextEditingController _subworkflowDescriptonController =
+      TextEditingController();
   _SwipeScreenState();
 
   late PageController _pageController;
@@ -30,8 +33,8 @@ class _SwipeScreenState extends State<SwipeScreen> {
     'calendar',
     'ganttChart',
     'chartView',
-    'pieChart'
-        'progressBar',
+    'pieChart',
+    'progressBar',
     'stepView',
   ];
 
@@ -158,6 +161,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                             Container(
                               padding: const EdgeInsets.all(16.0),
                               child: TextField(
+                                controller: _subworkflowNameController,
                                 decoration: InputDecoration(
                                   labelText: 'Enter a Subworkflow Name',
                                   fillColor: Colors.blue[50],
@@ -177,6 +181,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                             Container(
                               padding: const EdgeInsets.all(16.0),
                               child: TextField(
+                                controller: _subworkflowDescriptonController,
                                 decoration: InputDecoration(
                                   labelText: 'Enter a Subworkflow Discription',
                                   fillColor: Colors.blue[50],
@@ -232,10 +237,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                     value: _selectedTemplate,
                                     onChanged: (String? newValue) {
                                       setState(() {
-                                        _selectedTemplate = newValue != null
-                                            ? templates[templateDisplay
-                                                .indexOf(newValue)]
-                                            : '';
+                                        _selectedTemplate = newValue;
                                       });
                                     },
                                     items: templateDisplay
@@ -259,7 +261,13 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                       alignment: Alignment.center,
                                       elevation: 10,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      print(_subworkflowNameController.text);
+                                      print(_subworkflowDescriptonController
+                                          .text);
+                                      print(templates[templateDisplay
+                                          .indexOf(_selectedTemplate!)]);
+                                    },
                                     child: const Icon(
                                       Icons.arrow_forward,
                                       size: 25,
