@@ -11,8 +11,12 @@ import 'package:uuid/uuid.dart';
 class StepViewWorksScreen extends StatefulWidget {
   dynamic subworkflow;
   final String workflowName;
+  final Function(dynamic) onDelete;
   StepViewWorksScreen(
-      {super.key, required this.subworkflow, required this.workflowName});
+      {super.key,
+      required this.subworkflow,
+      required this.workflowName,
+      required this.onDelete});
 
   @override
   State<StepViewWorksScreen> createState() => _StepViewWorksScreenState();
@@ -22,10 +26,116 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
   List<WorkModel> workcards = [];
   Uuid uuid = const Uuid();
   TextEditingController _workController = TextEditingController();
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+
+  //Delete Step view
+  deleteStepView() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: kAlertBoxBorderStyle,
+          title: const Icon(
+            Icons.delete,
+            size: 60.0,
+            color: Colors.green,
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Are You Sure ?',
+                  style: kAlertBoxTopicTextStyle,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 20, left: 17),
+                  child: Text(
+                    'You want to delete StepView !',
+                    style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  style: kAlertBoxButtonStyle,
+                  onPressed: () {
+                    widget.onDelete(widget.subworkflow);
+                  },
+                  child: const Text(
+                    'Delete',
+                    style: kAlertBoxButtonTextStyle,
+                  ),
+                ),
+                ElevatedButton(
+                  style: kAlertBoxButtonStyle,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Cancel',
+                    style: kAlertBoxButtonTextStyle,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    );
+  }
+
+  //Title Step view
+  editTitle() {
+    TextFormField(
+      controller: _titleController,
+      decoration: const InputDecoration(
+        suffixIcon: Icon(Icons.create),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter Title';
+        }
+        return null;
+      },
+    );
+  }
+
+  //Description Step view
+  editDescription() {
+    TextFormField(
+      controller: _descriptionController,
+      decoration: const InputDecoration(
+        suffixIcon: Icon(Icons.create),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter Description';
+        }
+        return null;
+      },
+    );
+  }
 
   @override
   void initState() {
     super.initState();
+    _titleController.text = widget.subworkflow['title'];
+    _descriptionController.text = widget.subworkflow['description'];
   }
 
   @override
@@ -165,15 +275,19 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                widget.subworkflow['title'],
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const SizedBox(width: 15),
+                  editTitle(),
+                  IconButton(
+                      onPressed: deleteStepView, icon: const Icon(Icons.delete))
+                ],
               ),
             ),
+            const SizedBox(width: 8),
+            editDescription(),
             const SizedBox(height: 20),
             buildStepView(),
             const SizedBox(height: 15),

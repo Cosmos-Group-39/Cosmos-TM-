@@ -1,3 +1,4 @@
+import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -23,6 +24,117 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
   Map<DateTime, List<dynamic>> _events = {};
 
   TextEditingController _eventController = TextEditingController();
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+
+  //Delete calender view
+  deleteCalender() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: kAlertBoxBorderStyle,
+          title: const Icon(
+            Icons.delete,
+            size: 60.0,
+            color: Colors.green,
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Are You Sure ?',
+                  style: kAlertBoxTopicTextStyle,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 20, left: 17),
+                  child: Text(
+                    'You want to delete Calender !',
+                    style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  style: kAlertBoxButtonStyle,
+                  onPressed: () {
+                    widget.onDelete(widget.subworkflow);
+                  },
+                  child: const Text(
+                    'Delete',
+                    style: kAlertBoxButtonTextStyle,
+                  ),
+                ),
+                ElevatedButton(
+                  style: kAlertBoxButtonStyle,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Cancel',
+                    style: kAlertBoxButtonTextStyle,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    );
+  }
+
+  //Title calender view
+  editTitle() {
+    TextFormField(
+      controller: _titleController,
+      decoration: const InputDecoration(
+        suffixIcon: Icon(Icons.create),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter Title';
+        }
+        return null;
+      },
+    );
+  }
+
+  //Description calender view
+  editDescription() {
+    TextFormField(
+      controller: _descriptionController,
+      decoration: const InputDecoration(
+        suffixIcon: Icon(Icons.create),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter Description';
+        }
+        return null;
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController.text = widget.subworkflow['title'];
+    _descriptionController.text = widget.subworkflow['description']!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +149,21 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
   Widget buildCalendarWidget() {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const SizedBox(width: 15),
-            Text(widget.subworkflow['title']),
-            IconButton(
-                onPressed: () {
-                  widget.onDelete(widget.subworkflow);
-                },
-                icon: Icon(Icons.delete))
-          ],
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const SizedBox(width: 15),
+              editTitle(),
+              IconButton(
+                  onPressed: deleteCalender, icon: const Icon(Icons.delete))
+            ],
+          ),
         ),
+        const SizedBox(width: 8),
+        editDescription(),
+        const SizedBox(width: 8),
         TableCalendar(
           firstDay: DateTime.utc(2020, 1, 1),
           lastDay: DateTime.utc(2030, 12, 31),

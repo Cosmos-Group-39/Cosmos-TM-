@@ -47,9 +47,24 @@ class _SwipeScreenState extends State<SwipeScreen> {
     '    ProgressBar View',
     '    Step View',
   ];
+  void showErrorMessage(String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.red,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   void createSubworkflow() {
     // deleteSubworkflow(subWorkflows[0]);
+    if (_subworkflowNameController.text.isEmpty) {
+      showErrorMessage('Subworkflow Name cannot be empty');
+      return;
+    }
+    if (_selectedTemplate == null) {
+      showErrorMessage('Please select a view');
+      return;
+    }
     Map<String, dynamic> jsonObject = {
       'title': _subworkflowNameController.text,
       'description': _subworkflowDescriptonController.text,
@@ -66,7 +81,8 @@ class _SwipeScreenState extends State<SwipeScreen> {
         '\$push': {"subWorkflows": res.data['_id']}
       }).then((value) {
         print("Added");
-        //clear function
+        _subworkflowNameController.clear();
+        _subworkflowDescriptonController.clear();
         _goToNextPage();
       }).catchError(
           (error) => print(error)); // subworkflow couldn't link to workflow
@@ -95,15 +111,24 @@ class _SwipeScreenState extends State<SwipeScreen> {
     switch (subworkflow['view']) {
       case 'stepView':
         views.add(StepViewWorksScreen(
-            subworkflow: subworkflow, workflowName: widget.workflow['title']));
+          subworkflow: subworkflow,
+          workflowName: widget.workflow['title'],
+          onDelete: deleteSubworkflow,
+        ));
         break;
       case 'progressBar':
         views.add(ProgressBarWorksScreen(
-            subworkflow: subworkflow, workflowName: widget.workflow['title']));
+          subworkflow: subworkflow,
+          workflowName: widget.workflow['title'],
+          onDelete: deleteSubworkflow,
+        ));
         break;
       case 'ganttChart':
         views.add(GanttChartWorksScreen(
-            subworkflow: subworkflow, workflowName: widget.workflow['title']));
+          subworkflow: subworkflow,
+          workflowName: widget.workflow['title'],
+          onDelete: deleteSubworkflow,
+        ));
         break;
       case 'calendar':
         views.insert(
@@ -117,11 +142,17 @@ class _SwipeScreenState extends State<SwipeScreen> {
         break;
       case 'chartView':
         views.add(ChartViewWorksScreen(
-            subworkflow: subworkflow, workflowName: widget.workflow['title']));
+          subworkflow: subworkflow,
+          workflowName: widget.workflow['title'],
+          onDelete: deleteSubworkflow,
+        ));
         break;
       case 'pieChart':
         views.add(PieChartWorksScreen(
-            subworkflow: subworkflow, workflowName: widget.workflow['title']));
+          subworkflow: subworkflow,
+          workflowName: widget.workflow['title'],
+          onDelete: deleteSubworkflow,
+        ));
         break;
       default:
     }
