@@ -361,15 +361,12 @@ class _SwipeScreenState extends State<SwipeScreen> {
               bottom: 5,
               left: 0,
               right: 0,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  _buildDot(0),
-                  ...subWorkflows.map((element) =>
-                      _buildDot(subWorkflows.indexOf(element) + 1)),
-                ]),
-              ),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                _buildDot(0),
+                ...subWorkflows.map(
+                    (element) => _buildDot(subWorkflows.indexOf(element) + 1)),
+              ]),
             ),
             Positioned(
               bottom: -10,

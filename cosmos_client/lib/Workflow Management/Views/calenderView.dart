@@ -91,44 +91,6 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
     );
   }
 
-  //Title calender view
-  editTitle() {
-    TextFormField(
-      controller: _titleController,
-      decoration: const InputDecoration(
-        suffixIcon: Icon(Icons.create),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-      ),
-      // validator: (value) {
-      //   if (value!.isEmpty) {
-      //     return 'Please enter Title';
-      //   }
-      //   return null;
-      // },
-    );
-  }
-
-  //Description calender view
-  editDescription() {
-    TextFormField(
-      controller: _descriptionController,
-      decoration: const InputDecoration(
-        suffixIcon: Icon(Icons.create),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-      ),
-      // validator: (value) {
-      //   if (value!.isEmpty) {
-      //     return 'Please enter Description';
-      //   }
-      //   return null;
-      // },
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -150,119 +112,135 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
   }
 
   Widget buildCalendarWidget() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const SizedBox(width: 15),
-                editTitle(),
-                IconButton(
-                    onPressed: deleteCalender, icon: const Icon(Icons.delete))
-              ],
-            ),
-          ),
-          const SizedBox(width: 8),
-          // editDescription(),
-          const SizedBox(width: 8),
-          TableCalendar(
-            firstDay: DateTime.utc(2020, 1, 1),
-            lastDay: DateTime.utc(2030, 12, 31),
-            focusedDay: _focusedDay,
-            calendarFormat: _calendarFormat,
-            selectedDayPredicate: (day) {
-              return isSameDay(_selectedDay, day);
-            },
-            onFormatChanged: (format) {
-              setState(() {
-                _calendarFormat = format;
-              });
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = focusedDay;
-              });
-            },
-            calendarStyle: const CalendarStyle(
-              selectedDecoration: BoxDecoration(
-                color: Colors.blue,
-                shape: BoxShape.circle,
-              ),
-              todayDecoration: BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
-              ),
-            ),
-            calendarBuilders: CalendarBuilders(
-              markerBuilder: (context, date, events) {
-                if (events.isNotEmpty) {
-                  return Positioned(
-                    right: 1,
-                    bottom: 1,
-                    child: Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.blue,
-                      ),
-                      child: Text(
-                        '${events.length}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
-                      ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: _titleController,
+                  decoration: const InputDecoration(
+                    suffixIcon: Icon(Icons.create),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
-                  );
-                }
-                return const SizedBox();
-              },
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'Selected Day: ${_selectedDay.toString().split(' ')[0]}',
-            style: const TextStyle(fontSize: 18),
-          ),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _eventController,
-              decoration: InputDecoration(
-                labelText: 'Event',
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    setState(() {
-                      if (_events[_selectedDay] != null) {
-                        _events[_selectedDay]!.add(_eventController.text);
-                      } else {
-                        _events[_selectedDay] = [_eventController.text];
-                      }
-                      _eventController.clear();
-                    });
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter Title';
+                    }
+                    return null;
                   },
                 ),
               ),
+              IconButton(
+                  onPressed: deleteCalender, icon: const Icon(Icons.delete))
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        TableCalendar(
+          firstDay: DateTime.utc(2020, 1, 1),
+          lastDay: DateTime.utc(2030, 12, 31),
+          focusedDay: _focusedDay,
+          calendarFormat: _calendarFormat,
+          selectedDayPredicate: (day) {
+            return isSameDay(_selectedDay, day);
+          },
+          onFormatChanged: (format) {
+            setState(() {
+              _calendarFormat = format;
+            });
+          },
+          onDaySelected: (selectedDay, focusedDay) {
+            setState(() {
+              _selectedDay = selectedDay;
+              _focusedDay = focusedDay;
+            });
+          },
+          calendarStyle: const CalendarStyle(
+            markerDecoration: BoxDecoration(
+              color: Colors.amber,
+              shape: BoxShape.circle,
+            ),
+            selectedDecoration: BoxDecoration(
+              color: Colors.blue,
+              shape: BoxShape.circle,
+            ),
+            todayDecoration: BoxDecoration(
+              color: Colors.red,
+              shape: BoxShape.circle,
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _events[_selectedDay]?.length ?? 0,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text(_events[_selectedDay]![index]),
+          calendarBuilders: CalendarBuilders(
+            markerBuilder: (context, date, events) {
+              if (events.isNotEmpty) {
+                return Positioned(
+                  right: 1,
+                  bottom: 1,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.blue,
+                    ),
+                    child: Text(
+                      '${events.length}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
                 );
-              },
+              }
+              return const SizedBox();
+            },
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          'Selected Day: ${_selectedDay.toString().split(' ')[0]}',
+          style: const TextStyle(fontSize: 18),
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: TextField(
+            controller: _eventController,
+            decoration: InputDecoration(
+              labelText: 'Event',
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  setState(() {
+                    if (_events[_selectedDay] != null) {
+                      _events[_selectedDay]!.add(_eventController.text);
+                    } else {
+                      _events[_selectedDay] = [_eventController.text];
+                    }
+                    print(_events);
+                    _eventController.clear();
+                  });
+                },
+              ),
             ),
           ),
-        ],
-      ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: _events[_selectedDay]?.length ?? 0,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text(_events[_selectedDay]![index]),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
