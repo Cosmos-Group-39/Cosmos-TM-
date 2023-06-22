@@ -95,9 +95,6 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
   @override
   void initState() {
     super.initState();
-    print(widget.subworkflow['title']);
-    print(widget.subworkflow['description']);
-    print(widget.subworkflow);
     _titleController.text = widget.subworkflow['title'];
     _descriptionController.text = widget.subworkflow['description'];
   }

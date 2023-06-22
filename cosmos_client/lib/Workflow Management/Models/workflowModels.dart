@@ -109,11 +109,11 @@ class WorkModel {
 }
 
 class RepetitiveModel {
-  int? amount;
-  String? unit;
+  int amount;
+  String unit;
 
   RepetitiveModel({
-    this.amount,
-    this.unit,
+    required this.amount,
+    required this.unit,
   });
 }

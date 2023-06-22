@@ -1,3 +1,4 @@
+import 'package:cosmos_client/Workflow%20Management/Services/apiserviceworkflow.dart';
 import 'package:cosmos_client/Workflow%20Management/View%20Cards/progressBarCard.dart';
 import 'package:flutter/material.dart';
 import 'package:cosmos_client/Chat/Screen/chat_group.dart';
@@ -149,7 +150,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                     title: title,
                     active: true,
                   );
-
+                  createWork(work_newItem, workcards);
                   setState(() {
                     workcards.add(work_newItem);
                   });

@@ -29,7 +29,7 @@ const workSchema = new mongoose.Schema({
     },
     repetitive: {
         amount: Number,
-        Unit: String
+        unit: String
     }
 });
 
