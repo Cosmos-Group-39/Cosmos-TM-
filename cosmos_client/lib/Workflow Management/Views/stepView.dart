@@ -52,7 +52,7 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
                 const Padding(
                   padding: EdgeInsets.only(top: 20, left: 17),
                   child: Text(
-                    'You want to delete StepView !',
+                    'You want to delete ProgressBar View !',
                     style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
                   ),
                 ),
@@ -68,6 +68,7 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
                   style: kAlertBoxButtonStyle,
                   onPressed: () {
                     widget.onDelete(widget.subworkflow);
+                    Navigator.pop(context);
                   },
                   child: const Text(
                     'Delete',
@@ -89,44 +90,6 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
             const SizedBox(height: 10),
           ],
         );
-      },
-    );
-  }
-
-  //Title Step view
-  editTitle() {
-    TextFormField(
-      controller: _titleController,
-      decoration: const InputDecoration(
-        suffixIcon: Icon(Icons.create),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter Title';
-        }
-        return null;
-      },
-    );
-  }
-
-  //Description Step view
-  editDescription() {
-    TextFormField(
-      controller: _descriptionController,
-      decoration: const InputDecoration(
-        suffixIcon: Icon(Icons.create),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter Description';
-        }
-        return null;
       },
     );
   }
@@ -279,15 +242,40 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const SizedBox(width: 15),
-                  editTitle(),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _titleController,
+                      decoration: const InputDecoration(
+                        suffixIcon: Icon(Icons.create),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter Title';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
                   IconButton(
                       onPressed: deleteStepView, icon: const Icon(Icons.delete))
                 ],
               ),
             ),
-            const SizedBox(width: 8),
-            editDescription(),
+            const SizedBox(height: 8),
+            Expanded(
+              child: TextFormField(
+                controller: _descriptionController,
+                decoration: const InputDecoration(
+                  suffixIcon: Icon(Icons.create),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(height: 20),
             buildStepView(),
             const SizedBox(height: 15),

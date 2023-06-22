@@ -68,6 +68,7 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
                   style: kAlertBoxButtonStyle,
                   onPressed: () {
                     widget.onDelete(widget.subworkflow);
+                    Navigator.pop(context);
                   },
                   child: const Text(
                     'Delete',
@@ -93,42 +94,9 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
     );
   }
 
-  //Title  Chart view
-  editTitle() {
-    TextFormField(
-      controller: _titleController,
-      decoration: const InputDecoration(
-        suffixIcon: Icon(Icons.create),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter Title';
-        }
-        return null;
-      },
-    );
-  }
-
   //Description Chart view
   editDescription() {
-    TextFormField(
-      controller: _descriptionController,
-      decoration: const InputDecoration(
-        suffixIcon: Icon(Icons.create),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter Description';
-        }
-        return null;
-      },
-    );
+    ;
   }
 
   @override
@@ -282,17 +250,43 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const SizedBox(width: 15),
-                      editTitle(),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _titleController,
+                          decoration: const InputDecoration(
+                            suffixIcon: Icon(Icons.create),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter Title';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
                       IconButton(
                           onPressed: deleteChartView,
                           icon: const Icon(Icons.delete))
                     ],
                   ),
                 ),
-                const SizedBox(width: 8),
-                editDescription(),
-                const SizedBox(height: 40),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: TextFormField(
+                    controller: _descriptionController,
+                    decoration: const InputDecoration(
+                      suffixIcon: Icon(Icons.create),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SingleChildScrollView(

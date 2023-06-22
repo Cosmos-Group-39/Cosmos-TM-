@@ -50,7 +50,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                 const Padding(
                   padding: EdgeInsets.only(top: 20, left: 17),
                   child: Text(
-                    'You want to delete Progress Bar !',
+                    'You want to delete ProgressBar View !',
                     style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
                   ),
                 ),
@@ -66,6 +66,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                   style: kAlertBoxButtonStyle,
                   onPressed: () {
                     widget.onDelete(widget.subworkflow);
+                    Navigator.pop(context);
                   },
                   child: const Text(
                     'Delete',
@@ -87,44 +88,6 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
             const SizedBox(height: 10),
           ],
         );
-      },
-    );
-  }
-
-  //Title Progress Bar view
-  editTitle() {
-    TextFormField(
-      controller: _titleController,
-      decoration: const InputDecoration(
-        suffixIcon: Icon(Icons.create),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter Title';
-        }
-        return null;
-      },
-    );
-  }
-
-  //Description Progress Bar view
-  editDescription() {
-    TextFormField(
-      controller: _descriptionController,
-      decoration: const InputDecoration(
-        suffixIcon: Icon(Icons.create),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter Description';
-        }
-        return null;
       },
     );
   }
@@ -269,17 +232,42 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const SizedBox(width: 15),
-                    editTitle(),
+                    Expanded(
+                      child: TextFormField(
+                        controller: _titleController,
+                        decoration: const InputDecoration(
+                          suffixIcon: Icon(Icons.create),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter Title';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
                     IconButton(
                         onPressed: deleteProgressBarView,
                         icon: const Icon(Icons.delete))
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
-              editDescription(),
-              SizedBox(height: 25),
+              const SizedBox(height: 8),
+              Expanded(
+                child: TextFormField(
+                  controller: _descriptionController,
+                  decoration: const InputDecoration(
+                    suffixIcon: Icon(Icons.create),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
               progressBarWidget(),
               Expanded(
                 child: ListView.builder(

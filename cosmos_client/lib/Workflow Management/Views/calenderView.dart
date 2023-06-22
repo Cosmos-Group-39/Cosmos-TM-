@@ -66,6 +66,7 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
                   style: kAlertBoxButtonStyle,
                   onPressed: () {
                     widget.onDelete(widget.subworkflow);
+                    Navigator.pop(context);
                   },
                   child: const Text(
                     'Delete',

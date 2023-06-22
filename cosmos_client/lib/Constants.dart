@@ -62,7 +62,7 @@ var kAlertBoxBorderStyle = RoundedRectangleBorder(
 //Alert box Button Styles
 var kAlertBoxButtonStyle = TextButton.styleFrom(
   backgroundColor: kPrimaryColor,
-  minimumSize: const Size(170.0, 46.0),
+  minimumSize: const Size(150.0, 46.0),
   shadowColor: Colors.black,
   alignment: Alignment.center,
   elevation: 10,
