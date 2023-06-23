@@ -1,5 +1,6 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:cosmos_client/Workflow%20Management/Views/calenderView.dart';
 import 'package:cosmos_client/Workflow%20Management/Views/chartsView.dart';
 import 'package:cosmos_client/Workflow%20Management/Views/ganttChartView.dart';
@@ -203,6 +204,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(),
         body: Stack(
           children: [
             PageView(

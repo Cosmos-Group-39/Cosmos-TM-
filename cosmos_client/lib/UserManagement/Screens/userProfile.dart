@@ -123,7 +123,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             },
           ),
           suffixIcon: const Icon(Icons.create),
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
         ),
@@ -278,6 +278,111 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     }
   }
 
+  // Payment Dialog Box
+  paymentDialogBox() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final Size size = MediaQuery.of(context).size;
+        return AlertDialog(
+          shape: kAlertBoxBorderStyle,
+          contentPadding: EdgeInsets.zero,
+          content: Container(
+            width: size.width / 1.5,
+            height: size.height / 1.5,
+            decoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(50.0)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 25),
+                Container(
+                  color: Colors.amber,
+                  child: const Icon(
+                    Icons.payment,
+                    size: 60.0,
+                    color: Colors.white,
+                  ),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      children: <Widget>[
+                        const SizedBox(height: 25),
+                        Center(
+                          child: Text(
+                            'Are You Sure ?',
+                            style: kAlertBoxTopicTextStyle,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 20, left: 17),
+                          child: Text(
+                            'You want to delete the Work !',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 20, left: 17),
+                          child: Text(
+                            'You want to delete the Work !',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 20, left: 17),
+                          child: Text(
+                            'You want to delete the Work !',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 20, left: 17),
+                          child: Text(
+                            'You want to delete the Work !',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Center(
+                  child: ElevatedButton(
+                    style: kAlertBoxButtonStyle,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'Pay Now',
+                      style: kAlertBoxButtonTextStyle,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -293,7 +398,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.white,
             ),
@@ -349,8 +454,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
-                      elevation: MaterialStatePropertyAll(10)),
-                  onPressed: () {}, //payment
+                      elevation: const MaterialStatePropertyAll(10)),
+                  onPressed: () => paymentDialogBox(),
                   child: const Text(
                     'Premium',
                     style: TextStyle(

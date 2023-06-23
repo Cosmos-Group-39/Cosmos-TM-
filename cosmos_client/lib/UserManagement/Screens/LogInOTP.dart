@@ -1,5 +1,6 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/UserManagement/Screens/LogInPassword.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -53,7 +54,16 @@ class _LoginotpState extends State<Loginotp> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(backgroundColor: Colors.green),
+        appBar: AppBar(
+          backgroundColor: Colors.green,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+            },
+            icon: Icon(Icons.arrow_back),
+          ),
+        ),
         body: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height,

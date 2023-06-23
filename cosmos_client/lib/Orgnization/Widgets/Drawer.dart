@@ -1,6 +1,14 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Orgnization/Screens/Org_Form.dart';
+import 'package:cosmos_client/Orgnization/Screens/Org_HomePage.dart';
 import 'package:cosmos_client/Orgnization/Screens/Org_Settings.dart';
+import 'package:cosmos_client/UserManagement/Models/userModel.dart';
+import 'package:cosmos_client/UserManagement/Screens/LogInPassword.dart';
+import 'package:cosmos_client/UserManagement/Screens/userProfile.dart';
+import 'package:cosmos_client/UserManagement/Widgets/userProfilePic.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/yourWorkflow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
@@ -13,32 +21,53 @@ Widget kDrawer(BuildContext context) {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 10),
-            DrawerHeader(
-              child: Image.asset(
-                'images/cosmos.png',
-                height: 150,
-                width: 150,
-                filterQuality: FilterQuality.high,
-              ),
-            ),
-            const SizedBox(height: 60),
+            UserAccountsDrawerHeader(
+                onDetailsPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserProfileScreen(
+                                userModel: UserModel(
+                                    firstName: 'firstName',
+                                    lastName: '',
+                                    email: '',
+                                    mobile: '',
+                                    password: '',
+                                    dob: DateTime(1999),
+                                    isDeleted: true,
+                                    subcription: ''),
+                              )));
+                },
+                currentAccountPicture: CircleAvatar(),
+                accountName: Text('ABC DEF'),
+                accountEmail: Text('abcdsad@gmail.com')),
+            // DrawerHeader(
+            //   child: Image.asset(
+            //     'images/cosmos.png',
+            //     height: 150,
+            //     width: 150,
+            //     filterQuality: FilterQuality.high,
+            //   ),
+            // ),
+
+            // ListTile(
+            //   onTap: () => Navigator.push(context,
+            //       MaterialPageRoute(builder: (context) => const OrgSettings())),
+            //   leading: const Icon(
+            //     Icons.account_circle_rounded,
+            //   ),
+            //   title: const Text(
+            //     'Your Profile',
+            //     style: TextStyle(
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
+
+            const SizedBox(height: 15),
             ListTile(
               onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const OrgSettings())),
-              leading: const Icon(
-                Icons.account_circle_rounded,
-              ),
-              title: const Text(
-                'Your Profile',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Divider(color: kBackgroundColor.withOpacity(0.5)),
-            const SizedBox(height: 20),
-            const ListTile(
+                  MaterialPageRoute(builder: (context) => const HomeScreen())),
               leading: Icon(Icons.home, color: kBackgroundColor),
               title: Text(
                 'Home',
@@ -51,7 +80,11 @@ Widget kDrawer(BuildContext context) {
             ),
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
-            const ListTile(
+            ListTile(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CreatedWorkflows())),
               leading: Icon(Icons.timeline_rounded, color: kBackgroundColor),
               title: Text(
                 'Workflows',
@@ -64,7 +97,11 @@ Widget kDrawer(BuildContext context) {
             ),
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
-            const ListTile(
+            ListTile(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NewWorkflowScreen())),
               leading: Icon(Icons.add, color: kBackgroundColor),
               title: Text(
                 'Create Workflows',
@@ -77,7 +114,9 @@ Widget kDrawer(BuildContext context) {
             ),
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
-            const ListTile(
+            ListTile(
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const OrgMain())),
               leading: Icon(Icons.people, color: kBackgroundColor),
               title: Text(
                 'Organizations',

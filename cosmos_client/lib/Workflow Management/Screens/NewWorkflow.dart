@@ -1,4 +1,5 @@
 import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/yourWorkflow.dart';
 import 'package:flutter/material.dart';
 import '../Models/workflowModels.dart';
@@ -126,7 +127,10 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
           backgroundColor: Colors.green,
           leading: IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HomeScreen()));
               },
               icon: Icon(Icons.arrow_back)),
         ),

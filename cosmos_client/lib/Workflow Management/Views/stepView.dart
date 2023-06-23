@@ -1,3 +1,4 @@
+import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:cosmos_client/Workflow%20Management/View%20Cards/stepViewCard.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -198,10 +199,8 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const CreatedSubWorkflows()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
             },
             icon: const Icon(Icons.arrow_back)),
         actions: [
@@ -264,7 +263,6 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 8),
             Expanded(
               child: TextFormField(
                 controller: _descriptionController,
@@ -276,7 +274,6 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
             buildStepView(),
             const SizedBox(height: 15),
             Expanded(

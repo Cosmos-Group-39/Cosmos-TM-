@@ -1,6 +1,7 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/UserManagement/Screens/LogInOTP.dart';
 import 'package:cosmos_client/UserManagement/Screens/SignUp.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -24,7 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: Colors.green,
           leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
             },
             icon: Icon(Icons.arrow_back),
           ),

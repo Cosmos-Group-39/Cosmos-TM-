@@ -1,4 +1,4 @@
-import 'package:cosmos_client/Workflow%20Management/Services/apiserviceworkflow.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:cosmos_client/Workflow%20Management/View%20Cards/progressBarCard.dart';
 import 'package:flutter/material.dart';
 import 'package:cosmos_client/Chat/Screen/chat_group.dart';
@@ -150,7 +150,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                     title: title,
                     active: true,
                   );
-                  createWork(work_newItem, workcards);
+
                   setState(() {
                     workcards.add(work_newItem);
                   });
@@ -196,8 +196,14 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
             style: kAppBarTitle,
           ),
           centerTitle: true,
-          leading:
-              IconButton(onPressed: null, icon: const Icon(Icons.arrow_back)),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HomeScreen()));
+              },
+              icon: const Icon(Icons.arrow_back)),
           actions: [
             FloatingActionButton(
               backgroundColor: kPrimaryColor,
@@ -256,7 +262,6 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
               Expanded(
                 child: TextFormField(
                   controller: _descriptionController,
@@ -268,7 +273,6 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
               progressBarWidget(),
               Expanded(
                 child: ListView.builder(
@@ -293,7 +297,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
     double progress = 0.6; // Sample progress value
 
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(5.0),
       child: Column(
         children: [
           LinearProgressIndicator(

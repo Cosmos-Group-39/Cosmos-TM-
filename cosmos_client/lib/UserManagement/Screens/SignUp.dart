@@ -1,6 +1,7 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/UserManagement/Models/userModel.dart';
 import 'package:cosmos_client/UserManagement/Screens/userProfile.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
@@ -370,12 +371,15 @@ class _SignupScreenState extends State<SignupScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.green,
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.arrow_back))),
+          backgroundColor: Colors.green,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+            },
+            icon: Icon(Icons.arrow_back),
+          ),
+        ),
         body: SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,

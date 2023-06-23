@@ -1,5 +1,6 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -104,6 +105,12 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.workflowName),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+            },
+            icon: const Icon(Icons.arrow_back)),
       ),
       body: buildCalendarWidget(),
     );

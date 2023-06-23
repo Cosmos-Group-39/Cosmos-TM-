@@ -1,3 +1,4 @@
+import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:cosmos_client/Workflow%20Management/View%20Cards/chartViewCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_charts/flutter_charts.dart';
@@ -207,7 +208,7 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CreatedSubWorkflows()));
+                        builder: (context) => const HomeScreen()));
               },
               icon: const Icon(Icons.arrow_back)),
           actions: [
