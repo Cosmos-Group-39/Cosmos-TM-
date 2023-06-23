@@ -1,3 +1,4 @@
+import 'package:cosmos_client/Workflow%20Management/Services/apiserviceworkflow.dart';
 import 'package:cosmos_client/Workflow%20Management/View%20Cards/ganttChartCard.dart';
 import 'package:flutter/material.dart';
 import 'package:gantt_chart/gantt_chart.dart';
@@ -12,11 +13,7 @@ class GanttChartWorksScreen extends StatefulWidget {
   dynamic subworkflow;
   final String workflowName;
   final Function(dynamic) onDelete;
-  GanttChartWorksScreen(
-      {super.key,
-      required this.subworkflow,
-      required this.workflowName,
-      required this.onDelete});
+  GanttChartWorksScreen({super.key, required this.subworkflow, required this.workflowName, required this.onDelete});
 
   @override
   State<GanttChartWorksScreen> createState() => _GanttChartWorksScreenState();
@@ -104,6 +101,11 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
     super.initState();
     _titleController.text = widget.subworkflow['title'];
     _descriptionController.text = widget.subworkflow['description'];
+    int nWorks = widget.subworkflow['works'].length;
+    for (var i = 0; i < nWorks; i++) {
+      workcards.add(WorkModel(
+          workid: widget.subworkflow['works'][i]['_id'], title: widget.subworkflow['works'][i]['title'], active: widget.subworkflow['works'][i]['active']));
+    }
   }
 
   @override
@@ -156,7 +158,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                     title: title,
                     active: true,
                   );
-
+                  createWork(work_newItem, workcards, widget.subworkflow['_id']);
                   setState(() {
                     workcards.add(work_newItem);
                   });
@@ -178,6 +180,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
   }
 
   void deleteWorks(String workid) {
+    deleteWork(workcards.firstWhere((element) => element.workid == workid), workcards, widget.subworkflow['_id']);
     setState(() {
       workcards.removeWhere((element) => element.workid == workid);
     });
@@ -185,10 +188,10 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
 
   void editWorks(WorkModel editedItem) {
     setState(() {
-      int index = workcards
-          .indexWhere((element) => element.workid == editedItem.workid);
+      int index = workcards.indexWhere((element) => element.workid == editedItem.workid);
       workcards[index] = editedItem;
     });
+    editWork(workcards.firstWhere((element) => element.workid == editedItem.workid), workcards, widget.subworkflow['_id']);
   }
 
   @override
@@ -203,10 +206,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CreatedSubWorkflows()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => CreatedSubWorkflows()));
             },
             icon: const Icon(Icons.arrow_back)),
         actions: [
@@ -222,8 +222,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                           )));
             },
             shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(10.0), // Set the desired radius here
+              borderRadius: BorderRadius.circular(10.0), // Set the desired radius here
             ),
             child: const Icon(Icons.chat_bubble),
           )
@@ -261,9 +260,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                       },
                     ),
                   ),
-                  IconButton(
-                      onPressed: deleteGanttChartView,
-                      icon: const Icon(Icons.delete))
+                  IconButton(onPressed: deleteGanttChartView, icon: const Icon(Icons.delete))
                 ],
               ),
             ),

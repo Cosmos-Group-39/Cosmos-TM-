@@ -1,4 +1,5 @@
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
+import 'package:cosmos_client/Workflow%20Management/Services/apiserviceworkflow.dart';
 import 'package:cosmos_client/Workflow%20Management/View%20Cards/progressBarCard.dart';
 import 'package:flutter/material.dart';
 import 'package:cosmos_client/Chat/Screen/chat_group.dart';
@@ -27,6 +28,20 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   TextEditingController _workController = TextEditingController();
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController.text = widget.subworkflow['title'];
+    _descriptionController.text = widget.subworkflow['description'];
+    int nWorks = widget.subworkflow['works'].length;
+    for (var i = 0; i < nWorks; i++) {
+      workcards.add(WorkModel(
+          workid: widget.subworkflow['works'][i]['_id'],
+          title: widget.subworkflow['works'][i]['title'],
+          active: widget.subworkflow['works'][i]['active']));
+    }
+  }
 
   //Delete ProgressBar view
   deleteProgressBarView() {
@@ -94,13 +109,6 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _titleController.text = widget.subworkflow['title'];
-    _descriptionController.text = widget.subworkflow['description'];
-  }
-
-  @override
   void dispose() {
     _workController.dispose();
     super.dispose();
@@ -150,7 +158,8 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                     title: title,
                     active: true,
                   );
-
+                  createWork(
+                      work_newItem, workcards, widget.subworkflow['_id']);
                   setState(() {
                     workcards.add(work_newItem);
                   });
@@ -172,6 +181,8 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   }
 
   void deleteWorks(String workid) {
+    deleteWork(workcards.firstWhere((element) => element.workid == workid),
+        workcards, widget.subworkflow['_id']);
     setState(() {
       workcards.removeWhere((element) => element.workid == workid);
     });
@@ -183,6 +194,11 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
           .indexWhere((element) => element.workid == editedItem.workid);
       workcards[index] = editedItem;
     });
+
+    editWork(
+        workcards.firstWhere((element) => element.workid == editedItem.workid),
+        workcards,
+        widget.subworkflow['_id']);
   }
 
   @override
