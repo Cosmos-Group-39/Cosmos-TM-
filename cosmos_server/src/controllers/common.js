@@ -26,7 +26,7 @@ module.exports.create = (req, res) => {
     new require(`../models/${req.params.type}`)(req.body).save()
         .then((item) => {
             // res.status(200).json({ id: item._id })
-            res.status(200).json(item)
+            res.status(200).json(item);
         })
         .catch((error) => {
             res.status(500).json(error);
@@ -35,7 +35,7 @@ module.exports.create = (req, res) => {
 
 // PATCH /common/:type
 module.exports.update = (req, res) => {
-    require(`../models/${req.params.type}`).updateOne(req.body)
+    require(`../models/${req.params.type}`).updateOne(req.body.head, req.body.set)
         .then((item) => {
             res.status(200).json(item)
         })
@@ -53,6 +53,16 @@ module.exports.remove = (req, res) => {
             res.status(500).json({ error: 'Internal Server Error' });
         });
 };
+
+// module.exports.addToArray = (req, res) => {
+//     new require(`../models/${req.params.type}`)().works.push(req.body)
+//         .then((item) => {
+//             res.status(200).json(item)
+//         })
+//         .catch((error) => {
+//             res.status(500).json({ error: 'Internal Server Error' });
+//         });
+// }
 
 
 

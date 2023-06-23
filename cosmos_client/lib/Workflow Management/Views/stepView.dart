@@ -1,3 +1,4 @@
+import 'package:cosmos_client/Workflow%20Management/Services/apiserviceworkflow.dart';
 import 'package:cosmos_client/Workflow%20Management/View%20Cards/stepViewCard.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +13,7 @@ class StepViewWorksScreen extends StatefulWidget {
   dynamic subworkflow;
   final String workflowName;
   final Function(dynamic) onDelete;
-  StepViewWorksScreen(
-      {super.key,
-      required this.subworkflow,
-      required this.workflowName,
-      required this.onDelete});
+  StepViewWorksScreen({super.key, required this.subworkflow, required this.workflowName, required this.onDelete});
 
   @override
   State<StepViewWorksScreen> createState() => _StepViewWorksScreenState();
@@ -99,6 +96,11 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
     super.initState();
     _titleController.text = widget.subworkflow['title'];
     _descriptionController.text = widget.subworkflow['description'];
+    int nWorks = widget.subworkflow['works'].length;
+    for (var i = 0; i < nWorks; i++) {
+      workcards.add(WorkModel(
+          workid: widget.subworkflow['works'][i]['_id'], title: widget.subworkflow['works'][i]['title'], active: widget.subworkflow['works'][i]['active']));
+    }
   }
 
   @override
@@ -151,7 +153,7 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
                     title: title,
                     active: true,
                   );
-
+                  createWork(work_newItem, workcards, widget.subworkflow['_id']);
                   setState(() {
                     workcards.add(work_newItem);
                   });
@@ -173,6 +175,7 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
   }
 
   void deleteWorks(String workid) {
+    deleteWork(workcards.firstWhere((element) => element.workid == workid), workcards, widget.subworkflow['_id']);
     setState(() {
       workcards.removeWhere((element) => element.workid == workid);
     });
@@ -180,10 +183,10 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
 
   void editWorks(WorkModel editedItem) {
     setState(() {
-      int index = workcards
-          .indexWhere((element) => element.workid == editedItem.workid);
+      int index = workcards.indexWhere((element) => element.workid == editedItem.workid);
       workcards[index] = editedItem;
     });
+    editWork(workcards.firstWhere((element) => element.workid == editedItem.workid), workcards, widget.subworkflow['_id']);
   }
 
   @override
@@ -198,10 +201,7 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const CreatedSubWorkflows()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const CreatedSubWorkflows()));
             },
             icon: const Icon(Icons.arrow_back)),
         actions: [
@@ -218,8 +218,7 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
             },
             child: const Icon(Icons.chat_bubble),
             shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(10.0), // Set the desired radius here
+              borderRadius: BorderRadius.circular(10.0), // Set the desired radius here
             ),
           )
         ],
@@ -259,8 +258,7 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
                       },
                     ),
                   ),
-                  IconButton(
-                      onPressed: deleteStepView, icon: const Icon(Icons.delete))
+                  IconButton(onPressed: deleteStepView, icon: const Icon(Icons.delete))
                 ],
               ),
             ),
