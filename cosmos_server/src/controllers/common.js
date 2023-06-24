@@ -22,13 +22,13 @@ module.exports.getOne = (req, res) => {
 
 // POST /common/:type
 module.exports.create = (req, res) => {
-    console.log(req.body);
     new require(`../models/${req.params.type}`)(req.body).save()
         .then((item) => {
             // res.status(200).json({ id: item._id })
             res.status(200).json(item);
         })
         .catch((error) => {
+            console.log(error);
             res.status(500).json(error);
         });
 };
