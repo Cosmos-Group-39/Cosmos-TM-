@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  
+
   email: {
     type: String,
     required: true
@@ -39,8 +39,9 @@ const userSchema = new mongoose.Schema({
     default: false
   },
   subscription: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Subscription',
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Subscription',
+    type: String,
     required: true,
   },
   workflows: [{

@@ -2,6 +2,7 @@ import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/UserManagement/Models/userModel.dart';
 import 'package:cosmos_client/UserManagement/Screens/userProfile.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
@@ -108,8 +109,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return Expanded(
       child: TextFormField(
         controller: emailController,
-        keyboardType: TextInputType
-            .emailAddress, // Set the keyboard type to email address
+        keyboardType: TextInputType.emailAddress, // Set the keyboard type to email address
 
         decoration: const InputDecoration(
           labelText: 'Email',
@@ -130,9 +130,7 @@ class _SignupScreenState extends State<SignupScreen> {
             return 'Please enter an email address';
           }
 
-          bool emailValid = RegExp(
-                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9+\.[a-zA-Z]+")
-              .hasMatch(value);
+          bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9+\.[a-zA-Z]+").hasMatch(value);
 
           if (!emailValid) {
             return 'Enter a valid email address';
@@ -215,8 +213,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget buildBirthday() {
     return GestureDetector(
       onTap: () async {
-        picked =
-            (await _selectDate(context))!; // Assign the value to the variable
+        picked = (await _selectDate(context))!; // Assign the value to the variable
 
         if (picked != null) {
           setState(() {
@@ -357,12 +354,30 @@ class _SignupScreenState extends State<SignupScreen> {
         subcription: 'free',
       );
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => UserProfileScreen(userModel: userModel),
-        ),
-      );
+      Dio().post('$baseUrls/common/user', data: {
+        'firstName': firstNController.text,
+        'lastName': lastNController.text,
+        'email': emailController.text,
+        'mobile': mobileNumberController.text,
+        'password': confirmPasswordController.text,
+        'address': null,
+        'dob': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(picked.toString())),
+        'profilePic': null,
+        'isDeleted': false,
+        'subscription': 'free',
+        'workflows': [],
+        'organizations': [],
+        'reviews': []
+      }).then((value) {
+        print("User Added");
+        userModel.id = value.data['_id'];
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserProfileScreen(userModel: userModel),
+          ),
+        );
+      }).catchError((error) => print(error));
     }
   }
 
@@ -374,8 +389,7 @@ class _SignupScreenState extends State<SignupScreen> {
           backgroundColor: Colors.green,
           leading: IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
             },
             icon: Icon(Icons.arrow_back),
           ),
@@ -413,12 +427,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.circular(25),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 6,
-                              offset: Offset(0, 2))
-                        ],
+                        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -435,10 +444,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   letterSpacing: 1.3,
                                   wordSpacing: 1.5,
                                   shadows: [
-                                    Shadow(
-                                        color: Colors.black.withOpacity(0.2),
-                                        offset: Offset(2, 2),
-                                        blurRadius: 2),
+                                    Shadow(color: Colors.black.withOpacity(0.2), offset: Offset(2, 2), blurRadius: 2),
                                   ],
                                 )),
                           ),
@@ -459,8 +465,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         wordSpacing: 1.5,
                                         shadows: [
                                           Shadow(
-                                            color:
-                                                Colors.black.withOpacity(0.3),
+                                            color: Colors.black.withOpacity(0.3),
                                             offset: Offset(2, 2),
                                             blurRadius: 2,
                                           ),
@@ -468,8 +473,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       )),
                                   const SizedBox(height: 10),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
                                     child: Row(
                                       children: [
                                         buildFirstName(),
@@ -488,8 +492,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         wordSpacing: 1.5,
                                         shadows: [
                                           Shadow(
-                                            color:
-                                                Colors.black.withOpacity(0.3),
+                                            color: Colors.black.withOpacity(0.3),
                                             offset: Offset(2, 2),
                                             blurRadius: 2,
                                           ),
@@ -497,8 +500,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       )),
                                   const SizedBox(height: 10),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
                                     child: buildCreatePassword(),
                                   ),
                                   const SizedBox(height: 20),
@@ -511,8 +513,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         wordSpacing: 1.5,
                                         shadows: [
                                           Shadow(
-                                            color:
-                                                Colors.black.withOpacity(0.3),
+                                            color: Colors.black.withOpacity(0.3),
                                             offset: Offset(2, 2),
                                             blurRadius: 2,
                                           ),
@@ -520,8 +521,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       )),
                                   const SizedBox(height: 10),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
                                     child: buildConfirmPassword(),
                                   ),
                                   const SizedBox(height: 15),
@@ -534,8 +534,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         wordSpacing: 1.5,
                                         shadows: [
                                           Shadow(
-                                            color:
-                                                Colors.black.withOpacity(0.3),
+                                            color: Colors.black.withOpacity(0.3),
                                             offset: Offset(2, 2),
                                             blurRadius: 2,
                                           ),
@@ -543,8 +542,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       )),
                                   const SizedBox(height: 10),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
                                     child: buildEmail(),
                                   ),
                                   const SizedBox(height: 20),
@@ -556,8 +554,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         letterSpacing: 1.3,
                                         shadows: [
                                           Shadow(
-                                            color:
-                                                Colors.black.withOpacity(0.3),
+                                            color: Colors.black.withOpacity(0.3),
                                             offset: Offset(2, 2),
                                             blurRadius: 2,
                                           ),
@@ -565,8 +562,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       )),
                                   const SizedBox(height: 10),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
                                     child: buildBirthday(),
                                   ),
                                   const SizedBox(height: 20),
@@ -579,8 +575,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         wordSpacing: 1.5,
                                         shadows: [
                                           Shadow(
-                                            color:
-                                                Colors.black.withOpacity(0.3),
+                                            color: Colors.black.withOpacity(0.3),
                                             offset: Offset(2, 2),
                                             blurRadius: 2,
                                           ),
@@ -588,8 +583,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       )),
                                   const SizedBox(height: 10),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
                                     child: buildMobileNo(),
                                   ),
                                 ],
