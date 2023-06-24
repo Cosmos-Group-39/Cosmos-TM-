@@ -241,10 +241,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
                         ].map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
-                            child: Text(
-                              value,
-                              style: TextStyle(),
-                            ),
+                            child: Text(value),
                           );
                         }).toList(),
                       ),

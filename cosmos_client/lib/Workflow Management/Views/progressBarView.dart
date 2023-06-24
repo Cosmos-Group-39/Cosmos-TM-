@@ -3,9 +3,9 @@ import 'package:cosmos_client/Workflow%20Management/Services/apiserviceworkflow.
 import 'package:cosmos_client/Workflow%20Management/View%20Cards/progressBarCard.dart';
 import 'package:flutter/material.dart';
 import 'package:cosmos_client/Chat/Screen/chat_group.dart';
-import 'package:cosmos_client/Workflow%20Management/Screens/yourSubWorkflow.dart';
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 class ProgressBarWorksScreen extends StatefulWidget {
@@ -28,6 +28,37 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   TextEditingController _workController = TextEditingController();
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _startDateController = TextEditingController();
+  TextEditingController _endDateController = TextEditingController();
+  TextEditingController _amountController = TextEditingController();
+
+  String? selectedUnit;
+  bool isActive = true;
+  // Start Date
+  DateTime pickedStart = DateTime.now();
+  Future<DateTime?> _selectStartDate(BuildContext context) async {
+    final DateTime? pickedStart = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    return pickedStart;
+  }
+
+  // End Date
+  DateTime pickedEnd = DateTime.now();
+  Future<DateTime?> _selectEndDate(BuildContext context) async {
+    final DateTime? pickedEnd = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    return pickedEnd;
+  }
 
   @override
   void initState() {
@@ -53,7 +84,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
           title: const Icon(
             Icons.delete,
             size: 60.0,
-            color: Colors.green,
+            color: Colors.red,
           ),
           content: SingleChildScrollView(
             child: Column(
@@ -114,7 +145,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
     super.dispose();
   }
 
-  void createWorks() {
+  createWorks() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -135,13 +166,232 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                   color: Colors.green,
                 ),
                 const SizedBox(height: 10),
+                //Work Name
                 TextField(
                   controller: _workController,
                   decoration: const InputDecoration(
-                    hintText: 'Work Name',
+                    labelText: 'Work Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
+
+                //Start Date
+                GestureDetector(
+                  onTap: () async {
+                    pickedStart = (await _selectStartDate(
+                        context))!; // Assign the value to the variable
+
+                    if (pickedStart != null) {
+                      setState(() {
+                        _startDateController.text =
+                            DateFormat('dd/MM/yyyy').format(pickedStart);
+                      });
+                    }
+                  },
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: _startDateController,
+                      decoration: const InputDecoration(
+                        labelText: 'Start Date',
+                        prefixIcon: Icon(Icons.edit_calendar),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                      ),
+                      // Validations
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a Start Date';
+                        }
+
+                        final parts = value.split('/');
+
+                        if (parts.length != 3) {
+                          return 'Invalid format. Please enter in DD/MM/YYYY format';
+                        }
+
+                        final day = int.tryParse(parts[0]);
+                        final month = int.tryParse(parts[1]);
+                        final year = int.tryParse(parts[2]);
+                        final currentYear = DateTime.now().year;
+
+                        if (day == null || month == null || year == null) {
+                          return 'Invalid format';
+                        }
+
+                        if (year > currentYear) {
+                          return 'Enter a valid year';
+                        }
+
+                        if (month < 1 || month > 12) {
+                          return 'Enter a valid month';
+                        }
+
+                        final daysInMonth = DateTime(year, month + 1, 0).day;
+
+                        if (day < 1 || day > daysInMonth) {
+                          return 'Enter a valid date';
+                        }
+
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                //end Date
+                GestureDetector(
+                  onTap: () async {
+                    pickedEnd = (await _selectEndDate(
+                        context))!; // Assign the value to the variable
+
+                    if (pickedEnd != null) {
+                      setState(() {
+                        _endDateController.text =
+                            DateFormat('dd/MM/yyyy').format(pickedEnd);
+                      });
+                    }
+                  },
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: _endDateController,
+                      decoration: const InputDecoration(
+                        labelText: 'End Date',
+                        prefixIcon: Icon(Icons.edit_calendar),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                      ),
+                      // Validations
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a Start Date';
+                        }
+
+                        final parts = value.split('/');
+
+                        if (parts.length != 3) {
+                          return 'Invalid format. Please enter in DD/MM/YYYY format';
+                        }
+
+                        final day = int.tryParse(parts[0]);
+                        final month = int.tryParse(parts[1]);
+                        final year = int.tryParse(parts[2]);
+                        final currentYear = DateTime.now().year;
+
+                        if (day == null || month == null || year == null) {
+                          return 'Invalid format';
+                        }
+
+                        if (year > currentYear) {
+                          return 'Enter a valid year';
+                        }
+
+                        if (month < 1 || month > 12) {
+                          return 'Enter a valid month';
+                        }
+
+                        final daysInMonth = DateTime(year, month + 1, 0).day;
+
+                        if (day < 1 || day > daysInMonth) {
+                          return 'Enter a valid date';
+                        }
+
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                // IsActive
+                SwitchListTile(
+                  title: const Text('Active'),
+                  value: isActive,
+                  onChanged: (bool value) {
+                    print(value);
+                    setState(() {
+                      isActive = value;
+                    });
+                  },
+                ),
+                const SizedBox(height: 15),
+                //Amount and unit
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 130,
+                      child: TextField(
+                        controller: _amountController,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        decoration: const InputDecoration(
+                          labelText: 'Amount',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 5,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: Colors.grey.shade100,
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 6,
+                                offset: Offset(0, 2))
+                          ]),
+                      child: DropdownButton<String>(
+                        underline: Text(''),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        alignment: AlignmentDirectional.centerEnd,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          decoration: null,
+                        ),
+                        value: selectedUnit,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedUnit = newValue;
+                          });
+                          print(selectedUnit);
+                        },
+                        items: <String>[
+                          'kg',
+                          'km',
+                          'm',
+                          'LKR',
+                          'USD',
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 15),
               ],
             ),
           ),
@@ -241,11 +491,12 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
+          elevation: 10,
           backgroundColor: kPrimaryColor,
           onPressed: () => createWorks(),
-          child: const Icon(Icons.add),
+          child: const Icon(Icons.add, color: kDefaultIconLightColor),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
         body: Container(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -278,17 +529,17 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                   ],
                 ),
               ),
-              Expanded(
-                child: TextFormField(
-                  controller: _descriptionController,
-                  decoration: const InputDecoration(
-                    suffixIcon: Icon(Icons.create),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                  ),
-                ),
-              ),
+              // Expanded(
+              //   child: TextFormField(
+              //     controller: _descriptionController,
+              //     decoration: const InputDecoration(
+              //       suffixIcon: Icon(Icons.create),
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.all(Radius.circular(20)),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               progressBarWidget(),
               Expanded(
                 child: ListView.builder(

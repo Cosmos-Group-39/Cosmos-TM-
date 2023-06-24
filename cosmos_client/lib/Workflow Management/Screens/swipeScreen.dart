@@ -204,7 +204,6 @@ class _SwipeScreenState extends State<SwipeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
         body: Stack(
           children: [
             PageView(
@@ -323,10 +322,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                             (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
-                                        child: Text(
-                                          value,
-                                          style: const TextStyle(),
-                                        ),
+                                        child: Text(value),
                                       );
                                     }).toList(),
                                   ),
