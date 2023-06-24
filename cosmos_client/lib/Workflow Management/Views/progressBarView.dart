@@ -33,7 +33,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   TextEditingController _amountController = TextEditingController();
 
   String? selectedUnit;
-  bool isActive = true;
+  bool isActive = false;
   // Start Date
   DateTime pickedStart = DateTime.now();
   Future<DateTime?> _selectStartDate(BuildContext context) async {
@@ -145,7 +145,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
     super.dispose();
   }
 
-  createWorks() {
+  createWorks(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -320,10 +320,10 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                   title: const Text('Active'),
                   value: isActive,
                   onChanged: (bool value) {
-                    print(value);
                     setState(() {
                       isActive = value;
                     });
+                    print(isActive);
                   },
                 ),
                 const SizedBox(height: 15),
@@ -493,7 +493,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
         floatingActionButton: FloatingActionButton(
           elevation: 10,
           backgroundColor: kPrimaryColor,
-          onPressed: () => createWorks(),
+          onPressed: () => createWorks(context),
           child: const Icon(Icons.add, color: kDefaultIconLightColor),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endContained,

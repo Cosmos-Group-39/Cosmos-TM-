@@ -53,84 +53,6 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
     return pickedEnd;
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _worktitleController.text = widget.item.title;
-  }
-
-  @override
-  void dispose() {
-    _worktitleController.dispose();
-    super.dispose();
-  }
-
-  void workeditCard() {
-    String title = _worktitleController.text.trim();
-
-    WorkModel work_editedItem = WorkModel(
-      workid: widget.item.workid,
-      title: title,
-      active: true,
-    );
-
-    widget.workonEdit(work_editedItem);
-  }
-
-  void deleteWorks() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: kAlertBoxBorderStyle,
-          title: const Icon(
-            Icons.delete,
-            size: 60.0,
-            color: Colors.green,
-          ),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Are You Sure ?',
-                  style: kAlertBoxTopicTextStyle,
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 20, left: 17),
-                  child: Text(
-                    'You want to delete the Work !',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            const SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                style: kAlertBoxButtonStyle,
-                onPressed: () {
-                  widget.workonDelete(widget.item.workid!);
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  'Delete',
-                  style: kAlertBoxButtonTextStyle,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-          ],
-        );
-      },
-    );
-  }
-
   void changeWorkCard() {
     showDialog(
       context: context,
@@ -300,17 +222,7 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                // IsActive
-                SwitchListTile(
-                  title: const Text('Active'),
-                  value: isActive,
-                  onChanged: (bool value) {
-                    print(value);
-                    setState(() {
-                      isActive = value;
-                    });
-                  },
-                ),
+
                 const SizedBox(height: 15),
                 //Amount and unit
                 Row(
@@ -403,6 +315,84 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _worktitleController.text = widget.item.title;
+  }
+
+  @override
+  void dispose() {
+    _worktitleController.dispose();
+    super.dispose();
+  }
+
+  void workeditCard() {
+    String title = _worktitleController.text.trim();
+
+    WorkModel work_editedItem = WorkModel(
+      workid: widget.item.workid,
+      title: title,
+      active: true,
+    );
+
+    widget.workonEdit(work_editedItem);
+  }
+
+  void deleteWorks() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: kAlertBoxBorderStyle,
+          title: const Icon(
+            Icons.delete,
+            size: 60.0,
+            color: Colors.green,
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Are You Sure ?',
+                  style: kAlertBoxTopicTextStyle,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 20, left: 17),
+                  child: Text(
+                    'You want to delete the Work !',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  widget.workonDelete(widget.item.workid!);
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Delete',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(25),
@@ -421,34 +411,51 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
             bottom: 25,
             right: 25,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          child: Column(
             children: [
-              Flexible(
-                flex: 3,
-                child: Text(
-                  widget.item.title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: kBackgroundColor,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(width: 5),
+                  Container(
+                    width: 160,
+                    child: Column(
+                      children: [
+                        Text(
+                          widget.item.title,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: kBackgroundColor,
+                          ),
+                        ),
+                        Text('data')
+                      ],
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(width: 60),
-              Flexible(
-                flex: 1,
-                child: IconButton(
-                  icon: const Icon(Icons.edit, color: kBackgroundColor),
-                  onPressed: () => changeWorkCard(),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: IconButton(
-                  icon: const Icon(Icons.delete, color: kBackgroundColor),
-                  onPressed: () => deleteWorks(),
-                ),
+                  Container(
+                    width: 120,
+                    height: 40,
+                    child: SwitchListTile(
+                      value: isActive,
+                      onChanged: (bool value) {
+                        setState(() {
+                          isActive = value;
+                        });
+                        print(isActive);
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.edit, color: kBackgroundColor),
+                    onPressed: () => changeWorkCard(),
+                  ),
+                  SizedBox(width: 2),
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: kBackgroundColor),
+                    onPressed: () => deleteWorks(),
+                  ),
+                ],
               ),
             ],
           ),
