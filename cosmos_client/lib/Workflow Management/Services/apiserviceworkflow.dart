@@ -78,3 +78,5 @@ void editWork(WorkModel work, List<WorkModel> workArray, String subId) {
     print("Work Added");
   }).catchError((error) => print(error));
 }
+
+void editSubworkflow(String field, String value) {}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
+import 'package:intl/intl.dart';
 
 class GanttChartWorksCard extends StatefulWidget {
   final Function(WorkModel) workonEdit;
@@ -20,6 +21,368 @@ class GanttChartWorksCard extends StatefulWidget {
 
 class _GanttChartWorksCardState extends State<GanttChartWorksCard> {
   TextEditingController _worktitleController = TextEditingController();
+  TextEditingController _workDescriptionController = TextEditingController();
+  TextEditingController _startDateController = TextEditingController();
+  TextEditingController _endDateController = TextEditingController();
+  TextEditingController _amountController = TextEditingController();
+
+  String? selectedUnit;
+  bool isActive = false;
+  // Start Date
+  DateTime pickedStart = DateTime.now();
+  Future<DateTime?> _selectStartDate(BuildContext context) async {
+    final DateTime? pickedStart = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    return pickedStart;
+  }
+
+  // End Date
+  DateTime pickedEnd = DateTime.now();
+  Future<DateTime?> _selectEndDate(BuildContext context) async {
+    final DateTime? pickedEnd = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    return pickedEnd;
+  }
+
+  void changeWorkCard() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: kAlertBoxBorderStyle,
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Update Work',
+                  style: kAlertBoxTopicTextStyle,
+                ),
+                const SizedBox(height: 10),
+                const Icon(
+                  Icons.edit_document,
+                  size: 60.0,
+                  color: Colors.green,
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _worktitleController,
+                  decoration: const InputDecoration(
+                    hintText: 'Work Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+
+                //Start Date
+                GestureDetector(
+                  onTap: () async {
+                    pickedStart = (await _selectStartDate(
+                        context))!; // Assign the value to the variable
+
+                    if (pickedStart != null) {
+                      setState(() {
+                        _startDateController.text =
+                            DateFormat('dd/MM/yyyy').format(pickedStart);
+                      });
+                    }
+                  },
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: _startDateController,
+                      decoration: const InputDecoration(
+                        labelText: 'Start Date',
+                        prefixIcon: Icon(Icons.edit_calendar),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                      ),
+                      // Validations
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a Start Date';
+                        }
+
+                        final parts = value.split('/');
+
+                        if (parts.length != 3) {
+                          return 'Invalid format. Please enter in DD/MM/YYYY format';
+                        }
+
+                        final day = int.tryParse(parts[0]);
+                        final month = int.tryParse(parts[1]);
+                        final year = int.tryParse(parts[2]);
+                        final currentYear = DateTime.now().year;
+
+                        if (day == null || month == null || year == null) {
+                          return 'Invalid format';
+                        }
+
+                        if (year > currentYear) {
+                          return 'Enter a valid year';
+                        }
+
+                        if (month < 1 || month > 12) {
+                          return 'Enter a valid month';
+                        }
+
+                        final daysInMonth = DateTime(year, month + 1, 0).day;
+
+                        if (day < 1 || day > daysInMonth) {
+                          return 'Enter a valid date';
+                        }
+
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                //end Date
+                GestureDetector(
+                  onTap: () async {
+                    pickedEnd = (await _selectEndDate(
+                        context))!; // Assign the value to the variable
+
+                    if (pickedEnd != null) {
+                      setState(() {
+                        _endDateController.text =
+                            DateFormat('dd/MM/yyyy').format(pickedEnd);
+                      });
+                    }
+                  },
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: _endDateController,
+                      decoration: const InputDecoration(
+                        labelText: 'End Date',
+                        prefixIcon: Icon(Icons.edit_calendar),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                      ),
+                      // Validations
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a Start Date';
+                        }
+
+                        final parts = value.split('/');
+
+                        if (parts.length != 3) {
+                          return 'Invalid format. Please enter in DD/MM/YYYY format';
+                        }
+
+                        final day = int.tryParse(parts[0]);
+                        final month = int.tryParse(parts[1]);
+                        final year = int.tryParse(parts[2]);
+                        final currentYear = DateTime.now().year;
+
+                        if (day == null || month == null || year == null) {
+                          return 'Invalid format';
+                        }
+
+                        if (year > currentYear) {
+                          return 'Enter a valid year';
+                        }
+
+                        if (month < 1 || month > 12) {
+                          return 'Enter a valid month';
+                        }
+
+                        final daysInMonth = DateTime(year, month + 1, 0).day;
+
+                        if (day < 1 || day > daysInMonth) {
+                          return 'Enter a valid date';
+                        }
+
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+
+                const SizedBox(height: 15),
+                //Amount and unit
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 130,
+                      child: TextField(
+                        controller: _amountController,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        decoration: const InputDecoration(
+                          labelText: 'Amount',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 5,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: Colors.grey.shade100,
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 6,
+                                offset: Offset(0, 2))
+                          ]),
+                      child: DropdownButton<String>(
+                        underline: Text(''),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        alignment: AlignmentDirectional.centerEnd,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          decoration: null,
+                        ),
+                        value: selectedUnit,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedUnit = newValue;
+                          });
+                          print(selectedUnit);
+                        },
+                        items: <String>[
+                          'kg',
+                          'km',
+                          'm',
+                          'LKR',
+                          'USD',
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 15),
+              ],
+            ),
+          ),
+          actions: [
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  workeditCard();
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Confirm',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    );
+  }
+
+  // Edit Work Description
+  editWorkDescription() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: kAlertBoxBorderStyle,
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Description',
+                  style: kAlertBoxTopicTextStyle,
+                ),
+                const SizedBox(height: 10),
+                const Icon(
+                  Icons.description,
+                  size: 60.0,
+                  color: Colors.green,
+                ),
+                const SizedBox(height: 10),
+                //SubWorkflow Description
+                TextField(
+                  maxLines: 3,
+                  controller: _workDescriptionController,
+                  decoration: const InputDecoration(
+                    hintText: 'Edit here',
+                    border: InputBorder.none,
+                  ),
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+          actions: [
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  // String title = _workController.text.trim();
+                  // String workid = uuid.v4();
+                  // WorkModel work_newItem = WorkModel(
+                  //   workid: workid,
+                  //   title: title,
+                  //   active: true,
+                  // );
+                  // createWork(
+                  //     work_newItem, workcards, widget.subworkflow['_id']);
+                  // setState(() {
+                  //   workcards.add(work_newItem);
+                  // });
+
+                  // Navigator.pop(context);
+                  // _workController.clear();
+                },
+                child: const Text(
+                  'Confirm',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
@@ -99,59 +462,6 @@ class _GanttChartWorksCardState extends State<GanttChartWorksCard> {
     );
   }
 
-  void changeWorkCard() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: kAlertBoxBorderStyle,
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Update Work',
-                  style: kAlertBoxTopicTextStyle,
-                ),
-                const SizedBox(height: 10),
-                const Icon(
-                  Icons.edit_document,
-                  size: 60.0,
-                  color: Colors.green,
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: _worktitleController,
-                  decoration: const InputDecoration(
-                    hintText: 'Work Name',
-                  ),
-                ),
-                const SizedBox(height: 10),
-              ],
-            ),
-          ),
-          actions: [
-            const SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                style: kAlertBoxButtonStyle,
-                onPressed: () {
-                  workeditCard();
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  'Confirm',
-                  style: kAlertBoxButtonTextStyle,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -171,34 +481,76 @@ class _GanttChartWorksCardState extends State<GanttChartWorksCard> {
             bottom: 25,
             right: 25,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          child: Column(
             children: [
-              Flexible(
-                flex: 3,
-                child: Text(
-                  widget.item.title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: kBackgroundColor,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(width: 2),
+                  Container(
+                    width: 160,
+                    child: Column(
+                      children: [
+                        Text(
+                          widget.item.title,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: kBackgroundColor,
+                          ),
+                        ),
+                        Text('data')
+                      ],
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(width: 60),
-              Flexible(
-                flex: 1,
-                child: IconButton(
-                  icon: const Icon(Icons.edit, color: kBackgroundColor),
-                  onPressed: () => changeWorkCard(),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: IconButton(
-                  icon: const Icon(Icons.delete, color: kBackgroundColor),
-                  onPressed: () => deleteWorks(),
-                ),
+                  Transform.scale(
+                    scale: 0.75,
+                    child: Switch(
+                      value: isActive,
+                      onChanged: (bool value) {
+                        setState(() {
+                          isActive = value;
+                        });
+                        print(isActive);
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.help, color: kDefaultIconLightColor),
+                    onPressed: () => editWorkDescription(), // Show Description
+                  ),
+                  PopupMenuButton<bool>(
+                    // onSelected: (bool value) {
+                    //   // setState(() {
+                    //   //   // Update the member role
+                    //   //   isAdmin = value;
+                    //   //   widget.member.isAdmin = value;
+                    //   // });
+                    // },
+                    itemBuilder: (BuildContext context) {
+                      return <PopupMenuEntry<bool>>[
+                        PopupMenuItem<bool>(
+                          value: false,
+                          child: TextButton(
+                            child: const Text('Edit'),
+                            onPressed: () => changeWorkCard(),
+                          ),
+                        ),
+                        PopupMenuItem<bool>(
+                          value: true,
+                          child: TextButton(
+                            child: const Text('Delete'),
+                            onPressed: () => deleteWorks(),
+                          ),
+                        ),
+                      ];
+                    },
+                    icon: const Icon(
+                      Icons.more_vert,
+                      color: kBackgroundColor,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -7,13 +7,18 @@ import 'package:cosmos_client/Chat/Screen/chat_group.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/yourSubWorkflow.dart';
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 class GanttChartWorksScreen extends StatefulWidget {
   dynamic subworkflow;
   final String workflowName;
   final Function(dynamic) onDelete;
-  GanttChartWorksScreen({super.key, required this.subworkflow, required this.workflowName, required this.onDelete});
+  GanttChartWorksScreen(
+      {super.key,
+      required this.subworkflow,
+      required this.workflowName,
+      required this.onDelete});
 
   @override
   State<GanttChartWorksScreen> createState() => _GanttChartWorksScreenState();
@@ -25,6 +30,37 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
   TextEditingController _workController = TextEditingController();
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _startDateController = TextEditingController();
+  TextEditingController _endDateController = TextEditingController();
+  TextEditingController _amountController = TextEditingController();
+
+  String? selectedUnit;
+  bool isActive = false;
+  // Start Date
+  DateTime pickedStart = DateTime.now();
+  Future<DateTime?> _selectStartDate(BuildContext context) async {
+    final DateTime? pickedStart = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    return pickedStart;
+  }
+
+  // End Date
+  DateTime pickedEnd = DateTime.now();
+  Future<DateTime?> _selectEndDate(BuildContext context) async {
+    final DateTime? pickedEnd = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    return pickedEnd;
+  }
 
   //Delete Gantt Chart view
   deleteGanttChartView() {
@@ -91,9 +127,73 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
     );
   }
 
-  //Title Gantt Chart view
-  editTitle() {
-    ;
+  // Edit Subworkflow Description
+  editSubworkflow() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: kAlertBoxBorderStyle,
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Description',
+                  style: kAlertBoxTopicTextStyle,
+                ),
+                const SizedBox(height: 10),
+                const Icon(
+                  Icons.description,
+                  size: 60.0,
+                  color: Colors.green,
+                ),
+                const SizedBox(height: 10),
+                //SubWorkflow Description
+                TextField(
+                  maxLines: 3,
+                  controller: _descriptionController,
+                  decoration: const InputDecoration(
+                    hintText: 'Edit here',
+                    border: InputBorder.none,
+                  ),
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+          actions: [
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  // String title = _workController.text.trim();
+                  // String workid = uuid.v4();
+                  // WorkModel work_newItem = WorkModel(
+                  //   workid: workid,
+                  //   title: title,
+                  //   active: true,
+                  // );
+                  // createWork(
+                  //     work_newItem, workcards, widget.subworkflow['_id']);
+                  // setState(() {
+                  //   workcards.add(work_newItem);
+                  // });
+
+                  // Navigator.pop(context);
+                  // _workController.clear();
+                },
+                child: const Text(
+                  'Confirm',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -104,7 +204,9 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
     int nWorks = widget.subworkflow['works'].length;
     for (var i = 0; i < nWorks; i++) {
       workcards.add(WorkModel(
-          workid: widget.subworkflow['works'][i]['_id'], title: widget.subworkflow['works'][i]['title'], active: widget.subworkflow['works'][i]['active']));
+          workid: widget.subworkflow['works'][i]['_id'],
+          title: widget.subworkflow['works'][i]['title'],
+          active: widget.subworkflow['works'][i]['active']));
     }
   }
 
@@ -114,7 +216,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
     super.dispose();
   }
 
-  void createWorks() {
+  createWorks(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -135,13 +237,232 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                   color: Colors.green,
                 ),
                 const SizedBox(height: 10),
+                //Work Name
                 TextField(
                   controller: _workController,
                   decoration: const InputDecoration(
-                    hintText: 'Work Name',
+                    labelText: 'Work Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
+
+                //Start Date
+                GestureDetector(
+                  onTap: () async {
+                    pickedStart = (await _selectStartDate(
+                        context))!; // Assign the value to the variable
+
+                    if (pickedStart != null) {
+                      setState(() {
+                        _startDateController.text =
+                            DateFormat('dd/MM/yyyy').format(pickedStart);
+                      });
+                    }
+                  },
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: _startDateController,
+                      decoration: const InputDecoration(
+                        labelText: 'Start Date',
+                        prefixIcon: Icon(Icons.edit_calendar),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                      ),
+                      // Validations
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a Start Date';
+                        }
+
+                        final parts = value.split('/');
+
+                        if (parts.length != 3) {
+                          return 'Invalid format. Please enter in DD/MM/YYYY format';
+                        }
+
+                        final day = int.tryParse(parts[0]);
+                        final month = int.tryParse(parts[1]);
+                        final year = int.tryParse(parts[2]);
+                        final currentYear = DateTime.now().year;
+
+                        if (day == null || month == null || year == null) {
+                          return 'Invalid format';
+                        }
+
+                        if (year > currentYear) {
+                          return 'Enter a valid year';
+                        }
+
+                        if (month < 1 || month > 12) {
+                          return 'Enter a valid month';
+                        }
+
+                        final daysInMonth = DateTime(year, month + 1, 0).day;
+
+                        if (day < 1 || day > daysInMonth) {
+                          return 'Enter a valid date';
+                        }
+
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                //end Date
+                GestureDetector(
+                  onTap: () async {
+                    pickedEnd = (await _selectEndDate(
+                        context))!; // Assign the value to the variable
+
+                    if (pickedEnd != null) {
+                      setState(() {
+                        _endDateController.text =
+                            DateFormat('dd/MM/yyyy').format(pickedEnd);
+                      });
+                    }
+                  },
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: _endDateController,
+                      decoration: const InputDecoration(
+                        labelText: 'End Date',
+                        prefixIcon: Icon(Icons.edit_calendar),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                      ),
+                      // Validations
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a Start Date';
+                        }
+
+                        final parts = value.split('/');
+
+                        if (parts.length != 3) {
+                          return 'Invalid format. Please enter in DD/MM/YYYY format';
+                        }
+
+                        final day = int.tryParse(parts[0]);
+                        final month = int.tryParse(parts[1]);
+                        final year = int.tryParse(parts[2]);
+                        final currentYear = DateTime.now().year;
+
+                        if (day == null || month == null || year == null) {
+                          return 'Invalid format';
+                        }
+
+                        if (year > currentYear) {
+                          return 'Enter a valid year';
+                        }
+
+                        if (month < 1 || month > 12) {
+                          return 'Enter a valid month';
+                        }
+
+                        final daysInMonth = DateTime(year, month + 1, 0).day;
+
+                        if (day < 1 || day > daysInMonth) {
+                          return 'Enter a valid date';
+                        }
+
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                // IsActive
+                SwitchListTile(
+                  title: const Text('Active'),
+                  value: isActive,
+                  onChanged: (bool value) {
+                    setState(() {
+                      isActive = value;
+                    });
+                    print(isActive);
+                  },
+                ),
+                const SizedBox(height: 15),
+                //Amount and unit
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 130,
+                      child: TextField(
+                        controller: _amountController,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        decoration: const InputDecoration(
+                          labelText: 'Amount',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 5,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: Colors.grey.shade100,
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 6,
+                                offset: Offset(0, 2))
+                          ]),
+                      child: DropdownButton<String>(
+                        underline: Text(''),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        alignment: AlignmentDirectional.centerEnd,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          decoration: null,
+                        ),
+                        value: selectedUnit,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedUnit = newValue;
+                          });
+                          print(selectedUnit);
+                        },
+                        items: <String>[
+                          'kg',
+                          'km',
+                          'm',
+                          'LKR',
+                          'USD',
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 15),
               ],
             ),
           ),
@@ -158,7 +479,8 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                     title: title,
                     active: true,
                   );
-                  createWork(work_newItem, workcards, widget.subworkflow['_id']);
+                  createWork(
+                      work_newItem, workcards, widget.subworkflow['_id']);
                   setState(() {
                     workcards.add(work_newItem);
                   });
@@ -180,7 +502,8 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
   }
 
   void deleteWorks(String workid) {
-    deleteWork(workcards.firstWhere((element) => element.workid == workid), workcards, widget.subworkflow['_id']);
+    deleteWork(workcards.firstWhere((element) => element.workid == workid),
+        workcards, widget.subworkflow['_id']);
     setState(() {
       workcards.removeWhere((element) => element.workid == workid);
     });
@@ -188,10 +511,14 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
 
   void editWorks(WorkModel editedItem) {
     setState(() {
-      int index = workcards.indexWhere((element) => element.workid == editedItem.workid);
+      int index = workcards
+          .indexWhere((element) => element.workid == editedItem.workid);
       workcards[index] = editedItem;
     });
-    editWork(workcards.firstWhere((element) => element.workid == editedItem.workid), workcards, widget.subworkflow['_id']);
+    editWork(
+        workcards.firstWhere((element) => element.workid == editedItem.workid),
+        workcards,
+        widget.subworkflow['_id']);
   }
 
   @override
@@ -206,7 +533,10 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => CreatedSubWorkflows()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CreatedSubWorkflows()));
             },
             icon: const Icon(Icons.arrow_back)),
         actions: [
@@ -222,7 +552,8 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                           )));
             },
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0), // Set the desired radius here
+              borderRadius:
+                  BorderRadius.circular(10.0), // Set the desired radius here
             ),
             child: const Icon(Icons.chat_bubble),
           )
@@ -230,7 +561,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,
-        onPressed: () => createWorks(),
+        onPressed: () => createWorks(context),
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
@@ -260,22 +591,17 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                       },
                     ),
                   ),
-                  IconButton(onPressed: deleteGanttChartView, icon: const Icon(Icons.delete))
+                  IconButton(
+                    icon: const Icon(Icons.help, color: kDefaultIconDarkColor),
+                    onPressed: editSubworkflow, // Show Description
+                  ),
+                  IconButton(
+                      onPressed: deleteGanttChartView,
+                      icon: const Icon(Icons.delete))
                 ],
               ),
             ),
             const SizedBox(height: 8),
-            Expanded(
-              child: TextFormField(
-                controller: _descriptionController,
-                decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.create),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                ),
-              ),
-            ),
             const SizedBox(height: 20),
             buildGanttChartView(),
             const SizedBox(height: 15),

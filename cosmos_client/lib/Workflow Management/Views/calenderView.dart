@@ -1,6 +1,7 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
+import 'package:cosmos_client/Workflow%20Management/Services/apiserviceworkflow.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -93,6 +94,75 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
     );
   }
 
+  // Edit Subworkflow Description
+  editSubworkflow() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: kAlertBoxBorderStyle,
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Description',
+                  style: kAlertBoxTopicTextStyle,
+                ),
+                const SizedBox(height: 10),
+                const Icon(
+                  Icons.description,
+                  size: 60.0,
+                  color: Colors.green,
+                ),
+                const SizedBox(height: 10),
+                //SubWorkflow Description
+                TextField(
+                  maxLines: 3,
+                  controller: _descriptionController,
+                  decoration: const InputDecoration(
+                    hintText: 'Edit here',
+                    border: InputBorder.none,
+                  ),
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+          actions: [
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  // String title = _workController.text.trim();
+                  // String workid = uuid.v4();
+                  // WorkModel work_newItem = WorkModel(
+                  //   workid: workid,
+                  //   title: title,
+                  //   active: true,
+                  // );
+                  // createWork(
+                  //     work_newItem, workcards, widget.subworkflow['_id']);
+                  // setState(() {
+                  //   workcards.add(work_newItem);
+                  // });
+
+                  // Navigator.pop(context);
+                  // _workController.clear();
+                },
+                child: const Text(
+                  'Confirm',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -142,7 +212,13 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
                 ),
               ),
               IconButton(
-                  onPressed: deleteCalender, icon: const Icon(Icons.delete))
+                icon: const Icon(Icons.help, color: kDefaultIconDarkColor),
+                onPressed: editSubworkflow, // Show Description
+              ),
+              IconButton(
+                onPressed: deleteCalender,
+                icon: const Icon(Icons.delete),
+              )
             ],
           ),
         ),
