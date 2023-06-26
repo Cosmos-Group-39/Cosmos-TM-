@@ -2,7 +2,9 @@ import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/UserManagement/Screens/LogInOTP.dart';
 import 'package:cosmos_client/UserManagement/Screens/SignUp.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,20 +15,32 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isLoginSelected = true;
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  login() {
+    Dio().post('$baseUrls/user/login', data: {
+      'email': usernameController.text,
+      'password': passwordController.text,
+    }).then((value) {
+      const storage = FlutterSecureStorage();
+      storage.write(key: 'userID', value: value.data['id']);
+      storage.write(key: 'userName', value: ('${value.data['firstName']} ${value.data['lastName']}'));
+      storage.write(key: 'userEmail', value: value.data['email']);
+    }).catchError((error) {
+      print(error);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController usernameController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.green,
           leading: IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
             },
             icon: Icon(Icons.arrow_back),
           ),
@@ -65,12 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.circular(25),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 6,
-                              offset: Offset(0, 2))
-                        ],
+                        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
                       ),
                       child: Column(
                         children: [
@@ -83,13 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(20),
-                                            bottomLeft: Radius.circular(20)),
+                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
                                       ),
-                                      primary: isLoginSelected
-                                          ? kPrimaryColor
-                                          : Colors.grey,
+                                      primary: isLoginSelected ? kPrimaryColor : Colors.grey,
                                       minimumSize: const Size(160, 50),
                                       shadowColor: Colors.black,
                                       alignment: Alignment.center,
@@ -115,25 +120,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                   //swipe tiles of OTP
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      primary: isLoginSelected
-                                          ? Colors.grey
-                                          : kPrimaryColor,
+                                      primary: isLoginSelected ? Colors.grey : kPrimaryColor,
                                       minimumSize: const Size(160, 50),
                                       shadowColor: Colors.black,
                                       alignment: Alignment.center,
                                       elevation: 10,
                                       shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(20),
-                                            bottomRight: Radius.circular(20)),
+                                        borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
                                       ),
                                     ),
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Loginotp()));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Loginotp()));
                                       setState(() {
                                         isLoginSelected = false;
                                       });
@@ -161,12 +158,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 icon: Icon(Icons.person),
                                 labelText: 'Username / Email',
                                 border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
                                   // borderSide: BorderSide(color: Colors.white),
                                 ),
                                 // labelStyle: TextStyle(color: Colors.white60),
@@ -190,12 +185,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 labelText: 'Password',
                                 icon: Icon(Icons.lock_sharp),
                                 border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
                                   // borderSide: BorderSide(color: Colors.white),
                                 ),
                                 // labelStyle: TextStyle(color: Colors.white60),
@@ -220,8 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onPressed: () {},
                                   child: const Text(
                                     'Forgot Your Password ?',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w500),
+                                    style: TextStyle(fontWeight: FontWeight.w500),
                                   ),
                                 ),
                               ],
@@ -236,7 +228,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               alignment: Alignment.center,
                               elevation: 10,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              login();
+                            },
                             child: const Text(
                               'Confirm',
                               style: TextStyle(
@@ -253,23 +247,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               const Text(
                                 "Don't have an account ?",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    wordSpacing: 2),
+                                style: TextStyle(fontWeight: FontWeight.w600, wordSpacing: 2),
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const SignupScreen()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupScreen()));
                                 },
                                 child: const Text(
                                   'Sign Up',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      letterSpacing: 1.4),
+                                  style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 1.4),
                                 ),
                               ),
                             ],

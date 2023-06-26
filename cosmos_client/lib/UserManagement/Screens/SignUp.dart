@@ -354,7 +354,7 @@ class _SignupScreenState extends State<SignupScreen> {
         subcription: 'free',
       );
 
-      Dio().post('$baseUrls/common/user', data: {
+      Dio().post('$baseUrls/user/register', data: {
         'firstName': firstNController.text,
         'lastName': lastNController.text,
         'email': emailController.text,
@@ -377,7 +377,9 @@ class _SignupScreenState extends State<SignupScreen> {
             builder: (context) => UserProfileScreen(userModel: userModel),
           ),
         );
-      }).catchError((error) => print(error));
+      }).catchError((error) {
+        print(error);
+      });
     }
   }
 

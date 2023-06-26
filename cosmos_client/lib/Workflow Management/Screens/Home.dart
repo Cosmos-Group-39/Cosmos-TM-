@@ -8,6 +8,7 @@ import 'package:cosmos_client/Workflow%20Management/Screens/yourWorkflow.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,6 +20,23 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _searchTextController = TextEditingController();
   String errorMessage = '';
+  String userName = 'Anonymous';
+  String userEmail = '';
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterSecureStorage().read(key: 'userName').then((userName) {
+      setState(() {
+        this.userName = userName ?? 'Anonymous';
+      });
+    });
+    FlutterSecureStorage().read(key: 'userEmail').then((userEmail) {
+      setState(() {
+        this.userEmail = userEmail ?? '';
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           backgroundColor: Colors.green,
         ),
-        drawer: kDrawer(context),
+        drawer: kDrawer(context, userName, userEmail),
         body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
@@ -78,15 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                       return;
                     }
-                    Dio()
-                        .get(
-                            '$baseUrls/accesscode/${_searchTextController.text}')
-                        .then((value) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  SwipeScreen(workflow: value.data)));
+                    Dio().get('$baseUrls/accesscode/${_searchTextController.text}').then((value) {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SwipeScreen(workflow: value.data)));
                     }).catchError((value) {
                       setState(() {
                         errorMessage = 'Invalid Access Code';
@@ -114,10 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 FloatingActionButton(
                   backgroundColor: kPrimaryColor,
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const NewWorkflowScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const NewWorkflowScreen()));
                   },
                   child: const Icon(
                     Icons.add,
@@ -140,10 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                       },
                       child: const Text(
                         'LogIn',
@@ -163,10 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignupScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SignupScreen()));
                       },
                       child: const Text(
                         'SignUp',
@@ -196,9 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))
-        ],
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

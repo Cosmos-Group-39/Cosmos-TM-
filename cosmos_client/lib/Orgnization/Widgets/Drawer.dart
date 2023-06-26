@@ -10,9 +10,18 @@ import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/yourWorkflow.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
-Widget kDrawer(BuildContext context) {
+logout() {
+  const storage = FlutterSecureStorage();
+  storage.delete(key: 'userID');
+  storage.delete(key: 'userName');
+  storage.delete(key: 'userEmail');
+  // () => Navigator.push(MaterialPageRoute(builder: (context) => const NewWorkflowScreen())),
+}
+
+Widget kDrawer(BuildContext context, String userName, String userEmail) {
   return Drawer(
     child: Container(
       width: 250,
@@ -39,8 +48,8 @@ Widget kDrawer(BuildContext context) {
                               )));
                 },
                 currentAccountPicture: CircleAvatar(),
-                accountName: Text('ABC DEF'),
-                accountEmail: Text('abcdsad@gmail.com')),
+                accountName: Text(userName),
+                accountEmail: Text(userEmail)),
             // DrawerHeader(
             //   child: Image.asset(
             //     'images/cosmos.png',
@@ -66,8 +75,7 @@ Widget kDrawer(BuildContext context) {
 
             const SizedBox(height: 15),
             ListTile(
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen())),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen())),
               leading: Icon(Icons.home, color: kBackgroundColor),
               title: Text(
                 'Home',
@@ -81,10 +89,7 @@ Widget kDrawer(BuildContext context) {
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const CreatedWorkflows())),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CreatedWorkflows())),
               leading: Icon(Icons.timeline_rounded, color: kBackgroundColor),
               title: Text(
                 'Workflows',
@@ -98,10 +103,7 @@ Widget kDrawer(BuildContext context) {
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const NewWorkflowScreen())),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NewWorkflowScreen())),
               leading: Icon(Icons.add, color: kBackgroundColor),
               title: Text(
                 'Create Workflows',
@@ -115,8 +117,7 @@ Widget kDrawer(BuildContext context) {
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const OrgMain())),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const OrgMain())),
               leading: Icon(Icons.people, color: kBackgroundColor),
               title: Text(
                 'Organizations',
@@ -168,7 +169,8 @@ Widget kDrawer(BuildContext context) {
             ),
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 50),
-            const ListTile(
+            ListTile(
+              onTap: logout(),
               leading: Icon(Icons.logout, color: kDefaultIconLightColor),
               title: Text(
                 'Log out',

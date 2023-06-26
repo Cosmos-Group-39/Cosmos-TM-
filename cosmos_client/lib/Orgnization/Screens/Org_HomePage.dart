@@ -4,6 +4,7 @@ import 'package:cosmos_client/Orgnization/Widgets/Drawer.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Org_GridView.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class OrgMain extends StatefulWidget {
   const OrgMain({Key? key}) : super(key: key);
@@ -13,28 +14,38 @@ class OrgMain extends StatefulWidget {
 }
 
 class _OrgMainState extends State<OrgMain> {
+  String userName = 'Anonymous';
+  String userEmail = '';
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterSecureStorage().read(key: 'userName').then((userName) {
+      setState(() {
+        this.userName = userName ?? 'Anonymous';
+      });
+    });
+    FlutterSecureStorage().read(key: 'userEmail').then((userEmail) {
+      setState(() {
+        this.userEmail = userEmail ?? '';
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: kDrawer(context),
+        drawer: kDrawer(context, userName, userEmail),
         body: ListView(
           //whole screen.
           children: [
             Container(
-                padding: const EdgeInsets.only(
-                    top: 10, left: 2, right: 2, bottom: 5),
+                padding: const EdgeInsets.only(top: 10, left: 2, right: 2, bottom: 5),
                 decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 6,
-                        offset: Offset(0, 2))
-                  ],
+                  boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))],
                   color: kPrimaryColor,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30)),
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -54,8 +65,7 @@ class _OrgMainState extends State<OrgMain> {
                             style: kAppBarTitle,
                           ),
                           IconButton(
-                            icon: const Icon(Icons.notifications_sharp,
-                                color: kBackgroundColor),
+                            icon: const Icon(Icons.notifications_sharp, color: kBackgroundColor),
                             onPressed: () {},
                           ),
                         ],
@@ -95,22 +105,13 @@ class _OrgMainState extends State<OrgMain> {
             BottomNavigationBarItem(
                 icon: IconButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomeScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                     },
                     icon: const Icon(Icons.home_outlined)),
                 activeIcon: const Icon(Icons.home),
                 label: 'Home'),
-            const BottomNavigationBarItem(
-                icon: Icon(Icons.people_alt_outlined),
-                activeIcon: Icon(Icons.people_alt),
-                label: 'Organizations'),
-            const BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_outlined),
-                activeIcon: Icon(Icons.account_circle_sharp),
-                label: 'Profile'),
+            const BottomNavigationBarItem(icon: Icon(Icons.people_alt_outlined), activeIcon: Icon(Icons.people_alt), label: 'Organizations'),
+            const BottomNavigationBarItem(icon: Icon(Icons.account_circle_outlined), activeIcon: Icon(Icons.account_circle_sharp), label: 'Profile'),
           ],
         ),
       ),
