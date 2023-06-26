@@ -24,7 +24,7 @@ class ProgressBarWorksScreen extends StatefulWidget {
 
 class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   List<WorkModel> workcards = [];
-  Uuid uuid = Uuid();
+  Uuid uuid = const Uuid();
   TextEditingController _workController = TextEditingController();
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
@@ -430,6 +430,75 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
     );
   }
 
+  // Edit Subworkflow Description
+  editSubworkflow() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: kAlertBoxBorderStyle,
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Description',
+                  style: kAlertBoxTopicTextStyle,
+                ),
+                const SizedBox(height: 10),
+                const Icon(
+                  Icons.description,
+                  size: 60.0,
+                  color: Colors.green,
+                ),
+                const SizedBox(height: 10),
+                //SubWorkflow Description
+                TextField(
+                  maxLines: 3,
+                  controller: _descriptionController,
+                  decoration: const InputDecoration(
+                    hintText: 'Edit here',
+                    border: InputBorder.none,
+                  ),
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+          actions: [
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  // String title = _workController.text.trim();
+                  // String workid = uuid.v4();
+                  // WorkModel work_newItem = WorkModel(
+                  //   workid: workid,
+                  //   title: title,
+                  //   active: true,
+                  // );
+                  // createWork(
+                  //     work_newItem, workcards, widget.subworkflow['_id']);
+                  // setState(() {
+                  //   workcards.add(work_newItem);
+                  // });
+
+                  // Navigator.pop(context);
+                  // _workController.clear();
+                },
+                child: const Text(
+                  'Confirm',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    );
+  }
+
   void deleteWorks(String workid) {
     deleteWork(workcards.firstWhere((element) => element.workid == workid),
         workcards, widget.subworkflow['_id']);
@@ -524,8 +593,13 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                       ),
                     ),
                     IconButton(
+                      icon:
+                          const Icon(Icons.help, color: kDefaultIconDarkColor),
+                      onPressed: editSubworkflow, // Show Description
+                    ),
+                    IconButton(
                         onPressed: deleteProgressBarView,
-                        icon: const Icon(Icons.delete))
+                        icon: const Icon(Icons.delete)),
                   ],
                 ),
               ),

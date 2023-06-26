@@ -21,6 +21,7 @@ class ProgressBarWorksCard extends StatefulWidget {
 
 class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
   TextEditingController _worktitleController = TextEditingController();
+  TextEditingController _workDescriptionController = TextEditingController();
   TextEditingController _startDateController = TextEditingController();
   TextEditingController _endDateController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
@@ -232,8 +233,8 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
                       width: 130,
                       child: TextField(
                         controller: _amountController,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
                         decoration: const InputDecoration(
                           labelText: 'Amount',
                           border: OutlineInputBorder(
@@ -248,7 +249,8 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
                     Container(
                       width: MediaQuery.of(context).size.width / 5,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
                           color: Colors.grey.shade100,
                           boxShadow: const [
                             BoxShadow(
@@ -257,8 +259,9 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
                                 offset: Offset(0, 2))
                           ]),
                       child: DropdownButton<String>(
-                        underline: Text(''),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        underline: const Text(''),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
                         alignment: AlignmentDirectional.centerEnd,
                         style: const TextStyle(
                           color: Colors.black,
@@ -300,6 +303,75 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
                 onPressed: () {
                   workeditCard();
                   Navigator.pop(context);
+                },
+                child: const Text(
+                  'Confirm',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    );
+  }
+
+  // Edit Work Description
+  editWorkDescription() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: kAlertBoxBorderStyle,
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Description',
+                  style: kAlertBoxTopicTextStyle,
+                ),
+                const SizedBox(height: 10),
+                const Icon(
+                  Icons.description,
+                  size: 60.0,
+                  color: Colors.green,
+                ),
+                const SizedBox(height: 10),
+                //SubWorkflow Description
+                TextField(
+                  maxLines: 3,
+                  controller: _workDescriptionController,
+                  decoration: const InputDecoration(
+                    hintText: 'Edit here',
+                    border: InputBorder.none,
+                  ),
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+          actions: [
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  // String title = _workController.text.trim();
+                  // String workid = uuid.v4();
+                  // WorkModel work_newItem = WorkModel(
+                  //   workid: workid,
+                  //   title: title,
+                  //   active: true,
+                  // );
+                  // createWork(
+                  //     work_newItem, workcards, widget.subworkflow['_id']);
+                  // setState(() {
+                  //   workcards.add(work_newItem);
+                  // });
+
+                  // Navigator.pop(context);
+                  // _workController.clear();
                 },
                 child: const Text(
                   'Confirm',
@@ -416,9 +488,9 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(width: 5),
+                  const SizedBox(width: 2),
                   Container(
-                    width: 160,
+                    width: 150,
                     child: Column(
                       children: [
                         Text(
@@ -429,14 +501,13 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
                             color: kBackgroundColor,
                           ),
                         ),
-                        Text('data')
+                        const Text('data')
                       ],
                     ),
                   ),
-                  Container(
-                    width: 120,
-                    height: 40,
-                    child: SwitchListTile(
+                  Transform.scale(
+                    scale: 0.75,
+                    child: Switch(
                       value: isActive,
                       onChanged: (bool value) {
                         setState(() {
@@ -447,13 +518,39 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.edit, color: kBackgroundColor),
-                    onPressed: () => changeWorkCard(),
+                    icon: const Icon(Icons.help, color: kDefaultIconLightColor),
+                    onPressed: () => editWorkDescription(), // Show Description
                   ),
-                  SizedBox(width: 2),
-                  IconButton(
-                    icon: const Icon(Icons.delete, color: kBackgroundColor),
-                    onPressed: () => deleteWorks(),
+                  PopupMenuButton<bool>(
+                    // onSelected: (bool value) {
+                    //   // setState(() {
+                    //   //   // Update the member role
+                    //   //   isAdmin = value;
+                    //   //   widget.member.isAdmin = value;
+                    //   // });
+                    // },
+                    itemBuilder: (BuildContext context) {
+                      return <PopupMenuEntry<bool>>[
+                        PopupMenuItem<bool>(
+                          value: false,
+                          child: TextButton(
+                            child: const Text('Edit'),
+                            onPressed: () => changeWorkCard(),
+                          ),
+                        ),
+                        PopupMenuItem<bool>(
+                          value: true,
+                          child: TextButton(
+                            child: const Text('Delete'),
+                            onPressed: () => deleteWorks(),
+                          ),
+                        ),
+                      ];
+                    },
+                    icon: const Icon(
+                      Icons.more_vert,
+                      color: kBackgroundColor,
+                    ),
                   ),
                 ],
               ),

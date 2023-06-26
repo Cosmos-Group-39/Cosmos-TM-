@@ -21,7 +21,7 @@ class PieChartWorksCard extends StatefulWidget {
 
 class _PieChartWorksCardState extends State<PieChartWorksCard> {
   TextEditingController _worktitleController = TextEditingController();
-
+  TextEditingController _workDescriptionController = TextEditingController();
   TextEditingController _startDateController = TextEditingController();
   TextEditingController _endDateController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
@@ -315,6 +315,75 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
     );
   }
 
+  // Edit Work Description
+  editWorkDescription() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: kAlertBoxBorderStyle,
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Description',
+                  style: kAlertBoxTopicTextStyle,
+                ),
+                const SizedBox(height: 10),
+                const Icon(
+                  Icons.description,
+                  size: 60.0,
+                  color: Colors.green,
+                ),
+                const SizedBox(height: 10),
+                //SubWorkflow Description
+                TextField(
+                  maxLines: 3,
+                  controller: _workDescriptionController,
+                  decoration: const InputDecoration(
+                    hintText: 'Edit here',
+                    border: InputBorder.none,
+                  ),
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+          actions: [
+            Center(
+              child: ElevatedButton(
+                style: kAlertBoxButtonStyle,
+                onPressed: () {
+                  // String title = _workController.text.trim();
+                  // String workid = uuid.v4();
+                  // WorkModel work_newItem = WorkModel(
+                  //   workid: workid,
+                  //   title: title,
+                  //   active: true,
+                  // );
+                  // createWork(
+                  //     work_newItem, workcards, widget.subworkflow['_id']);
+                  // setState(() {
+                  //   workcards.add(work_newItem);
+                  // });
+
+                  // Navigator.pop(context);
+                  // _workController.clear();
+                },
+                child: const Text(
+                  'Confirm',
+                  style: kAlertBoxButtonTextStyle,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -417,7 +486,7 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(width: 5),
+                  const SizedBox(width: 2),
                   Container(
                     width: 160,
                     child: Column(
@@ -434,10 +503,9 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
                       ],
                     ),
                   ),
-                  Container(
-                    width: 120,
-                    height: 40,
-                    child: SwitchListTile(
+                  Transform.scale(
+                    scale: 0.75,
+                    child: Switch(
                       value: isActive,
                       onChanged: (bool value) {
                         setState(() {
@@ -448,13 +516,39 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.edit, color: kBackgroundColor),
-                    onPressed: () => changeWorkCard(),
+                    icon: const Icon(Icons.help, color: kDefaultIconLightColor),
+                    onPressed: () => editWorkDescription(), // Show Description
                   ),
-                  SizedBox(width: 2),
-                  IconButton(
-                    icon: const Icon(Icons.delete, color: kBackgroundColor),
-                    onPressed: () => deleteWorks(),
+                  PopupMenuButton<bool>(
+                    // onSelected: (bool value) {
+                    //   // setState(() {
+                    //   //   // Update the member role
+                    //   //   isAdmin = value;
+                    //   //   widget.member.isAdmin = value;
+                    //   // });
+                    // },
+                    itemBuilder: (BuildContext context) {
+                      return <PopupMenuEntry<bool>>[
+                        PopupMenuItem<bool>(
+                          value: false,
+                          child: TextButton(
+                            child: const Text('Edit'),
+                            onPressed: () => changeWorkCard(),
+                          ),
+                        ),
+                        PopupMenuItem<bool>(
+                          value: true,
+                          child: TextButton(
+                            child: const Text('Delete'),
+                            onPressed: () => deleteWorks(),
+                          ),
+                        ),
+                      ];
+                    },
+                    icon: const Icon(
+                      Icons.more_vert,
+                      color: kBackgroundColor,
+                    ),
                   ),
                 ],
               ),
