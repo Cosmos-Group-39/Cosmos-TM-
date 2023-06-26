@@ -25,8 +25,12 @@ class _LoginScreenState extends State<LoginScreen> {
     }).then((value) {
       const storage = FlutterSecureStorage();
       storage.write(key: 'userID', value: value.data['id']);
-      storage.write(key: 'userName', value: ('${value.data['firstName']} ${value.data['lastName']}'));
-      storage.write(key: 'userEmail', value: value.data['email']);
+      storage.write(
+          key: 'userName',
+          value: ('${value.data['firstName']} ${value.data['lastName']}'));
+      storage.write(key: 'userEmail', value: value.data['email']).then(
+          (value) => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const HomeScreen())));
     }).catchError((error) {
       print(error);
     });
@@ -40,7 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: Colors.green,
           leading: IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
             },
             icon: Icon(Icons.arrow_back),
           ),
@@ -79,7 +84,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.circular(25),
-                        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 6,
+                              offset: Offset(0, 2))
+                        ],
                       ),
                       child: Column(
                         children: [
@@ -92,9 +102,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            bottomLeft: Radius.circular(20)),
                                       ),
-                                      primary: isLoginSelected ? kPrimaryColor : Colors.grey,
+                                      primary: isLoginSelected
+                                          ? kPrimaryColor
+                                          : Colors.grey,
                                       minimumSize: const Size(160, 50),
                                       shadowColor: Colors.black,
                                       alignment: Alignment.center,
@@ -120,17 +134,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                   //swipe tiles of OTP
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      primary: isLoginSelected ? Colors.grey : kPrimaryColor,
+                                      primary: isLoginSelected
+                                          ? Colors.grey
+                                          : kPrimaryColor,
                                       minimumSize: const Size(160, 50),
                                       shadowColor: Colors.black,
                                       alignment: Alignment.center,
                                       elevation: 10,
                                       shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(20),
+                                            bottomRight: Radius.circular(20)),
                                       ),
                                     ),
                                     onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Loginotp()));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Loginotp()));
                                       setState(() {
                                         isLoginSelected = false;
                                       });
@@ -155,13 +177,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: TextFormField(
                               controller: usernameController,
                               decoration: const InputDecoration(
-                                icon: Icon(Icons.person),
-                                labelText: 'Username / Email',
+                                icon: Icon(Icons.email),
+                                labelText: 'Email',
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
                                   // borderSide: BorderSide(color: Colors.white),
                                 ),
                                 // labelStyle: TextStyle(color: Colors.white60),
@@ -185,10 +209,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 labelText: 'Password',
                                 icon: Icon(Icons.lock_sharp),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
                                   // borderSide: BorderSide(color: Colors.white),
                                 ),
                                 // labelStyle: TextStyle(color: Colors.white60),
@@ -213,7 +239,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onPressed: () {},
                                   child: const Text(
                                     'Forgot Your Password ?',
-                                    style: TextStyle(fontWeight: FontWeight.w500),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
                                   ),
                                 ),
                               ],
@@ -232,7 +259,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               login();
                             },
                             child: const Text(
-                              'Confirm',
+                              'Sign in',
                               style: TextStyle(
                                 fontSize: 15,
                                 letterSpacing: 2,
@@ -247,15 +274,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               const Text(
                                 "Don't have an account ?",
-                                style: TextStyle(fontWeight: FontWeight.w600, wordSpacing: 2),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    wordSpacing: 2),
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupScreen()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SignupScreen()));
                                 },
                                 child: const Text(
                                   'Sign Up',
-                                  style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 1.4),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      letterSpacing: 1.4),
                                 ),
                               ),
                             ],

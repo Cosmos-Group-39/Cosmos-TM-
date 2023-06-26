@@ -27,9 +27,11 @@ class GanttChartWorksScreen extends StatefulWidget {
 class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
   List<WorkModel> workcards = [];
   Uuid uuid = Uuid();
-  TextEditingController _workController = TextEditingController();
+  TextEditingController _workController = TextEditingController(); //name
+  TextEditingController _workDesController = TextEditingController(); //des
   TextEditingController _titleController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _descriptionController =
+      TextEditingController(); // Subworkflow
   TextEditingController _startDateController = TextEditingController();
   TextEditingController _endDateController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
@@ -251,7 +253,20 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-
+                //Work Description
+                TextField(
+                  controller: _workDesController,
+                  decoration: const InputDecoration(
+                    labelText: 'Work Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
                 //Start Date
                 GestureDetector(
                   onTap: () async {

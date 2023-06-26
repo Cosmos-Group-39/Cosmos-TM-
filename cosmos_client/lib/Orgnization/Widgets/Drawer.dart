@@ -13,12 +13,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
-logout() {
+logout(BuildContext context) {
   const storage = FlutterSecureStorage();
   storage.delete(key: 'userID');
   storage.delete(key: 'userName');
   storage.delete(key: 'userEmail');
-  // () => Navigator.push(MaterialPageRoute(builder: (context) => const NewWorkflowScreen())),
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const HomeScreen()));
 }
 
 Widget kDrawer(BuildContext context, String userName, String userEmail) {
@@ -50,32 +51,10 @@ Widget kDrawer(BuildContext context, String userName, String userEmail) {
                 currentAccountPicture: CircleAvatar(),
                 accountName: Text(userName),
                 accountEmail: Text(userEmail)),
-            // DrawerHeader(
-            //   child: Image.asset(
-            //     'images/cosmos.png',
-            //     height: 150,
-            //     width: 150,
-            //     filterQuality: FilterQuality.high,
-            //   ),
-            // ),
-
-            // ListTile(
-            //   onTap: () => Navigator.push(context,
-            //       MaterialPageRoute(builder: (context) => const OrgSettings())),
-            //   leading: const Icon(
-            //     Icons.account_circle_rounded,
-            //   ),
-            //   title: const Text(
-            //     'Your Profile',
-            //     style: TextStyle(
-            //       fontWeight: FontWeight.bold,
-            //     ),
-            //   ),
-            // ),
-
             const SizedBox(height: 15),
             ListTile(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen())),
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen())),
               leading: Icon(Icons.home, color: kBackgroundColor),
               title: Text(
                 'Home',
@@ -89,7 +68,10 @@ Widget kDrawer(BuildContext context, String userName, String userEmail) {
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CreatedWorkflows())),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CreatedWorkflows())),
               leading: Icon(Icons.timeline_rounded, color: kBackgroundColor),
               title: Text(
                 'Workflows',
@@ -103,7 +85,10 @@ Widget kDrawer(BuildContext context, String userName, String userEmail) {
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NewWorkflowScreen())),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NewWorkflowScreen())),
               leading: Icon(Icons.add, color: kBackgroundColor),
               title: Text(
                 'Create Workflows',
@@ -117,7 +102,8 @@ Widget kDrawer(BuildContext context, String userName, String userEmail) {
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const OrgMain())),
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const OrgMain())),
               leading: Icon(Icons.people, color: kBackgroundColor),
               title: Text(
                 'Organizations',
@@ -170,7 +156,7 @@ Widget kDrawer(BuildContext context, String userName, String userEmail) {
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 50),
             ListTile(
-              onTap: logout(),
+              onTap: () => logout(context),
               leading: Icon(Icons.logout, color: kDefaultIconLightColor),
               title: Text(
                 'Log out',

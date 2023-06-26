@@ -25,9 +25,11 @@ class ProgressBarWorksScreen extends StatefulWidget {
 class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   List<WorkModel> workcards = [];
   Uuid uuid = const Uuid();
-  TextEditingController _workController = TextEditingController();
+  TextEditingController _workController = TextEditingController(); //name
+  TextEditingController _workDesController = TextEditingController(); //des
   TextEditingController _titleController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _descriptionController =
+      TextEditingController(); // Subworkflow
   TextEditingController _startDateController = TextEditingController();
   TextEditingController _endDateController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
@@ -70,6 +72,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
       workcards.add(WorkModel(
           workid: widget.subworkflow['works'][i]['_id'],
           title: widget.subworkflow['works'][i]['title'],
+          description: widget.subworkflow['works'][i]['description'],
           active: widget.subworkflow['works'][i]['active']));
     }
   }
@@ -180,218 +183,19 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-
-                //Start Date
-                GestureDetector(
-                  onTap: () async {
-                    pickedStart = (await _selectStartDate(
-                        context))!; // Assign the value to the variable
-
-                    if (pickedStart != null) {
-                      setState(() {
-                        _startDateController.text =
-                            DateFormat('dd/MM/yyyy').format(pickedStart);
-                      });
-                    }
-                  },
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: _startDateController,
-                      decoration: const InputDecoration(
-                        labelText: 'Start Date',
-                        prefixIcon: Icon(Icons.edit_calendar),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                      ),
-                      // Validations
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter a Start Date';
-                        }
-
-                        final parts = value.split('/');
-
-                        if (parts.length != 3) {
-                          return 'Invalid format. Please enter in DD/MM/YYYY format';
-                        }
-
-                        final day = int.tryParse(parts[0]);
-                        final month = int.tryParse(parts[1]);
-                        final year = int.tryParse(parts[2]);
-                        final currentYear = DateTime.now().year;
-
-                        if (day == null || month == null || year == null) {
-                          return 'Invalid format';
-                        }
-
-                        if (year > currentYear) {
-                          return 'Enter a valid year';
-                        }
-
-                        if (month < 1 || month > 12) {
-                          return 'Enter a valid month';
-                        }
-
-                        final daysInMonth = DateTime(year, month + 1, 0).day;
-
-                        if (day < 1 || day > daysInMonth) {
-                          return 'Enter a valid date';
-                        }
-
-                        return null;
-                      },
+                //Work Description
+                TextField(
+                  controller: _workDesController,
+                  decoration: const InputDecoration(
+                    labelText: 'Work Description',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                   ),
                 ),
-                const SizedBox(height: 15),
-                //end Date
-                GestureDetector(
-                  onTap: () async {
-                    pickedEnd = (await _selectEndDate(
-                        context))!; // Assign the value to the variable
-
-                    if (pickedEnd != null) {
-                      setState(() {
-                        _endDateController.text =
-                            DateFormat('dd/MM/yyyy').format(pickedEnd);
-                      });
-                    }
-                  },
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: _endDateController,
-                      decoration: const InputDecoration(
-                        labelText: 'End Date',
-                        prefixIcon: Icon(Icons.edit_calendar),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                      ),
-                      // Validations
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter a Start Date';
-                        }
-
-                        final parts = value.split('/');
-
-                        if (parts.length != 3) {
-                          return 'Invalid format. Please enter in DD/MM/YYYY format';
-                        }
-
-                        final day = int.tryParse(parts[0]);
-                        final month = int.tryParse(parts[1]);
-                        final year = int.tryParse(parts[2]);
-                        final currentYear = DateTime.now().year;
-
-                        if (day == null || month == null || year == null) {
-                          return 'Invalid format';
-                        }
-
-                        if (year > currentYear) {
-                          return 'Enter a valid year';
-                        }
-
-                        if (month < 1 || month > 12) {
-                          return 'Enter a valid month';
-                        }
-
-                        final daysInMonth = DateTime(year, month + 1, 0).day;
-
-                        if (day < 1 || day > daysInMonth) {
-                          return 'Enter a valid date';
-                        }
-
-                        return null;
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                // IsActive
-                SwitchListTile(
-                  title: const Text('Active'),
-                  value: isActive,
-                  onChanged: (bool value) {
-                    setState(() {
-                      isActive = value;
-                    });
-                    print(isActive);
-                  },
-                ),
-                const SizedBox(height: 15),
-                //Amount and unit
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      width: 130,
-                      child: TextField(
-                        controller: _amountController,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        decoration: const InputDecoration(
-                          labelText: 'Amount',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width / 5,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          color: Colors.grey.shade100,
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 6,
-                                offset: Offset(0, 2))
-                          ]),
-                      child: DropdownButton<String>(
-                        underline: Text(''),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        alignment: AlignmentDirectional.centerEnd,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          decoration: null,
-                        ),
-                        value: selectedUnit,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedUnit = newValue;
-                          });
-                          print(selectedUnit);
-                        },
-                        items: <String>[
-                          'kg',
-                          'km',
-                          'm',
-                          'LKR',
-                          'USD',
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 15),
               ],
             ),
           ),
@@ -402,10 +206,12 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                 style: kAlertBoxButtonStyle,
                 onPressed: () {
                   String title = _workController.text.trim();
+                  String descripion = _workDesController.text.trim();
                   String workid = uuid.v4();
                   WorkModel work_newItem = WorkModel(
                     workid: workid,
                     title: title,
+                    description: descripion,
                     active: true,
                   );
                   createWork(
