@@ -145,6 +145,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   @override
   void dispose() {
     _workController.dispose();
+    _workDesController.dispose();
     super.dispose();
   }
 
@@ -222,6 +223,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
 
                   Navigator.pop(context);
                   _workController.clear();
+                  _workDesController.clear();
                 },
                 child: const Text(
                   'Create',

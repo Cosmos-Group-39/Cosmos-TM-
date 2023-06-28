@@ -206,6 +206,7 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
       workcards.add(WorkModel(
           workid: widget.subworkflow['works'][i]['_id'],
           title: widget.subworkflow['works'][i]['title'],
+          description: widget.subworkflow['works'][i]['description'],
           active: widget.subworkflow['works'][i]['active']));
     }
   }
@@ -213,6 +214,7 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
   @override
   void dispose() {
     _workController.dispose();
+    _workDesController.dispose();
     super.dispose();
   }
 
@@ -399,18 +401,6 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                // IsActive
-                SwitchListTile(
-                  title: const Text('Active'),
-                  value: isActive,
-                  onChanged: (bool value) {
-                    setState(() {
-                      isActive = value;
-                    });
-                    print(isActive);
-                  },
-                ),
-                const SizedBox(height: 15),
                 //Amount and unit
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -486,10 +476,12 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
                 style: kAlertBoxButtonStyle,
                 onPressed: () {
                   String title = _workController.text.trim();
+                  String descripion = _workDesController.text.trim();
                   String workid = uuid.v4();
                   WorkModel work_newItem = WorkModel(
                     workid: workid,
                     title: title,
+                    description: descripion,
                     active: true,
                   );
                   createWork(
@@ -500,6 +492,7 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
 
                   Navigator.pop(context);
                   _workController.clear();
+                  _workDesController.clear();
                 },
                 child: const Text(
                   'Create',

@@ -208,6 +208,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
       workcards.add(WorkModel(
           workid: widget.subworkflow['works'][i]['_id'],
           title: widget.subworkflow['works'][i]['title'],
+          description: widget.subworkflow['works'][i]['description'],
           active: widget.subworkflow['works'][i]['active']));
     }
   }
@@ -215,6 +216,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
   @override
   void dispose() {
     _workController.dispose();
+    _workDesController.dispose();
     super.dispose();
   }
 
@@ -401,83 +403,6 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                // IsActive
-                SwitchListTile(
-                  title: const Text('Active'),
-                  value: isActive,
-                  onChanged: (bool value) {
-                    setState(() {
-                      isActive = value;
-                    });
-                    print(isActive);
-                  },
-                ),
-                const SizedBox(height: 15),
-                //Amount and unit
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      width: 130,
-                      child: TextField(
-                        controller: _amountController,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        decoration: const InputDecoration(
-                          labelText: 'Amount',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width / 5,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          color: Colors.grey.shade100,
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 6,
-                                offset: Offset(0, 2))
-                          ]),
-                      child: DropdownButton<String>(
-                        underline: Text(''),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        alignment: AlignmentDirectional.centerEnd,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          decoration: null,
-                        ),
-                        value: selectedUnit,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedUnit = newValue;
-                          });
-                          print(selectedUnit);
-                        },
-                        items: <String>[
-                          'kg',
-                          'km',
-                          'm',
-                          'LKR',
-                          'USD',
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 15),
               ],
             ),
           ),
@@ -488,10 +413,12 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                 style: kAlertBoxButtonStyle,
                 onPressed: () {
                   String title = _workController.text.trim();
+                  String descripion = _workDesController.text.trim();
                   String workid = uuid.v4();
                   WorkModel work_newItem = WorkModel(
                     workid: workid,
                     title: title,
+                    description: descripion,
                     active: true,
                   );
                   createWork(
@@ -502,6 +429,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
 
                   Navigator.pop(context);
                   _workController.clear();
+                  _workDesController.clear();
                 },
                 child: const Text(
                   'Create',

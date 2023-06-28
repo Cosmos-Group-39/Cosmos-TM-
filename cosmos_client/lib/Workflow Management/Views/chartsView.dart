@@ -209,6 +209,7 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
       workcards.add(WorkModel(
           workid: widget.subworkflow['works'][i]['_id'],
           title: widget.subworkflow['works'][i]['title'],
+          description: widget.subworkflow['works'][i]['description'],
           active: widget.subworkflow['works'][i]['active']));
     }
   }
@@ -216,6 +217,7 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
   @override
   void dispose() {
     _workController.dispose();
+    _workDesController.dispose();
     super.dispose();
   }
 
@@ -402,8 +404,6 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-
-                const SizedBox(height: 15),
                 //Amount and unit
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -479,10 +479,12 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
                 style: kAlertBoxButtonStyle,
                 onPressed: () {
                   String title = _workController.text.trim();
+                  String descripion = _workDesController.text.trim();
                   String workid = uuid.v4();
                   WorkModel work_newItem = WorkModel(
                     workid: workid,
                     title: title,
+                    description: descripion,
                     active: true,
                   );
                   createWork(
@@ -493,6 +495,7 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
 
                   Navigator.pop(context);
                   _workController.clear();
+                  _workDesController.clear();
                 },
                 child: const Text(
                   'Create',

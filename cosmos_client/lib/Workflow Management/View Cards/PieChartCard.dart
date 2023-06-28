@@ -75,6 +75,7 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
                   color: Colors.green,
                 ),
                 const SizedBox(height: 10),
+                //Work Name
                 TextField(
                   controller: _worktitleController,
                   decoration: const InputDecoration(
@@ -88,7 +89,6 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
                   ),
                 ),
                 const SizedBox(height: 15),
-
                 //Start Date
                 GestureDetector(
                   onTap: () async {
@@ -222,8 +222,6 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 15),
-
                 const SizedBox(height: 15),
                 //Amount and unit
                 Row(
@@ -388,20 +386,24 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
   void initState() {
     super.initState();
     _worktitleController.text = widget.item.title;
+    _workDescriptionController.text = widget.item.description ?? '';
   }
 
   @override
   void dispose() {
     _worktitleController.dispose();
+    _workDescriptionController.dispose();
     super.dispose();
   }
 
   void workeditCard() {
     String title = _worktitleController.text.trim();
+    String description = _workDescriptionController.text.trim();
 
     WorkModel work_editedItem = WorkModel(
       workid: widget.item.workid,
       title: title,
+      description: description,
       active: true,
     );
 

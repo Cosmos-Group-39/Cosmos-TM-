@@ -152,23 +152,7 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
             Center(
               child: ElevatedButton(
                 style: kAlertBoxButtonStyle,
-                onPressed: () {
-                  // String title = _workController.text.trim();
-                  // String workid = uuid.v4();
-                  // WorkModel work_newItem = WorkModel(
-                  //   workid: workid,
-                  //   title: title,
-                  //   active: true,
-                  // );
-                  // createWork(
-                  //     work_newItem, workcards, widget.subworkflow['_id']);
-                  // setState(() {
-                  //   workcards.add(work_newItem);
-                  // });
-
-                  // Navigator.pop(context);
-                  // _workController.clear();
-                },
+                onPressed: () => workeditCard(),
                 child: const Text(
                   'Confirm',
                   style: kAlertBoxButtonTextStyle,
@@ -186,20 +170,24 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
   void initState() {
     super.initState();
     _worktitleController.text = widget.item.title;
+    _workDescriptionController.text = widget.item.description ?? '';
   }
 
   @override
   void dispose() {
     _worktitleController.dispose();
+    _workDescriptionController.dispose();
     super.dispose();
   }
 
   void workeditCard() {
     String title = _worktitleController.text.trim();
+    String description = _workDescriptionController.text.trim();
 
     WorkModel work_editedItem = WorkModel(
       workid: widget.item.workid,
       title: title,
+      description: description,
       active: true,
     );
 
@@ -318,27 +306,25 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
                     onPressed: () => editWorkDescription(), // Show Description
                   ),
                   PopupMenuButton<bool>(
-                    // onSelected: (bool value) {
-                    //   // setState(() {
-                    //   //   // Update the member role
-                    //   //   isAdmin = value;
-                    //   //   widget.member.isAdmin = value;
-                    //   // });
-                    // },
+                    onSelected: (bool value) {},
                     itemBuilder: (BuildContext context) {
                       return <PopupMenuEntry<bool>>[
                         PopupMenuItem<bool>(
                           value: false,
                           child: TextButton(
                             child: const Text('Edit'),
-                            onPressed: () => changeWorkCard(),
+                            onPressed: () {
+                              changeWorkCard();
+                            },
                           ),
                         ),
                         PopupMenuItem<bool>(
                           value: true,
                           child: TextButton(
                             child: const Text('Delete'),
-                            onPressed: () => deleteWorks(),
+                            onPressed: () {
+                              deleteWorks();
+                            },
                           ),
                         ),
                       ];

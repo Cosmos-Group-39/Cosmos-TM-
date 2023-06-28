@@ -75,6 +75,7 @@ class _StepViewWorksCardState extends State<StepViewWorksCard> {
                   color: Colors.green,
                 ),
                 const SizedBox(height: 10),
+                //Work Title
                 TextField(
                   controller: _worktitleController,
                   decoration: const InputDecoration(
@@ -88,7 +89,6 @@ class _StepViewWorksCardState extends State<StepViewWorksCard> {
                   ),
                 ),
                 const SizedBox(height: 15),
-
                 //Start Date
                 GestureDetector(
                   onTap: () async {
@@ -156,7 +156,7 @@ class _StepViewWorksCardState extends State<StepViewWorksCard> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                //end Date
+                //End Date
                 GestureDetector(
                   onTap: () async {
                     pickedEnd = (await _selectEndDate(
@@ -221,73 +221,6 @@ class _StepViewWorksCardState extends State<StepViewWorksCard> {
                       },
                     ),
                   ),
-                ),
-                const SizedBox(height: 15),
-
-                const SizedBox(height: 15),
-                //Amount and unit
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      width: 130,
-                      child: TextField(
-                        controller: _amountController,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        decoration: const InputDecoration(
-                          labelText: 'Amount',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width / 5,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          color: Colors.grey.shade100,
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 6,
-                                offset: Offset(0, 2))
-                          ]),
-                      child: DropdownButton<String>(
-                        underline: Text(''),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        alignment: AlignmentDirectional.centerEnd,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          decoration: null,
-                        ),
-                        value: selectedUnit,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedUnit = newValue;
-                          });
-                          print(selectedUnit);
-                        },
-                        items: <String>[
-                          'kg',
-                          'km',
-                          'm',
-                          'LKR',
-                          'USD',
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ],
                 ),
                 const SizedBox(height: 15),
               ],
@@ -388,20 +321,24 @@ class _StepViewWorksCardState extends State<StepViewWorksCard> {
   void initState() {
     super.initState();
     _worktitleController.text = widget.item.title;
+    _workDescriptionController.text = widget.item.description ?? '';
   }
 
   @override
   void dispose() {
     _worktitleController.dispose();
+    _workDescriptionController.dispose();
     super.dispose();
   }
 
   void workeditCard() {
     String title = _worktitleController.text.trim();
+    String description = _workDescriptionController.text.trim();
 
     WorkModel work_editedItem = WorkModel(
       workid: widget.item.workid,
       title: title,
+      description: description,
       active: true,
     );
 
