@@ -1,3 +1,4 @@
+import 'package:cosmos_client/Chat/Screen/chat_group.dart';
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
@@ -204,6 +205,41 @@ class _SwipeScreenState extends State<SwipeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kPrimaryColor,
+          title: Text(
+            widget.workflow['title'],
+            style: kAppBarTitle,
+          ),
+          centerTitle: true,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HomeScreen()));
+              },
+              icon: const Icon(Icons.arrow_back)),
+          actions: [
+            FloatingActionButton(
+              backgroundColor: kPrimaryColor,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const GroupPage(
+                              name: '',
+                              userId: '',
+                            )));
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(10.0), // Set the desired radius here
+              ),
+              child: const Icon(Icons.chat_bubble),
+            )
+          ],
+        ),
         body: Stack(
           children: [
             PageView(
@@ -211,7 +247,16 @@ class _SwipeScreenState extends State<SwipeScreen> {
               onPageChanged: _onPageChanged,
               children: [
                 Container(
-                  color: Colors.blue,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.green,
+                        Colors.blue,
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
@@ -226,7 +271,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                 offset: Offset(0, 2))
                           ],
                         ),
-                        height: MediaQuery.of(context).size.height / 2,
+                        height: MediaQuery.of(context).size.height / 1.6,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -241,8 +286,8 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                 controller: _subworkflowNameController,
                                 decoration: InputDecoration(
                                   labelText: 'Enter a Subworkflow Name',
-                                  fillColor: Colors.blue[50],
-                                  filled: true,
+                                  // fillColor: Colors.blue[50],
+                                  // filled: true,
                                   border: const OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
@@ -250,7 +295,8 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                   focusedBorder: const OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
-                                    borderSide: BorderSide(color: Colors.white),
+                                    borderSide:
+                                        BorderSide(color: Colors.black54),
                                   ),
                                 ),
                               ),
@@ -259,10 +305,11 @@ class _SwipeScreenState extends State<SwipeScreen> {
                               padding: const EdgeInsets.all(16.0),
                               child: TextField(
                                 controller: _subworkflowDescriptonController,
+                                maxLines: 3,
                                 decoration: InputDecoration(
                                   labelText: 'Enter a Subworkflow Discription',
-                                  fillColor: Colors.blue[50],
-                                  filled: true,
+                                  // fillColor: Colors.blue[50],
+                                  // filled: true,
                                   border: const OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
@@ -270,7 +317,8 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                   focusedBorder: const OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
-                                    borderSide: BorderSide(color: Colors.white),
+                                    borderSide:
+                                        BorderSide(color: Colors.black54),
                                   ),
                                 ),
                               ),
@@ -291,7 +339,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                       color: Colors.black,
                                       width: 1.0,
                                     ),
-                                    color: Colors.blue[50],
+                                    // color: Colors.blue[50],
                                     borderRadius: BorderRadius.circular(20),
                                     boxShadow: const [
                                       BoxShadow(

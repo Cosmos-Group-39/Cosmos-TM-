@@ -534,41 +534,6 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: kPrimaryColor,
-          title: Text(
-            widget.workflowName,
-            style: kAppBarTitle,
-          ),
-          centerTitle: true,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const HomeScreen()));
-              },
-              icon: const Icon(Icons.arrow_back)),
-          actions: [
-            FloatingActionButton(
-              backgroundColor: kPrimaryColor,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const GroupPage(
-                              name: '',
-                              userId: '',
-                            )));
-              },
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(10.0), // Set the desired radius here
-              ),
-              child: const Icon(Icons.chat_bubble),
-            )
-          ],
-        ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: kPrimaryColor,
           onPressed: () => createWorks(context),

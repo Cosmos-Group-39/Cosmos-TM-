@@ -24,9 +24,9 @@ logout(BuildContext context) {
 
 Widget kDrawer(BuildContext context, String userName, String userEmail) {
   return Drawer(
+    backgroundColor: kPrimaryColor,
     child: Container(
       width: 250,
-      color: kPrimaryColor,
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -467,41 +467,6 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        title: Text(
-          widget.workflowName,
-          style: kAppBarTitle,
-        ),
-        centerTitle: true,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CreatedSubWorkflows()));
-            },
-            icon: const Icon(Icons.arrow_back)),
-        actions: [
-          FloatingActionButton(
-            backgroundColor: kPrimaryColor,
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => GroupPage(
-                            name: '',
-                            userId: '',
-                          )));
-            },
-            shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(10.0), // Set the desired radius here
-            ),
-            child: const Icon(Icons.chat_bubble),
-          )
-        ],
-      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,
         onPressed: () => createWorks(context),

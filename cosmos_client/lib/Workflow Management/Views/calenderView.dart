@@ -173,15 +173,6 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.workflowName),
-        leading: IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()));
-            },
-            icon: const Icon(Icons.arrow_back)),
-      ),
       body: buildCalendarWidget(),
     );
   }

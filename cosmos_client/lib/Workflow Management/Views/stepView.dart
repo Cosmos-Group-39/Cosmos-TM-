@@ -468,39 +468,6 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        title: Text(
-          widget.workflowName,
-          style: kAppBarTitle,
-        ),
-        centerTitle: true,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()));
-            },
-            icon: const Icon(Icons.arrow_back)),
-        actions: [
-          FloatingActionButton(
-            backgroundColor: kPrimaryColor,
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const GroupPage(
-                            name: '',
-                            userId: '',
-                          )));
-            },
-            child: const Icon(Icons.chat_bubble),
-            shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(10.0), // Set the desired radius here
-            ),
-          )
-        ],
-      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,
         onPressed: () => createWorks(context),
