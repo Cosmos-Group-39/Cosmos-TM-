@@ -30,9 +30,6 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController =
       TextEditingController(); // Subworkflow
-  TextEditingController _startDateController = TextEditingController();
-  TextEditingController _endDateController = TextEditingController();
-  TextEditingController _amountController = TextEditingController();
 
   String? selectedUnit;
   bool isActive = false;

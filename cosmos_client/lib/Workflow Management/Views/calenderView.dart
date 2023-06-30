@@ -234,19 +234,18 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
             });
           },
           calendarStyle: const CalendarStyle(
-            markerDecoration: BoxDecoration(
-              color: Colors.amber,
-              shape: BoxShape.circle,
-            ),
-            selectedDecoration: BoxDecoration(
-              color: Colors.blue,
-              shape: BoxShape.circle,
-            ),
-            todayDecoration: BoxDecoration(
-              color: Colors.red,
-              shape: BoxShape.circle,
-            ),
-          ),
+              selectedDecoration: BoxDecoration(
+                color: Colors.blue,
+                shape: BoxShape.circle,
+              ),
+              todayDecoration: BoxDecoration(
+                color: Colors.red,
+                shape: BoxShape.circle,
+              ),
+              markerDecoration: BoxDecoration(
+                color: Colors.green,
+                shape: BoxShape.rectangle,
+              )),
           calendarBuilders: CalendarBuilders(
             markerBuilder: (context, date, events) {
               if (events.isNotEmpty) {
@@ -257,7 +256,7 @@ class _CalenderViewScreenState extends State<CalenderViewScreen> {
                     padding: const EdgeInsets.all(2),
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.blue,
+                      color: Colors.green,
                     ),
                     child: Text(
                       '${events.length}',
