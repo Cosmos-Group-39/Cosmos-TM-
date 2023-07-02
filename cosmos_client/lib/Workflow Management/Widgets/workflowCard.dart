@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/swipeScreen.dart';
+import 'package:cosmos_client/Workflow%20Management/Screens/workflowMembers.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/yourSubWorkflow.dart';
 import 'package:flutter/material.dart';
 
@@ -202,7 +203,16 @@ class _WorkflowCardState extends State<WorkflowCard> {
                   icon: const Icon(Icons.create, color: kBackgroundColor)),
               IconButton(
                   onPressed: deleteWorkflow,
-                  icon: const Icon(Icons.delete, color: kBackgroundColor))
+                  icon: const Icon(Icons.delete, color: kBackgroundColor)),
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => WorkflowMembers()));
+                  },
+                  icon: const Icon(Icons.add_circle_outline,
+                      color: kBackgroundColor))
             ],
           ),
         ),

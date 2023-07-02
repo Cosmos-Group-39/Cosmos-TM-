@@ -23,35 +23,31 @@ class _OrgFormState extends State<OrgForm> {
     if (formKeyorg.currentState!.validate()) {
       formKeyorg.currentState!.save();
 
-      // Call the API to create the organization
-      try {
-        await apiService.createOrganization(
+      // // Call the API to create the organization
+      // try {
+      //   await apiService.createOrganization(
+      //     name: cardControllername.text,
+      //     pic: pic,
+      //     description: cardControllerDes.text,
+      //   );
+
+      cardsx.add(
+        OrganizationModel(
+          id: uuid.v1(),
           name: cardControllername.text,
-          pic: pic,
           description: cardControllerDes.text,
-        );
+          pic: pic,
+        ),
+      );
 
-        cardsx.add(
-          OrganizationModel(
-            id: uuid.v1(),
-            name: cardControllername.text,
-            description: cardControllerDes.text,
-            pic: pic,
-          ),
-        );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CreateCards()),
+      );
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const CreateCards()),
-        );
-
-        cardControllername.clear();
-        cardControllerDes.clear();
-        _resetProfilePicture();
-      } catch (e) {
-        // Handle the API call exception
-        print('Exception occurred: $e');
-      }
+      cardControllername.clear();
+      cardControllerDes.clear();
+      _resetProfilePicture();
     }
   }
 

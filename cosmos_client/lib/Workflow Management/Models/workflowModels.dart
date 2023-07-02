@@ -117,3 +117,13 @@ class RepetitiveModel {
     required this.unit,
   });
 }
+
+class LabelModel {
+  String name;
+  String color;
+
+  LabelModel({
+    required this.name,
+    required this.color,
+  });
+}

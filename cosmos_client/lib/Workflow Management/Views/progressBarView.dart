@@ -32,7 +32,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
       TextEditingController(); // Subworkflow
 
   String? selectedUnit;
-  bool isActive = false;
+  // bool isActive = false;
   // Start Date
   DateTime pickedStart = DateTime.now();
   Future<DateTime?> _selectStartDate(BuildContext context) async {
@@ -405,7 +405,8 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   }
 
   progressBarWidget() {
-    double progress = 0.6; // Sample progress value
+    int activeWorks = countActiveWorks();
+    double progress = activeWorks / workcards.length;
 
     return Container(
       padding: const EdgeInsets.all(5.0),
@@ -420,5 +421,15 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
         ],
       ),
     );
+  }
+
+  int countActiveWorks() {
+    int count = 0;
+    for (var work in workcards) {
+      if (work.active) {
+        count++;
+      }
+    }
+    return count;
   }
 }

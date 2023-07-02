@@ -27,7 +27,7 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
   TextEditingController _amountController = TextEditingController();
 
   String? selectedUnit;
-  bool isActive = false;
+  // bool isActive = false;
   // Start Date
   DateTime pickedStart = DateTime.now();
   Future<DateTime?> _selectStartDate(BuildContext context) async {
@@ -188,7 +188,7 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
       workid: widget.item.workid,
       title: title,
       description: description,
-      active: true,
+      active: widget.item.active,
     );
 
     widget.workonEdit(work_editedItem);
@@ -292,12 +292,13 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
                   Transform.scale(
                     scale: 0.75,
                     child: Switch(
-                      value: isActive,
+                      value: widget.item.active,
                       onChanged: (bool value) {
                         setState(() {
-                          isActive = value;
+                          widget.item.active = value;
                         });
-                        print(isActive);
+                        workeditCard();
+                        print(widget.item.active);
                       },
                     ),
                   ),
