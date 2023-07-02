@@ -79,8 +79,10 @@ class _SwipeScreenState extends State<SwipeScreen> {
       subWorkflows.insert(0, res.data);
       createViews(res.data);
       Dio().patch('$baseUrls/common/workflow', data: {
-        '_id': widget.workflow['_id'],
-        '\$push': {"subWorkflows": res.data['_id']}
+        'head': {'_id': widget.workflow['_id']},
+        'set': {
+          '\$push': {"subWorkflows": res.data['_id']}
+        }
       }).then((value) {
         print("Added");
         _subworkflowNameController.clear();
@@ -100,8 +102,10 @@ class _SwipeScreenState extends State<SwipeScreen> {
       subWorkflows.removeAt(index);
       views.removeAt(index);
       Dio().patch('$baseUrls/common/workflow', data: {
-        '_id': widget.workflow['_id'],
-        '\$pull': {"subWorkflows": res.data['_id']}
+        'head': {'_id': widget.workflow['_id']},
+        'set': {
+          '\$pull': {"subWorkflows": res.data['_id']}
+        }
       }).then((value) {
         print("Deleted");
         _goToPreviousPage();

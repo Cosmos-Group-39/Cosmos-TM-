@@ -38,7 +38,7 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
   TextEditingController _amountController = TextEditingController();
 
   String? selectedUnit;
-  bool isActive = false;
+
   // Start Date
   DateTime pickedStart = DateTime.now();
   Future<DateTime?> _selectStartDate(BuildContext context) async {
@@ -533,21 +533,20 @@ class _StepViewWorksScreenState extends State<StepViewWorksScreen> {
   }
 
   Widget buildStepView() {
-    int activeStep = 5; // Initial step set to 5.
-    int upperBound = 6; // upperBound MUST BE total number of icons minus 1.
+    int activeStep = 2; // Initial step set to 5.
+// upperBound MUST BE total number of icons minus 1.
 
     return Column(
       children: [
         IconStepper(
           // ignore: prefer_const_literals_to_create_immutables
           icons: [
-            const Icon(Icons.check),
-            const Icon(Icons.flag),
-            const Icon(Icons.access_alarm),
-            const Icon(Icons.supervised_user_circle),
-            const Icon(Icons.flag),
-            const Icon(Icons.access_alarm),
-            const Icon(Icons.supervised_user_circle),
+            const Icon(Icons.looks_one_sharp),
+            const Icon(Icons.looks_two_sharp),
+            const Icon(Icons.looks_3_sharp),
+            const Icon(Icons.looks_4_sharp),
+            const Icon(Icons.looks_5_sharp),
+            const Icon(Icons.looks_6_sharp),
           ],
           activeStep: activeStep,
           onStepReached: (index) {

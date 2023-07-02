@@ -25,14 +25,13 @@ class PieChartWorksScreen extends StatefulWidget {
 
 class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
   List<WorkModel> workcards = [];
+  Map<String, double> dataMap = {};
   Uuid uuid = const Uuid();
   TextEditingController _workController = TextEditingController(); //name
   TextEditingController _workDesController = TextEditingController(); //des
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController =
       TextEditingController(); // Subworkflow
-  TextEditingController _startDateController = TextEditingController();
-  TextEditingController _endDateController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
 
   String? selectedUnit;
@@ -207,7 +206,18 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
           workid: widget.subworkflow['works'][i]['_id'],
           title: widget.subworkflow['works'][i]['title'],
           description: widget.subworkflow['works'][i]['description'],
-          active: widget.subworkflow['works'][i]['active']));
+          active: widget.subworkflow['works'][i]['active'],
+          repetitive: RepetitiveModel(
+            amount: widget.subworkflow['works'][i]['repetitive']['amount'] ?? 0,
+            unit: widget.subworkflow['works'][i]['repetitive']['unit'] ?? 'NU',
+          )));
+    }
+    updateDataMap();
+  }
+
+  updateDataMap() {
+    for (var work in workcards) {
+      dataMap[work.title] = work.repetitive?.amount ?? 0;
     }
   }
 
@@ -257,146 +267,12 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
                 TextField(
                   controller: _workDesController,
                   decoration: const InputDecoration(
-                    labelText: 'Work Name',
+                    labelText: 'Work Description',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                //Start Date
-                GestureDetector(
-                  onTap: () async {
-                    pickedStart = (await _selectStartDate(
-                        context))!; // Assign the value to the variable
-
-                    if (pickedStart != null) {
-                      setState(() {
-                        _startDateController.text =
-                            DateFormat('dd/MM/yyyy').format(pickedStart);
-                      });
-                    }
-                  },
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: _startDateController,
-                      decoration: const InputDecoration(
-                        labelText: 'Start Date',
-                        prefixIcon: Icon(Icons.edit_calendar),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                      ),
-                      // Validations
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter a Start Date';
-                        }
-
-                        final parts = value.split('/');
-
-                        if (parts.length != 3) {
-                          return 'Invalid format. Please enter in DD/MM/YYYY format';
-                        }
-
-                        final day = int.tryParse(parts[0]);
-                        final month = int.tryParse(parts[1]);
-                        final year = int.tryParse(parts[2]);
-                        final currentYear = DateTime.now().year;
-
-                        if (day == null || month == null || year == null) {
-                          return 'Invalid format';
-                        }
-
-                        if (year > currentYear) {
-                          return 'Enter a valid year';
-                        }
-
-                        if (month < 1 || month > 12) {
-                          return 'Enter a valid month';
-                        }
-
-                        final daysInMonth = DateTime(year, month + 1, 0).day;
-
-                        if (day < 1 || day > daysInMonth) {
-                          return 'Enter a valid date';
-                        }
-
-                        return null;
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                //end Date
-                GestureDetector(
-                  onTap: () async {
-                    pickedEnd = (await _selectEndDate(
-                        context))!; // Assign the value to the variable
-
-                    if (pickedEnd != null) {
-                      setState(() {
-                        _endDateController.text =
-                            DateFormat('dd/MM/yyyy').format(pickedEnd);
-                      });
-                    }
-                  },
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: _endDateController,
-                      decoration: const InputDecoration(
-                        labelText: 'End Date',
-                        prefixIcon: Icon(Icons.edit_calendar),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                      ),
-                      // Validations
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter a Start Date';
-                        }
-
-                        final parts = value.split('/');
-
-                        if (parts.length != 3) {
-                          return 'Invalid format. Please enter in DD/MM/YYYY format';
-                        }
-
-                        final day = int.tryParse(parts[0]);
-                        final month = int.tryParse(parts[1]);
-                        final year = int.tryParse(parts[2]);
-                        final currentYear = DateTime.now().year;
-
-                        if (day == null || month == null || year == null) {
-                          return 'Invalid format';
-                        }
-
-                        if (year > currentYear) {
-                          return 'Enter a valid year';
-                        }
-
-                        if (month < 1 || month > 12) {
-                          return 'Enter a valid month';
-                        }
-
-                        final daysInMonth = DateTime(year, month + 1, 0).day;
-
-                        if (day < 1 || day > daysInMonth) {
-                          return 'Enter a valid date';
-                        }
-
-                        return null;
-                      },
                     ),
                   ),
                 ),
@@ -479,17 +355,19 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
                   String descripion = _workDesController.text.trim();
                   String workid = uuid.v4();
                   WorkModel work_newItem = WorkModel(
-                    workid: workid,
-                    title: title,
-                    description: descripion,
-                    active: true,
-                  );
+                      workid: workid,
+                      title: title,
+                      description: descripion,
+                      active: true,
+                      repetitive: RepetitiveModel(
+                          amount: double.parse(_amountController.text),
+                          unit: selectedUnit ?? 'NU'));
                   createWork(
                       work_newItem, workcards, widget.subworkflow['_id']);
                   setState(() {
                     workcards.add(work_newItem);
                   });
-
+                  updateDataMap();
                   Navigator.pop(context);
                   _workController.clear();
                   _workDesController.clear();
@@ -513,6 +391,8 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
     setState(() {
       workcards.removeWhere((element) => element.workid == workid);
     });
+    dataMap.clear();
+    updateDataMap();
   }
 
   void editWorks(WorkModel editedItem) {
@@ -525,6 +405,8 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
         workcards.firstWhere((element) => element.workid == editedItem.workid),
         workcards,
         widget.subworkflow['_id']);
+    dataMap.clear();
+    updateDataMap();
   }
 
   @override
@@ -600,13 +482,6 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
   }
 
   Widget buildPieChart() {
-    final dataMap = <String, double>{
-      "Food": 5,
-      "Travelling": 4,
-      "Rent": 1,
-      "Internet and Phone": 2,
-    };
-
     final colorList = <Color>[
       Colors.greenAccent,
       Colors.amber,
@@ -616,20 +491,22 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 2),
-      child: PieChart(
-        dataMap: dataMap,
-        chartType: ChartType.ring,
-        ringStrokeWidth: 20,
-        colorList: colorList,
-        initialAngleInDegree: -90,
-        chartLegendSpacing: 48,
-        chartRadius: 200,
-        chartValuesOptions: const ChartValuesOptions(
-          showChartValueBackground: false,
-          showChartValuesInPercentage: true,
-          decimalPlaces: 1,
-        ),
-      ),
+      child: dataMap.isEmpty
+          ? const Text('Add a Work')
+          : PieChart(
+              dataMap: dataMap,
+              chartType: ChartType.ring,
+              ringStrokeWidth: 20,
+              colorList: colorList,
+              initialAngleInDegree: -90,
+              chartLegendSpacing: 48,
+              chartRadius: 200,
+              chartValuesOptions: const ChartValuesOptions(
+                showChartValueBackground: false,
+                showChartValuesInPercentage: true,
+                decimalPlaces: 1,
+              ),
+            ),
     );
   }
 }

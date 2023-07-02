@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Drawer.dart';
 import 'package:cosmos_client/UserManagement/Screens/LogInPassword.dart';
@@ -100,6 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         .get(
                             '$baseUrls/accesscode/${_searchTextController.text}')
                         .then((value) {
+                      // print(jsonDecode(value.data));
+                      print(value.data);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
