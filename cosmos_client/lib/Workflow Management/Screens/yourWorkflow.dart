@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/NewWorkflow.dart';
 import 'package:cosmos_client/Workflow%20Management/Widgets/workflowCard.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:uuid/uuid.dart';
 
-List<WorkflowModel> wfcards = [];
+List<dynamic> wfcards = [];
 var uuid = const Uuid();
 
 class CreatedWorkflows extends StatefulWidget {
@@ -25,7 +29,20 @@ class _CreatedWorkflowsState extends State<CreatedWorkflows> {
   @override
   void initState() {
     super.initState();
-    print(workflow);
+    FlutterSecureStorage().read(key: 'userID').then((userID) {
+      final options = Options(
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer $userID',
+        },
+      );
+      Dio().get('$baseUrls/user/ownWorkflows', options: options).then((value) {
+        print(value.data[0]);
+        // print(WorkflowModel.fromJson(jsonDecode(value.data[0])));
+
+        wfcards = value.data.map((workflow) => WorkflowModel.fromJson(workflow)).toList();
+      });
+    });
   }
 
   //Edit workflow Name
@@ -58,9 +75,7 @@ class _CreatedWorkflowsState extends State<CreatedWorkflows> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
-              side: const BorderSide(color: kPrimaryColor, width: 5)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0), side: const BorderSide(color: kPrimaryColor, width: 5)),
           child: Container(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -120,14 +135,12 @@ class _CreatedWorkflowsState extends State<CreatedWorkflows> {
                         switch (selectedValue) {
                           case 'Name (A-Z)':
                             setState(() {
-                              wfcards
-                                  .sort((a, b) => a.title.compareTo(b.title));
+                              wfcards.sort((a, b) => a.title.compareTo(b.title));
                             });
                             break;
                           case 'Name (Z-A)':
                             setState(() {
-                              wfcards
-                                  .sort((a, b) => b.title.compareTo(a.title));
+                              wfcards.sort((a, b) => b.title.compareTo(a.title));
                             });
                             break;
 
@@ -178,10 +191,7 @@ class _CreatedWorkflowsState extends State<CreatedWorkflows> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const NewWorkflowScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const NewWorkflowScreen()));
             },
             icon: const Icon(Icons.arrow_back)),
       ),
@@ -208,8 +218,7 @@ class _CreatedWorkflowsState extends State<CreatedWorkflows> {
                   const SizedBox(width: 160),
                   Text(
                     (selectedValue ?? 'Filter Workflows'),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w500, color: Colors.blue),
+                    style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.blue),
                   ),
                   IconButton(
                     onPressed: showFilterDialog,

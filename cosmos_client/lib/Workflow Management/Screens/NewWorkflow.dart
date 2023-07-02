@@ -1,7 +1,9 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/yourWorkflow.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../Models/workflowModels.dart';
 
 /* This is creating new workflws
@@ -64,9 +66,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
-              side: const BorderSide(color: kPrimaryColor, width: 5)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0), side: const BorderSide(color: kPrimaryColor, width: 5)),
           content: SingleChildScrollView(
             child: Form(
               key: formKeywf,
@@ -127,10 +127,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
           backgroundColor: Colors.green,
           leading: IconButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const HomeScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
               },
               icon: Icon(Icons.arrow_back)),
         ),
@@ -152,8 +149,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                  padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
                   child: Image.asset(
                     'images/cosmos.png',
                     height: 200,
@@ -211,12 +207,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           color: Colors.grey.shade100,
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 6,
-                                offset: Offset(0, 2))
-                          ]),
+                          boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))]),
                       child: DropdownButton<String>(
                         underline: Text(''),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -316,7 +307,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
                 ),
                 const SizedBox(height: 40),
 
-                //custom workflow
+                //import Template
                 Text(
                   'Import a Template',
                   style: TextStyle(

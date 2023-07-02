@@ -29,6 +29,8 @@
 // }
 
 //Workflows
+import 'package:flutter/material.dart';
+
 class AccessModel {
   String accessLevel;
   String userId;
@@ -37,6 +39,8 @@ class AccessModel {
     required this.accessLevel,
     required this.userId,
   });
+
+  factory AccessModel.fromJson(Map<String, dynamic> json) => AccessModel(accessLevel: json['accessLevel'], userId: json['user']);
 }
 
 class WorkflowModel {
@@ -61,6 +65,30 @@ class WorkflowModel {
     this.labels,
     required this.active,
   });
+
+  factory WorkflowModel.fromJson(Map<String, dynamic> json) => WorkflowModel(
+        wid: json['_id'],
+        title: json['title'],
+        type: json['type'],
+        // subWorkflows: json['subWorkflows'],
+        // users: json['users'].map((e) => AccessModel.fromJson(e)),
+        // accessCodes: json['accessCodes'],
+        // chat: json['chat'],
+        // labels: json['labels'],
+        active: json['active'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        '_id': wid,
+        'title': title,
+        'type': type,
+        'subWorkflows': subWorkflows,
+        'users': users,
+        'accessCodes': accessCodes,
+        'chat': chat,
+        'labels': labels,
+        'active': active
+      };
 }
 
 //Subworkflows

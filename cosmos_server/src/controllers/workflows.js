@@ -1,5 +1,6 @@
 const Workflow = require('../models/workflow');
 const AccessCode = require('../models/accessCode');
+const User = require('../models/user');
 
 module.exports.accessCode = (req, res) => {
     AccessCode.findOne({ code: req.params.accCode })
