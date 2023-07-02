@@ -26,7 +26,7 @@ class ChartViewWorksScreen extends StatefulWidget {
 }
 
 class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
-  List<List<double>> dataRows = [];
+  List<List<double>> dataRows = [[]];
   List<String> xUserLabels = [];
   List<String> dataRowsLegends = [];
 
@@ -224,11 +224,18 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
   }
 
   createDataArrays() {
-    xUserLabels.add(widget.subworkflow['title']);
+    dataRows.clear();
+    dataRowsLegends.clear();
+    xUserLabels.clear();
+    dataRows.add([]);
+    if (dataRows.isNotEmpty) dataRowsLegends.add(widget.subworkflow['title']);
     for (var work in workcards) {
       dataRows[0].add(work.repetitive?.amount ?? 0);
-      dataRowsLegends.add(work.title);
+      xUserLabels.add(work.title);
     }
+    print(dataRows);
+    print(dataRowsLegends);
+    print(xUserLabels);
   }
 
   @override
