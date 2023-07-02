@@ -26,6 +26,10 @@ class ChartViewWorksScreen extends StatefulWidget {
 }
 
 class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
+  List<List<double>> dataRows = [];
+  List<String> xUserLabels = [];
+  List<String> dataRowsLegends = [];
+
   List<WorkModel> workcards = [];
   Uuid uuid = const Uuid();
   TextEditingController _workController = TextEditingController(); //name
@@ -207,10 +211,23 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
     int nWorks = widget.subworkflow['works'].length;
     for (var i = 0; i < nWorks; i++) {
       workcards.add(WorkModel(
-          workid: widget.subworkflow['works'][i]['_id'],
-          title: widget.subworkflow['works'][i]['title'],
-          description: widget.subworkflow['works'][i]['description'],
-          active: widget.subworkflow['works'][i]['active']));
+        workid: widget.subworkflow['works'][i]['_id'],
+        title: widget.subworkflow['works'][i]['title'],
+        description: widget.subworkflow['works'][i]['description'],
+        active: widget.subworkflow['works'][i]['active'],
+        repetitive: RepetitiveModel(
+            amount: widget.subworkflow['works'][i]['repetitive']['amount'] ?? 0,
+            unit: widget.subworkflow['works'][i]['repetitive']['unit'] ?? 'NU'),
+      ));
+    }
+    createDataArrays();
+  }
+
+  createDataArrays() {
+    xUserLabels.add(widget.subworkflow['title']);
+    for (var work in workcards) {
+      dataRows[0].add(work.repetitive?.amount ?? 0);
+      dataRowsLegends.add(work.title);
     }
   }
 
@@ -486,13 +503,16 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
                     title: title,
                     description: descripion,
                     active: true,
+                    repetitive: RepetitiveModel(
+                        amount: double.parse(_amountController.text),
+                        unit: selectedUnit ?? 'NU'),
                   );
                   createWork(
                       work_newItem, workcards, widget.subworkflow['_id']);
                   setState(() {
                     workcards.add(work_newItem);
                   });
-
+                  createDataArrays();
                   Navigator.pop(context);
                   _workController.clear();
                   _workDesController.clear();
@@ -516,6 +536,10 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
     setState(() {
       workcards.removeWhere((element) => element.workid == workid);
     });
+    dataRows.clear();
+    xUserLabels.clear();
+    dataRowsLegends.clear();
+    createDataArrays();
   }
 
   void editWorks(WorkModel editedItem) {
@@ -528,6 +552,10 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
         workcards.firstWhere((element) => element.workid == editedItem.workid),
         workcards,
         widget.subworkflow['_id']);
+    dataRows.clear();
+    xUserLabels.clear();
+    dataRowsLegends.clear();
+    createDataArrays();
   }
 
   @override
@@ -588,9 +616,12 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: SingleChildScrollView(
                     child: Container(
-                        height: MediaQuery.of(context).size.height / 2,
-                        width: MediaQuery.of(context).size.width,
-                        child: buildChartWidget()),
+                      height: MediaQuery.of(context).size.height / 2,
+                      width: MediaQuery.of(context).size.width,
+                      child: dataRowsLegends.isEmpty
+                          ? const Text('Add a Work')
+                          : buildChartWidget(),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -625,15 +656,9 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
       ),
     );
     chartData = ChartData(
-      dataRows: const [
-        [10.0, 200.0, 20000.0],
-        [70.0, 700.0, 150000.0],
-      ],
-      xUserLabels: const ['March', 'April', 'May'],
-      dataRowsLegends: const [
-        'Materials',
-        'Workers',
-      ],
+      dataRows: dataRows,
+      xUserLabels: xUserLabels,
+      dataRowsLegends: dataRowsLegends,
       chartOptions: chartOptions,
     );
     var lineChartContainer = LineChartTopContainer(

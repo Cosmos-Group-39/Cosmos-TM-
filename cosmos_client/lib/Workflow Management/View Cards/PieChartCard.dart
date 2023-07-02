@@ -27,7 +27,6 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
   TextEditingController _amountController = TextEditingController();
 
   String? selectedUnit;
-  bool isActive = false;
   // Start Date
   DateTime pickedStart = DateTime.now();
   Future<DateTime?> _selectStartDate(BuildContext context) async {
@@ -85,140 +84,6 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                //Start Date
-                GestureDetector(
-                  onTap: () async {
-                    pickedStart = (await _selectStartDate(
-                        context))!; // Assign the value to the variable
-
-                    if (pickedStart != null) {
-                      setState(() {
-                        _startDateController.text =
-                            DateFormat('dd/MM/yyyy').format(pickedStart);
-                      });
-                    }
-                  },
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: _startDateController,
-                      decoration: const InputDecoration(
-                        labelText: 'Start Date',
-                        prefixIcon: Icon(Icons.edit_calendar),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                      ),
-                      // Validations
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter a Start Date';
-                        }
-
-                        final parts = value.split('/');
-
-                        if (parts.length != 3) {
-                          return 'Invalid format. Please enter in DD/MM/YYYY format';
-                        }
-
-                        final day = int.tryParse(parts[0]);
-                        final month = int.tryParse(parts[1]);
-                        final year = int.tryParse(parts[2]);
-                        final currentYear = DateTime.now().year;
-
-                        if (day == null || month == null || year == null) {
-                          return 'Invalid format';
-                        }
-
-                        if (year > currentYear) {
-                          return 'Enter a valid year';
-                        }
-
-                        if (month < 1 || month > 12) {
-                          return 'Enter a valid month';
-                        }
-
-                        final daysInMonth = DateTime(year, month + 1, 0).day;
-
-                        if (day < 1 || day > daysInMonth) {
-                          return 'Enter a valid date';
-                        }
-
-                        return null;
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                //end Date
-                GestureDetector(
-                  onTap: () async {
-                    pickedEnd = (await _selectEndDate(
-                        context))!; // Assign the value to the variable
-
-                    if (pickedEnd != null) {
-                      setState(() {
-                        _endDateController.text =
-                            DateFormat('dd/MM/yyyy').format(pickedEnd);
-                      });
-                    }
-                  },
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: _endDateController,
-                      decoration: const InputDecoration(
-                        labelText: 'End Date',
-                        prefixIcon: Icon(Icons.edit_calendar),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                      ),
-                      // Validations
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter a Start Date';
-                        }
-
-                        final parts = value.split('/');
-
-                        if (parts.length != 3) {
-                          return 'Invalid format. Please enter in DD/MM/YYYY format';
-                        }
-
-                        final day = int.tryParse(parts[0]);
-                        final month = int.tryParse(parts[1]);
-                        final year = int.tryParse(parts[2]);
-                        final currentYear = DateTime.now().year;
-
-                        if (day == null || month == null || year == null) {
-                          return 'Invalid format';
-                        }
-
-                        if (year > currentYear) {
-                          return 'Enter a valid year';
-                        }
-
-                        if (month < 1 || month > 12) {
-                          return 'Enter a valid month';
-                        }
-
-                        final daysInMonth = DateTime(year, month + 1, 0).day;
-
-                        if (day < 1 || day > daysInMonth) {
-                          return 'Enter a valid date';
-                        }
-
-                        return null;
-                      },
                     ),
                   ),
                 ),
@@ -399,12 +264,15 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
   void workeditCard() {
     String title = _worktitleController.text.trim();
     String description = _workDescriptionController.text.trim();
-
+    RepetitiveModel repetitive = RepetitiveModel(
+        amount: double.parse(_amountController.text),
+        unit: selectedUnit ?? 'NU');
     WorkModel work_editedItem = WorkModel(
       workid: widget.item.workid,
       title: title,
       description: description,
-      active: true,
+      active: false,
+      repetitive: repetitive,
     );
 
     widget.workonEdit(work_editedItem);
@@ -503,18 +371,6 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
                         ),
                         Text('data')
                       ],
-                    ),
-                  ),
-                  Transform.scale(
-                    scale: 0.75,
-                    child: Switch(
-                      value: isActive,
-                      onChanged: (bool value) {
-                        setState(() {
-                          isActive = value;
-                        });
-                        print(isActive);
-                      },
                     ),
                   ),
                   IconButton(

@@ -109,7 +109,7 @@ class WorkModel {
 }
 
 class RepetitiveModel {
-  int amount;
+  double amount;
   String unit;
 
   RepetitiveModel({

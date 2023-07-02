@@ -402,11 +402,13 @@ class _ChartViewWorksCardState extends State<ChartViewWorksCard> {
     String description = _workDescriptionController.text.trim();
 
     WorkModel work_editedItem = WorkModel(
-      workid: widget.item.workid,
-      title: title,
-      description: description,
-      active: true,
-    );
+        workid: widget.item.workid,
+        title: title,
+        description: description,
+        active: true,
+        repetitive: RepetitiveModel(
+            amount: double.parse(_amountController.text),
+            unit: selectedUnit ?? 'NU'));
 
     widget.workonEdit(work_editedItem);
   }
