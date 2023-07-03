@@ -340,6 +340,8 @@ class _GanttChartWorksCardState extends State<GanttChartWorksCard> {
       title: title,
       description: description,
       active: true,
+      startTime: pickedStart,
+      endTime: pickedEnd,
     );
 
     widget.workonEdit(work_editedItem);

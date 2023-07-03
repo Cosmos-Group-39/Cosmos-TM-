@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
                     Dio().get('$baseUrls/accesscode/${_searchTextController.text}').then((value) {
                       // print(jsonDecode(value.data));
-                      print(value.data);
+                      // print(value.data);
                       Navigator.push(context, MaterialPageRoute(builder: (context) => SwipeScreen(workflow: value.data)));
                     }).catchError((value) {
                       setState(() {
