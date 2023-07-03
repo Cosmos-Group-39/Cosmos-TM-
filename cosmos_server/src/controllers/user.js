@@ -76,7 +76,34 @@ module.exports.createWorkflow = (req, res) => {
         .then((item) => {
             User.updateOne({ _id: req.user._id }, { $push: { workflows: item._id } })
                 .then(() => res.status(200).json(item))
-                .catch((e) => console.log(e));
+                .catch((e) => {
+                    console.log(e);
+                    res.status(500).json(error);
+                });
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json(error);
+        });
+};
+
+module.exports.deleteWorkflow = (req, res) => {
+    console.log(req.body.wid);
+    Workflow.findByIdAndDelete(req.body.wid)
+        .then((item) => {
+            User.updateOne({ _id: req.user._id }, {
+                "$pull": {
+                    "workflows": req.body.wid
+                }
+            })
+                .then((res) => {
+                    console.log(res);
+                    res.status(200).json(item)
+                })
+                .catch((e) => {
+                    console.log(e);
+                    res.status(500).json(e);
+                });
         })
         .catch((error) => {
             console.log(error);
