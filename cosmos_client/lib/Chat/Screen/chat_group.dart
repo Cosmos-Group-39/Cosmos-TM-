@@ -17,7 +17,7 @@ class GroupPage extends StatefulWidget {
 
 class _GroupPageState extends State<GroupPage> {
   IO.Socket? socket;
-  List<MsgModel> listMsg = [];
+  List<MsgModel> messages = [];
   TextEditingController _msgController = TextEditingController();
 
   @override
@@ -34,15 +34,17 @@ class _GroupPageState extends State<GroupPage> {
     socket!.connect();
     socket!.onConnect((_) {
       print('connect into frontend');
-      socket!.on("sendMsgServer", (msg) {
-        print(msg);
-        if (msg["userId"] != widget.userId) {
+      socket!.on("sendMsgServer", (content) {
+        print(content);
+        if (content["userId"] != widget.userId) {
           setState(() {
-            listMsg.add(
+            messages.add(
               MsgModel(
-                  msg: msg["msg"],
-                  type: msg["type"],
-                  sender: msg["senderName"]),
+                content: content["content"],
+                type: content["type"],
+                user: content["senderName"],
+                time: DateTime.now(), // change
+              ),
             );
           });
         }
@@ -50,76 +52,79 @@ class _GroupPageState extends State<GroupPage> {
     });
   }
 
-  void sendMsg(String msg, String? senderName) {
-    MsgModel ownMsg =
-        MsgModel(msg: msg, type: "ownMsg", sender: senderName ?? "Unknown");
-    listMsg.add(ownMsg);
+  void sendMsg(String content, String? senderName) {
+    MsgModel ownMsg = MsgModel(
+        content: content,
+        type: "ownMsg",
+        user: senderName ?? "Unknown",
+        time: DateTime.now());
+    messages.add(ownMsg);
     setState(() {
-      listMsg;
+      messages;
     });
     socket!.emit('sendMsg', {
       "type": "ownMsg",
-      "msg": msg,
+      "content": content,
       "senderName": senderName ?? "Unknown",
       "userId": widget.userId,
     });
   }
 
-//Delete chat history
-  deleteChat() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: kAlertBoxBorderStyle,
-          title: const Icon(
-            Icons.backspace,
-            size: 60.0,
-            color: Colors.green,
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Center(
-                child: Text(
-                  'Are You Sure ?',
-                  style: kAlertBoxTopicTextStyle,
-                ),
-              ),
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 20, left: 17),
-                  child: Text(
-                    'You want to clear the chat !',
-                    style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            const SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                style: kAlertBoxButtonStyle, //Elevated button style
-                onPressed: () {
-                  setState(() {
-                    listMsg.clear();
-                  });
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  'Clear',
-                  style: kAlertBoxButtonTextStyle, //Elevated button Text style
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-          ],
-        );
-      },
-    );
-  }
+// //Delete chat history
+//   deleteChat() {
+//     showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           shape: kAlertBoxBorderStyle,
+//           title: const Icon(
+//             Icons.backspace,
+//             size: 60.0,
+//             color: Colors.green,
+//           ),
+//           content: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               Center(
+//                 child: Text(
+//                   'Are You Sure ?',
+//                   style: kAlertBoxTopicTextStyle,
+//                 ),
+//               ),
+//               const Center(
+//                 child: Padding(
+//                   padding: EdgeInsets.only(top: 20, left: 17),
+//                   child: Text(
+//                     'You want to clear the chat !',
+//                     style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//           actions: [
+//             const SizedBox(height: 20),
+//             Center(
+//               child: ElevatedButton(
+//                 style: kAlertBoxButtonStyle, //Elevated button style
+//                 onPressed: () {
+//                   setState(() {
+//                     listMsg.clear();
+//                   });
+//                   Navigator.pop(context);
+//                 },
+//                 child: const Text(
+//                   'Clear',
+//                   style: kAlertBoxButtonTextStyle, //Elevated button Text style
+//                 ),
+//               ),
+//             ),
+//             const SizedBox(height: 10),
+//           ],
+//         );
+//       },
+//     );
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -143,10 +148,10 @@ class _GroupPageState extends State<GroupPage> {
             bottomRight: Radius.circular(30),
           ),
         ),
-        actions: <Widget>[
+        actions: const <Widget>[
           IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: deleteChat,
+            icon: Icon(Icons.menu),
+            onPressed: null,
           ),
         ],
       ),
@@ -155,14 +160,16 @@ class _GroupPageState extends State<GroupPage> {
           SizedBox(height: 20),
           Expanded(
             child: ListView.builder(
-                itemCount: listMsg.length,
+                itemCount: messages.length,
                 itemBuilder: (context, index) {
-                  if (listMsg[index].type == "ownMsg") {
+                  if (messages[index].type == "ownMsg") {
                     return OwnMSgWidget(
-                        msg: listMsg[index].msg, sender: listMsg[index].sender);
+                        content: messages[index].content,
+                        user: messages[index].user!);
                   } else {
                     return OtherMSgWidget(
-                        msg: listMsg[index].msg, sender: listMsg[index].sender);
+                        content: messages[index].content,
+                        user: messages[index].user!);
                   }
                 }),
           ),
@@ -183,9 +190,9 @@ class _GroupPageState extends State<GroupPage> {
                       ),
                       suffixIcon: IconButton(
                         onPressed: () {
-                          String msg = _msgController.text;
-                          if ((msg.isNotEmpty)) {
-                            sendMsg(msg, widget.name); //
+                          String content = _msgController.text;
+                          if ((content.isNotEmpty)) {
+                            sendMsg(content, widget.name); //
                             _msgController.clear();
                           }
                         },

@@ -533,7 +533,16 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
             ),
             const SizedBox(height: 8),
             const SizedBox(height: 20),
-            buildGanttChartView(),
+            tasks.isEmpty
+                ? const Center(
+                    child: Text(
+                    'Add a Work',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.red),
+                  ))
+                : buildGanttChartView(),
             const SizedBox(height: 15),
             Expanded(
               child: ListView.builder(

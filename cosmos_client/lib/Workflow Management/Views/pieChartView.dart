@@ -492,7 +492,25 @@ class _PieChartWorksScreenState extends State<PieChartWorksScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: dataMap.isEmpty
-          ? const Text('Add a Work')
+          ? const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                    child: Text(
+                  'Add a Work',
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black54),
+                )),
+                SizedBox(height: 20),
+                Icon(
+                  Icons.hourglass_empty_outlined,
+                  size: 40,
+                  color: Colors.red,
+                ),
+              ],
+            )
           : PieChart(
               dataMap: dataMap,
               chartType: ChartType.ring,

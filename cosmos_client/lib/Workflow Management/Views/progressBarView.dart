@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:cosmos_client/Workflow%20Management/Services/apiserviceworkflow.dart';
 import 'package:cosmos_client/Workflow%20Management/View%20Cards/progressBarCard.dart';

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class OtherMSgWidget extends StatelessWidget {
-  final String sender;
-  final String msg;
+  final String user;
+  final String content;
 
-  const OtherMSgWidget({Key? key, required this.msg, required this.sender})
+  const OtherMSgWidget({Key? key, required this.content, required this.user})
       : super(key: key);
 
   String _getCurrentDateTime() {
@@ -35,7 +35,7 @@ class OtherMSgWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  sender,
+                  user,
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -45,7 +45,7 @@ class OtherMSgWidget extends StatelessWidget {
                   height: 3,
                 ),
                 Text(
-                  msg,
+                  content,
                   style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
