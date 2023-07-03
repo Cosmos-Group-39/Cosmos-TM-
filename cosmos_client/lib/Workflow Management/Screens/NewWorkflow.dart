@@ -45,19 +45,31 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
     if (formKeywf.currentState!.validate()) {
       formKeywf.currentState!.save();
 
-      wfcards.add(WorkflowModel(
-        wid: uuid.v4(),
+      WorkflowModel newWorkflow = WorkflowModel(
+        // wid: uuid.v4(),
         title: workflowNameController.text,
         active: true,
         type: 'free',
-      ));
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => CreatedWorkflows(),
-        ),
       );
+
+      FlutterSecureStorage().read(key: 'userID').then((userID) {
+        final options = Options(
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer $userID',
+          },
+        );
+
+        Map<String, dynamic> data = newWorkflow.toJson();
+        Dio().post('$baseUrls/user/createWorkflow', data: data, options: options).then((value) {
+          print(value);
+          setState(() {
+            wfcards.add(WorkflowModel.fromJson(value.data));
+          });
+        }).catchError((onError) {
+          print(onError);
+        });
+      });
     }
   }
 

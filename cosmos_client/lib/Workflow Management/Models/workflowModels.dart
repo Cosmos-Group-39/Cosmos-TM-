@@ -71,8 +71,8 @@ class WorkflowModel {
       wid: json['_id'],
       title: json['title'],
       type: json['type'],
-      subWorkflows: List<String>.from(json['subWorkflows']),
-      users: List<AccessModel>.from(json['users'].map((e) => AccessModel.fromJson(e)).toList()),
+      subWorkflows: List<String>.from(json['subWorkflows'] ?? []),
+      users: List<AccessModel>.from(json['users']?.map((e) => AccessModel.fromJson(e)).toList() ?? []),
       accessCodes: List<String>.from(json['accessCodes']),
       chat: json['chat'],
       labels: List<String>.from(json['labels']),
@@ -81,7 +81,7 @@ class WorkflowModel {
   }
 
   Map<String, dynamic> toJson() => {
-        '_id': wid,
+        // '_id': wid,
         'title': title,
         'type': type,
         'subWorkflows': subWorkflows,

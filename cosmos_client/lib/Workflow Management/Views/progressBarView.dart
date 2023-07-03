@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:cosmos_client/Workflow%20Management/Services/apiserviceworkflow.dart';
 import 'package:cosmos_client/Workflow%20Management/View%20Cards/progressBarCard.dart';
@@ -14,11 +12,7 @@ class ProgressBarWorksScreen extends StatefulWidget {
   dynamic subworkflow;
   final String workflowName;
   final Function(dynamic) onDelete;
-  ProgressBarWorksScreen(
-      {super.key,
-      required this.subworkflow,
-      required this.workflowName,
-      required this.onDelete});
+  ProgressBarWorksScreen({super.key, required this.subworkflow, required this.workflowName, required this.onDelete});
 
   @override
   State<ProgressBarWorksScreen> createState() => _ProgressBarWorksScreenState();
@@ -30,8 +24,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   TextEditingController _workController = TextEditingController(); //name
   TextEditingController _workDesController = TextEditingController(); //des
   TextEditingController _titleController = TextEditingController();
-  TextEditingController _descriptionController =
-      TextEditingController(); // Subworkflow
+  TextEditingController _descriptionController = TextEditingController(); // Subworkflow
 
   String? selectedUnit;
   // bool isActive = false;
@@ -214,8 +207,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                     description: descripion,
                     active: true,
                   );
-                  createWork(
-                      work_newItem, workcards, widget.subworkflow['_id']);
+                  createWork(work_newItem, workcards, widget.subworkflow['_id']);
                   setState(() {
                     workcards.add(work_newItem);
                   });
@@ -307,8 +299,7 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   }
 
   void deleteWorks(String workid) {
-    deleteWork(workcards.firstWhere((element) => element.workid == workid),
-        workcards, widget.subworkflow['_id']);
+    deleteWork(workcards.firstWhere((element) => element.workid == workid), workcards, widget.subworkflow['_id']);
     setState(() {
       workcards.removeWhere((element) => element.workid == workid);
     });
@@ -316,15 +307,11 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
 
   void editWorks(WorkModel editedItem) {
     setState(() {
-      int index = workcards
-          .indexWhere((element) => element.workid == editedItem.workid);
+      int index = workcards.indexWhere((element) => element.workid == editedItem.workid);
       workcards[index] = editedItem;
     });
 
-    editWork(
-        workcards.firstWhere((element) => element.workid == editedItem.workid),
-        workcards,
-        widget.subworkflow['_id']);
+    editWork(workcards.firstWhere((element) => element.workid == editedItem.workid), workcards, widget.subworkflow['_id']);
   }
 
   @override
@@ -365,13 +352,10 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                       ),
                     ),
                     IconButton(
-                      icon:
-                          const Icon(Icons.help, color: kDefaultIconDarkColor),
+                      icon: const Icon(Icons.help, color: kDefaultIconDarkColor),
                       onPressed: editSubworkflow, // Show Description
                     ),
-                    IconButton(
-                        onPressed: deleteProgressBarView,
-                        icon: const Icon(Icons.delete)),
+                    IconButton(onPressed: deleteProgressBarView, icon: const Icon(Icons.delete)),
                   ],
                 ),
               ),

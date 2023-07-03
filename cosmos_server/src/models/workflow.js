@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// const Access = require('./accessSchema');
 
 const accessSchema = new mongoose.Schema({
     accessLevel: {
@@ -29,7 +30,7 @@ const workflowSchema = new mongoose.Schema({
         ref: 'SubWorkflow'
     }],
     users: {
-        type: [accessSchema],
+        type: [accessSchema],//[Access.schema],
     },
     accessCodes: [{
         type: mongoose.Schema.Types.ObjectId,
