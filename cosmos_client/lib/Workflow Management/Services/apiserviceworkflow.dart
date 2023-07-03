@@ -1,6 +1,7 @@
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 // import 'package:intl/intl.dart';
 
 void createWork(WorkModel work, List<WorkModel> workArray, String subId) {
@@ -8,8 +9,10 @@ void createWork(WorkModel work, List<WorkModel> workArray, String subId) {
     'title': work.title,
     'description': work.description,
     'active': work.active,
-    'startTime': work.startTime,
-    'endTime': work.endTime,
+    'startTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(
+        work.startTime?.toString() ?? DateTime.now().toString())),
+    'endTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(
+        DateTime.parse(work.endTime?.toString() ?? DateTime.now().toString())),
     'labels': work.labels,
     'user': work.user,
     'repetitive': {
@@ -30,12 +33,16 @@ void createWork(WorkModel work, List<WorkModel> workArray, String subId) {
 }
 
 void deleteWork(WorkModel work, List<WorkModel> workArray, String subId) {
+  print(DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(
+      DateTime.parse(work.startTime?.toString() ?? DateTime.now().toString())));
   Map<String, dynamic> jsonObject = {
     'title': work.title,
     'description': work.description,
     'active': work.active,
-    'startTime': work.startTime,
-    'endTime': work.endTime,
+    'startTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(
+        work.startTime?.toString() ?? DateTime.now().toString())),
+    'endTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(
+        DateTime.parse(work.endTime?.toString() ?? DateTime.now().toString())),
     'labels': work.labels,
     'user': work.user,
     'repetitive': {
@@ -43,10 +50,14 @@ void deleteWork(WorkModel work, List<WorkModel> workArray, String subId) {
       'unit': work.repetitive?.unit,
     }
   };
+  print(work.workid);
+  print(subId);
   Dio().patch('$baseUrls/common/subWorkflow', data: {
     'head': {'_id': subId},
     'set': {
-      '\$pull': {"works": jsonObject}
+      '\$pull': {
+        "works": {"_id": work.workid}
+      }
     }
   }).then((value) {
     // workArray.remove(work);
@@ -63,8 +74,12 @@ void editWork(WorkModel work, List<WorkModel> workArray, String subId) {
         'works.\$.title': work.title,
         'works.\$.description': work.description,
         'works.\$.active': work.active,
-        'works.\$.startTime': work.startTime,
-        'works.\$.endTime': work.endTime,
+        'works.\$.startTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(
+            DateTime.parse(
+                work.startTime?.toString() ?? DateTime.now().toString())),
+        'works.\$.endTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(
+            DateTime.parse(
+                work.endTime?.toString() ?? DateTime.now().toString())),
         'works.\$.labels': work.labels,
         'works.\$.user': work.user,
         'works.\$.repetitive': {

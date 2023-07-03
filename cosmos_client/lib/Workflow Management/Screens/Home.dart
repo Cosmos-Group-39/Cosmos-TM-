@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             '$baseUrls/accesscode/${_searchTextController.text}')
                         .then((value) {
                       // print(jsonDecode(value.data));
-                      print(value.data);
+                      // print(value.data);
                       Navigator.push(
                           context,
                           MaterialPageRoute(

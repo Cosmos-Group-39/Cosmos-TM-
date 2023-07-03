@@ -25,6 +25,7 @@ class GanttChartWorksScreen extends StatefulWidget {
 }
 
 class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
+  List<GanttEventBase> tasks = [];
   List<WorkModel> workcards = [];
   Uuid uuid = Uuid();
   TextEditingController _workController = TextEditingController(); //name
@@ -206,10 +207,27 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
     int nWorks = widget.subworkflow['works'].length;
     for (var i = 0; i < nWorks; i++) {
       workcards.add(WorkModel(
-          workid: widget.subworkflow['works'][i]['_id'],
-          title: widget.subworkflow['works'][i]['title'],
-          description: widget.subworkflow['works'][i]['description'],
-          active: widget.subworkflow['works'][i]['active']));
+        workid: widget.subworkflow['works'][i]['_id'],
+        title: widget.subworkflow['works'][i]['title'],
+        description: widget.subworkflow['works'][i]['description'],
+        active: widget.subworkflow['works'][i]['active'],
+        startTime: DateTime.parse(widget.subworkflow['works'][i]['startTime']),
+        endTime: DateTime.parse(widget.subworkflow['works'][i]['endTime']),
+      ));
+    }
+    createTaskArrays();
+  }
+
+  createTaskArrays() {
+    tasks.clear();
+    for (var work in workcards) {
+      tasks.add(
+        GanttAbsoluteEvent(
+          startDate: work.startTime ?? DateTime.now(),
+          endDate: work.endTime ?? DateTime.now(),
+          displayName: work.title,
+        ),
+      );
     }
   }
 
@@ -420,13 +438,15 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                     title: title,
                     description: descripion,
                     active: true,
+                    startTime: pickedStart,
+                    endTime: pickedEnd,
                   );
                   createWork(
                       work_newItem, workcards, widget.subworkflow['_id']);
                   setState(() {
                     workcards.add(work_newItem);
                   });
-
+                  createTaskArrays();
                   Navigator.pop(context);
                   _workController.clear();
                   _workDesController.clear();
@@ -450,6 +470,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
     setState(() {
       workcards.removeWhere((element) => element.workid == workid);
     });
+    createTaskArrays();
   }
 
   void editWorks(WorkModel editedItem) {
@@ -462,6 +483,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
         workcards.firstWhere((element) => element.workid == editedItem.workid),
         workcards,
         widget.subworkflow['_id']);
+    createTaskArrays();
   }
 
   @override
@@ -534,41 +556,16 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
   Widget buildGanttChartView() {
     return Container(
       child: GanttChartView(
-        maxDuration: const Duration(days: 30 * 2),
-        startDate: DateTime(2022, 6, 7),
-        dayWidth: 30,
-        eventHeight: 30,
-        stickyAreaWidth: 150,
-        showStickyArea: true,
-        showDays: true,
-        startOfTheWeek: WeekDay.sunday,
-        weekEnds: const {WeekDay.friday, WeekDay.saturday},
-        isExtraHoliday: (context, day) {
-          return DateUtils.isSameDay(DateTime(2022, 7, 1), day);
-        },
-        events: [
-          GanttRelativeEvent(
-            relativeToStart: const Duration(days: 0),
-            duration: const Duration(days: 5),
-            displayName: 'Project Initiation',
-          ),
-          GanttAbsoluteEvent(
-            startDate: DateTime(2022, 6, 10),
-            endDate: DateTime(2022, 6, 16),
-            displayName: 'Project Planning',
-          ),
-          GanttAbsoluteEvent(
-            startDate: DateTime(2022, 6, 9),
-            endDate: DateTime(2022, 6, 16),
-            displayName: 'Project Execution',
-          ),
-          GanttAbsoluteEvent(
-            startDate: DateTime(2022, 6, 9),
-            endDate: DateTime(2022, 6, 16),
-            displayName: 'Project Monitoring',
-          ),
-        ],
-      ),
+          maxDuration: const Duration(days: 30 * 2),
+          startDate: DateTime(2023, 6, 1),
+          dayWidth: 30,
+          eventHeight: 30,
+          stickyAreaWidth: 150,
+          showStickyArea: true,
+          showDays: true,
+          startOfTheWeek: WeekDay.monday,
+          weekEnds: const {},
+          events: tasks),
     );
   }
 }
