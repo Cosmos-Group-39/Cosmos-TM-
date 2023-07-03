@@ -18,7 +18,10 @@ class _OrgSettingsState extends State<OrgSettings> {
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: kDefaultIconLightColor,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },

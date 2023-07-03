@@ -192,7 +192,7 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
             unit: widget.subworkflow['works'][i]['repetitive']['unit'] ?? 'NU'),
       ));
     }
-    createDataArrays();
+    // createDataArrays();
   }
 
   createDataArrays() {

@@ -180,7 +180,10 @@ class _CreateCardsState extends State<CreateCards> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const OrgMain()));
             },
-            icon: const Icon(Icons.arrow_back)),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: kDefaultIconLightColor,
+            )),
       ),
       bottomSheet: Container(
         height: 50,
