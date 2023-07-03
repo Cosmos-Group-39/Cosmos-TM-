@@ -73,14 +73,14 @@ class WorkflowModel {
 
   factory WorkflowModel.fromJson(Map<String, dynamic> json) {
     return WorkflowModel(
-      // wid: json['_id'],
+      wid: json['_id'],
       title: json['title'] as String? ?? '',
       type: json['type'] as String? ?? 'free',
       subWorkflows:
           List<String>.from(json['subWorkflows'] as List<dynamic>? ?? []),
       users: (json['users'] as List<dynamic>?)
           ?.map((e) => AccessModel.fromJson(e))
-          ?.toList(),
+          .toList(),
       accessCodes:
           List<String>.from(json['accessCodes'] as List<dynamic>? ?? []),
       chat: json['chat'] as String? ?? '',

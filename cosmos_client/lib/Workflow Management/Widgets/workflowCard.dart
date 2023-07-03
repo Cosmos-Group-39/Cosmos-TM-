@@ -162,8 +162,7 @@ class _WorkflowCardState extends State<WorkflowCard> {
       borderRadius: BorderRadius.circular(25),
       onTap: () {
         Dio().get('$baseUrls/workflows/${widget.item.wid}').then((value) {
-          // print(jsonDecode(value.data));
-
+          print(value.data);
           Navigator.push(
               context,
               MaterialPageRoute(
