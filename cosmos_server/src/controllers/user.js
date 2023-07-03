@@ -43,7 +43,7 @@ module.exports.create = (req, res) => {
 
 module.exports.ownWorkflows = (req, res) => {
     console.log("get int");
-       User.findById(req.user._id)
+    User.findById(req.user._id)
         .then((user) => {
             console.log('gt user');
             const workflowPromises = user.workflows.map((id) => Workflow.findById(id));

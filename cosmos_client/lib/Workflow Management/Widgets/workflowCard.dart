@@ -4,6 +4,7 @@ import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/swipeScreen.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/workflowMembers.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/yourSubWorkflow.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class WorkflowCard extends StatefulWidget {
@@ -160,12 +161,16 @@ class _WorkflowCardState extends State<WorkflowCard> {
     return InkWell(
       borderRadius: BorderRadius.circular(25),
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SwipeScreen(),
-          ),
-        );
+        Dio().get('$baseUrls/workflows/${widget.item.wid}').then((value) {
+          // print(jsonDecode(value.data));
+          print(value.data);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SwipeScreen(workflow: value.data)));
+        }).catchError((value) {
+          setState(() {
+            // errorMessage = 'Invalid Access Code';
+          });
+          // print(value);
+        });
       },
       child: Card(
         elevation: 10,
@@ -198,21 +203,13 @@ class _WorkflowCardState extends State<WorkflowCard> {
                 ),
               ),
               const SizedBox(width: 100),
-              IconButton(
-                  onPressed: changeCard,
-                  icon: const Icon(Icons.create, color: kBackgroundColor)),
-              IconButton(
-                  onPressed: deleteWorkflow,
-                  icon: const Icon(Icons.delete, color: kBackgroundColor)),
+              IconButton(onPressed: changeCard, icon: const Icon(Icons.create, color: kBackgroundColor)),
+              IconButton(onPressed: deleteWorkflow, icon: const Icon(Icons.delete, color: kBackgroundColor)),
               IconButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => WorkflowMembers()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => WorkflowMembers()));
                   },
-                  icon: const Icon(Icons.add_circle_outline,
-                      color: kBackgroundColor))
+                  icon: const Icon(Icons.add_circle_outline, color: kBackgroundColor))
             ],
           ),
         ),

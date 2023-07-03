@@ -98,17 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                       return;
                     }
-                    Dio()
-                        .get(
-                            '$baseUrls/accesscode/${_searchTextController.text}')
-                        .then((value) {
+                    Dio().get('$baseUrls/accesscode/${_searchTextController.text}').then((value) {
                       // print(jsonDecode(value.data));
                       // print(value.data);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  SwipeScreen(workflow: value.data)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SwipeScreen(workflow: value.data)));
                     }).catchError((value) {
                       setState(() {
                         errorMessage = 'Invalid Access Code';
@@ -136,10 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 FloatingActionButton(
                   backgroundColor: kPrimaryColor,
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const NewWorkflowScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const NewWorkflowScreen()));
                   },
                   child: const Icon(
                     Icons.add,
@@ -162,10 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                       },
                       child: const Text(
                         'Log in',
@@ -185,10 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignupScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SignupScreen()));
                       },
                       child: const Text(
                         'SignUp',
@@ -218,9 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))
-        ],
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

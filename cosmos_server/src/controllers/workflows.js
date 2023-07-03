@@ -32,6 +32,24 @@ module.exports.accessCode = (req, res) => {
 };
 
 
+module.exports.getWorkflow = (req, res) => {
+    Workflow.findById(req.params.id).populate('subWorkflows')
+        .then((workflow) => {
+            if (workflow) {
+                console.log(workflow);
+                res.status(200).json(workflow);
+            } else {
+                console.log('Workflow not found');
+                res.status(404).json({ message: 'Workflow not found' });
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).json({ message: 'Internal server error' });
+        });
+};
+
+
 
 // GET /workflows
 // module.exports.getAll = (req, res) => {

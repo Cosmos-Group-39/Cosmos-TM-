@@ -37,10 +37,9 @@ class _CreatedWorkflowsState extends State<CreatedWorkflows> {
         },
       );
       Dio().get('$baseUrls/user/ownWorkflows', options: options).then((value) {
-        print(value.data[0]);
-        // print(WorkflowModel.fromJson(jsonDecode(value.data[0])));
-
-        wfcards = value.data.map((workflow) => WorkflowModel.fromJson(workflow)).toList();
+        setState(() {
+          wfcards = value.data.map((workflow) => WorkflowModel.fromJson(workflow)).toList();
+        });
       });
     });
   }
