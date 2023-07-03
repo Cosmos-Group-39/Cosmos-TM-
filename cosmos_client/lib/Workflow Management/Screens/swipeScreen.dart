@@ -1,5 +1,6 @@
 import 'package:cosmos_client/Chat/Screen/chat_group.dart';
 import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/FeedBack/Screens/feedbackReview.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/Home.dart';
 import 'package:cosmos_client/Workflow%20Management/Views/calenderView.dart';
@@ -225,6 +226,17 @@ class _SwipeScreenState extends State<SwipeScreen> {
               },
               icon: const Icon(Icons.arrow_back)),
           actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FeedbackReview()));
+                },
+                icon: Icon(
+                  Icons.rate_review_outlined,
+                  color: kDefaultIconLightColor,
+                )),
             FloatingActionButton(
               backgroundColor: kPrimaryColor,
               onPressed: () {
@@ -240,7 +252,10 @@ class _SwipeScreenState extends State<SwipeScreen> {
                 borderRadius:
                     BorderRadius.circular(10.0), // Set the desired radius here
               ),
-              child: const Icon(Icons.chat_bubble),
+              child: const Icon(
+                Icons.chat_bubble,
+                color: kDefaultIconLightColor,
+              ),
             )
           ],
         ),

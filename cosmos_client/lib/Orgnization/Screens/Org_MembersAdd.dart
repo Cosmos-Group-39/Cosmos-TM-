@@ -141,7 +141,10 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.arrow_back)),
+              icon: Icon(
+                Icons.arrow_back,
+                color: kDefaultIconLightColor,
+              )),
         ),
         body: SingleChildScrollView(
           child: Column(

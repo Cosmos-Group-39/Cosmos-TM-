@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:cosmos_client/Constants.dart';
+import 'package:cosmos_client/FeedBack/Models/feedbackModels.dart';
 import 'package:cosmos_client/Orgnization/Screens/Org_MembersAdd.dart';
 import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class OrgPro extends StatefulWidget {
   final OrganizationModel item;
@@ -15,13 +17,9 @@ class OrgPro extends StatefulWidget {
 
 class _OrgProState extends State<OrgPro> {
   File? _profilePic;
-  List<String> _reviews = [
-    'review 1',
-    'review 2',
-    'review 3',
-    'review 4',
-    'review 5',
-  ];
+  late double _rating = 1;
+  double _initialRating = 1;
+  List<ReviewModel> _reviews = [];
 
   @override
   void initState() {
@@ -77,6 +75,14 @@ class _OrgProState extends State<OrgPro> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: kDefaultIconLightColor,
+              )),
           title: Text(
             widget.item.name,
             style: kAppBarTitle,
@@ -149,9 +155,20 @@ class _OrgProState extends State<OrgPro> {
                   child: ListView.builder(
                     itemCount: _reviews.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        title: Text(_reviews[index]),
-                        onTap: () {},
+                      return Column(
+                        children: [
+                          ListTile(
+                            title: Row(
+                              children: [
+                                Icon(Icons.star, color: Colors.yellow),
+                                SizedBox(width: 8),
+                                Text(''),
+                              ],
+                            ),
+                            onTap: null,
+                          ),
+                          ratingBar(),
+                        ],
                       );
                     },
                   ),
@@ -162,6 +179,54 @@ class _OrgProState extends State<OrgPro> {
           ),
         ),
       ),
+    );
+  }
+
+  //Rating Bar
+  Widget ratingBar() {
+    return RatingBar.builder(
+      initialRating: _initialRating,
+      unratedColor: Colors.grey,
+      direction: Axis.horizontal,
+      itemCount: 5,
+      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+      itemBuilder: (context, index) {
+        switch (index) {
+          case 0:
+            return const Icon(
+              Icons.sentiment_very_dissatisfied,
+              color: Colors.red,
+            );
+          case 1:
+            return const Icon(
+              Icons.sentiment_dissatisfied,
+              color: Colors.redAccent,
+            );
+          case 2:
+            return const Icon(
+              Icons.sentiment_neutral,
+              color: Colors.amber,
+            );
+          case 3:
+            return const Icon(
+              Icons.sentiment_satisfied,
+              color: Colors.lightGreen,
+            );
+          case 4:
+            return const Icon(
+              Icons.sentiment_very_satisfied,
+              color: Colors.green,
+            );
+          default:
+            return Container();
+        }
+      },
+      onRatingUpdate: (rating) {
+        setState(() {
+          _rating = rating;
+        });
+      },
+      updateOnDrag: true,
     );
   }
 }

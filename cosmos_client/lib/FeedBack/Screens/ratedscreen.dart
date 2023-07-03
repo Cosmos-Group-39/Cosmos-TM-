@@ -34,6 +34,7 @@ class _RatedScreenState extends State<RatedScreen> {
         child: ElevatedButton(
           onPressed: () {
             Navigator.pop(context);
+            Navigator.pop(context);
           },
           style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
