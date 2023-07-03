@@ -2,7 +2,7 @@ const router = require('express').Router();
 const workflow = require('../controllers/workflows');
 
 // Route: GET /workflows
-// router.get('/:id', workflow.ownWorkflows);
+router.get('/:id', workflow.getWorkflow);
 // // Route: POST /workflows
 // router.post('/', workflow.create);
 

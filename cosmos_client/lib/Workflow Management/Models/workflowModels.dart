@@ -66,17 +66,19 @@ class WorkflowModel {
     required this.active,
   });
 
-  factory WorkflowModel.fromJson(Map<String, dynamic> json) => WorkflowModel(
-        wid: json['_id'],
-        title: json['title'],
-        type: json['type'],
-        // subWorkflows: json['subWorkflows'],
-        // users: json['users'].map((e) => AccessModel.fromJson(e)),
-        // accessCodes: json['accessCodes'],
-        // chat: json['chat'],
-        // labels: json['labels'],
-        active: json['active'],
-      );
+  factory WorkflowModel.fromJson(Map<String, dynamic> json) {
+    return WorkflowModel(
+      wid: json['_id'],
+      title: json['title'],
+      type: json['type'],
+      subWorkflows: List<String>.from(json['subWorkflows']),
+      users: List<AccessModel>.from(json['users'].map((e) => AccessModel.fromJson(e)).toList()),
+      accessCodes: List<String>.from(json['accessCodes']),
+      chat: json['chat'],
+      labels: List<String>.from(json['labels']),
+      active: json['active'],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         '_id': wid,
