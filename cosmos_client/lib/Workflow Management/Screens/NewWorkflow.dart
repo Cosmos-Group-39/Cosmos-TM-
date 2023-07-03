@@ -61,8 +61,9 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
         );
 
         Map<String, dynamic> data = newWorkflow.toJson();
-        Dio().post('$baseUrls/user/createWorkflow', data: data, options: options).then((value) {
-          print(value);
+        Dio()
+            .post('$baseUrls/user/createWorkflow', data: data, options: options)
+            .then((value) {
           setState(() {
             wfcards.add(WorkflowModel.fromJson(value.data));
           });
@@ -78,7 +79,9 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0), side: const BorderSide(color: kPrimaryColor, width: 5)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              side: const BorderSide(color: kPrimaryColor, width: 5)),
           content: SingleChildScrollView(
             child: Form(
               key: formKeywf,
@@ -139,7 +142,10 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
           backgroundColor: Colors.green,
           leading: IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HomeScreen()));
               },
               icon: Icon(Icons.arrow_back)),
         ),
@@ -161,7 +167,8 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                  padding:
+                      const EdgeInsets.only(bottom: 10, left: 10, right: 10),
                   child: Image.asset(
                     'images/cosmos.png',
                     height: 200,
@@ -219,7 +226,12 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           color: Colors.grey.shade100,
-                          boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))]),
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 6,
+                                offset: Offset(0, 2))
+                          ]),
                       child: DropdownButton<String>(
                         underline: Text(''),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
