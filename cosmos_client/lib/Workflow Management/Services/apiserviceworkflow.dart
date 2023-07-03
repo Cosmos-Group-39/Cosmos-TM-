@@ -9,10 +9,8 @@ void createWork(WorkModel work, List<WorkModel> workArray, String subId) {
     'title': work.title,
     'description': work.description,
     'active': work.active,
-    'startTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(
-        work.startTime?.toString() ?? DateTime.now().toString())),
-    'endTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(
-        DateTime.parse(work.endTime?.toString() ?? DateTime.now().toString())),
+    'startTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(work.startTime?.toString() ?? DateTime.now().toString())),
+    'endTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(work.endTime?.toString() ?? DateTime.now().toString())),
     'labels': work.labels,
     'user': work.user,
     'repetitive': {
@@ -27,31 +25,28 @@ void createWork(WorkModel work, List<WorkModel> workArray, String subId) {
       '\$push': {"works": jsonObject}
     }
   }).then((value) {
-    // workArray.add(work);
+    workArray.add(work);
     print("Work Added");
   }).catchError((error) => print(error));
 }
 
 void deleteWork(WorkModel work, List<WorkModel> workArray, String subId) {
-  print(DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(
-      DateTime.parse(work.startTime?.toString() ?? DateTime.now().toString())));
-  Map<String, dynamic> jsonObject = {
-    'title': work.title,
-    'description': work.description,
-    'active': work.active,
-    'startTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(
-        work.startTime?.toString() ?? DateTime.now().toString())),
-    'endTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(
-        DateTime.parse(work.endTime?.toString() ?? DateTime.now().toString())),
-    'labels': work.labels,
-    'user': work.user,
-    'repetitive': {
-      'amount': work.repetitive?.amount,
-      'unit': work.repetitive?.unit,
-    }
-  };
-  print(work.workid);
-  print(subId);
+  print(DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(work.startTime?.toString() ?? DateTime.now().toString())));
+  // Map<String, dynamic> jsonObject = {
+  //   'title': work.title,
+  //   'description': work.description,
+  //   'active': work.active,
+  //   'startTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(work.startTime?.toString() ?? DateTime.now().toString())),
+  //   'endTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(work.endTime?.toString() ?? DateTime.now().toString())),
+  //   'labels': work.labels,
+  //   'user': work.user,
+  //   'repetitive': {
+  //     'amount': work.repetitive?.amount,
+  //     'unit': work.repetitive?.unit,
+  //   }
+  // };
+  // print(work.workid);
+  // print(subId);
   Dio().patch('$baseUrls/common/subWorkflow', data: {
     'head': {'_id': subId},
     'set': {
@@ -74,12 +69,8 @@ void editWork(WorkModel work, List<WorkModel> workArray, String subId) {
         'works.\$.title': work.title,
         'works.\$.description': work.description,
         'works.\$.active': work.active,
-        'works.\$.startTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(
-            DateTime.parse(
-                work.startTime?.toString() ?? DateTime.now().toString())),
-        'works.\$.endTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(
-            DateTime.parse(
-                work.endTime?.toString() ?? DateTime.now().toString())),
+        'works.\$.startTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(work.startTime?.toString() ?? DateTime.now().toString())),
+        'works.\$.endTime': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(work.endTime?.toString() ?? DateTime.now().toString())),
         'works.\$.labels': work.labels,
         'works.\$.user': work.user,
         'works.\$.repetitive': {
