@@ -40,7 +40,8 @@ class AccessModel {
     required this.userId,
   });
 
-  factory AccessModel.fromJson(Map<String, dynamic> json) => AccessModel(accessLevel: json['accessLevel'], userId: json['user']);
+  factory AccessModel.fromJson(Map<String, dynamic> json) =>
+      AccessModel(accessLevel: json['accessLevel'], userId: json['user']);
 }
 
 class WorkflowModel {
@@ -68,14 +69,15 @@ class WorkflowModel {
 
   factory WorkflowModel.fromJson(Map<String, dynamic> json) {
     return WorkflowModel(
-      wid: json['_id'],
+      // wid: json['_id'],
       title: json['title'],
       type: json['type'],
-      subWorkflows: List<String>.from(json['subWorkflows'] ?? []),
-      users: List<AccessModel>.from(json['users']?.map((e) => AccessModel.fromJson(e)).toList() ?? []),
-      accessCodes: List<String>.from(json['accessCodes']),
-      chat: json['chat'],
-      labels: List<String>.from(json['labels']),
+      // subWorkflows: List<String>.from(json['subWorkflows'] ?? []),
+      // users: List<AccessModel>.from(
+      //     json['users']?.map((e) => AccessModel.fromJson(e))?.toList() ?? []),
+      // accessCodes: List<String>.from(json['accessCodes']),
+      // chat: json['chat'],
+      // labels: List<String>.from(json['labels']),
       active: json['active'],
     );
   }

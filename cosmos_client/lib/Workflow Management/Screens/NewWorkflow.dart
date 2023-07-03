@@ -51,7 +51,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
         active: true,
         type: 'free',
       );
-
+      print(workflowNameController.text);
       FlutterSecureStorage().read(key: 'userID').then((userID) {
         final options = Options(
           method: 'GET',
@@ -65,7 +65,7 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
             .post('$baseUrls/user/createWorkflow', data: data, options: options)
             .then((value) {
           setState(() {
-            wfcards.add(WorkflowModel.fromJson(value.data));
+            // wfcards.add(WorkflowModel.fromJson(value.data));
           });
         }).catchError((onError) {
           print(onError);
