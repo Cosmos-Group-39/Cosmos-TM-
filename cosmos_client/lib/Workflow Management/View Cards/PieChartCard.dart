@@ -369,7 +369,11 @@ class _PieChartWorksCardState extends State<PieChartWorksCard> {
                             color: kBackgroundColor,
                           ),
                         ),
-                        Text('data')
+                        Text(
+                          widget.item.repetitive!.amount.toString() +
+                              widget.item.repetitive!.unit,
+                          style: TextStyle(color: Colors.white54),
+                        )
                       ],
                     ),
                   ),

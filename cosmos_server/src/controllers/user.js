@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Workflow = require('../models/workflow');
 const Access = require('../models/accessSchema');
+const { insertMany } = require('../models/workflow');
 
 require('dotenv').config();
 
@@ -96,8 +97,8 @@ module.exports.deleteWorkflow = (req, res) => {
                     "workflows": req.body.wid
                 }
             })
-                .then((res) => {
-                    console.log(res);
+                .then((item) => {
+                    console.log(item);
                     res.status(200).json(item)
                 })
                 .catch((e) => {

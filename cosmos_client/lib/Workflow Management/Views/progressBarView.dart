@@ -12,7 +12,11 @@ class ProgressBarWorksScreen extends StatefulWidget {
   dynamic subworkflow;
   final String workflowName;
   final Function(dynamic) onDelete;
-  ProgressBarWorksScreen({super.key, required this.subworkflow, required this.workflowName, required this.onDelete});
+  ProgressBarWorksScreen(
+      {super.key,
+      required this.subworkflow,
+      required this.workflowName,
+      required this.onDelete});
 
   @override
   State<ProgressBarWorksScreen> createState() => _ProgressBarWorksScreenState();
@@ -24,35 +28,10 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   TextEditingController _workController = TextEditingController(); //name
   TextEditingController _workDesController = TextEditingController(); //des
   TextEditingController _titleController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController(); // Subworkflow
+  TextEditingController _descriptionController =
+      TextEditingController(); // Subworkflow
 
   String? selectedUnit;
-  // bool isActive = false;
-  // Start Date
-  DateTime pickedStart = DateTime.now();
-  Future<DateTime?> _selectStartDate(BuildContext context) async {
-    final DateTime? pickedStart = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-
-    return pickedStart;
-  }
-
-  // End Date
-  DateTime pickedEnd = DateTime.now();
-  Future<DateTime?> _selectEndDate(BuildContext context) async {
-    final DateTime? pickedEnd = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-
-    return pickedEnd;
-  }
 
   @override
   void initState() {
@@ -205,9 +184,10 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                     workid: workid,
                     title: title,
                     description: descripion,
-                    active: true,
+                    active: false,
                   );
-                  createWork(work_newItem, workcards, widget.subworkflow['_id']);
+                  createWork(
+                      work_newItem, workcards, widget.subworkflow['_id']);
                   setState(() {
                     workcards.add(work_newItem);
                   });
@@ -299,7 +279,8 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
   }
 
   void deleteWorks(String workid) {
-    deleteWork(workcards.firstWhere((element) => element.workid == workid), workcards, widget.subworkflow['_id']);
+    deleteWork(workcards.firstWhere((element) => element.workid == workid),
+        workcards, widget.subworkflow['_id']);
     setState(() {
       workcards.removeWhere((element) => element.workid == workid);
     });
@@ -307,11 +288,16 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
 
   void editWorks(WorkModel editedItem) {
     setState(() {
-      int index = workcards.indexWhere((element) => element.workid == editedItem.workid);
+      int index = workcards
+          .indexWhere((element) => element.workid == editedItem.workid);
+      print(index);
       workcards[index] = editedItem;
     });
 
-    editWork(workcards.firstWhere((element) => element.workid == editedItem.workid), workcards, widget.subworkflow['_id']);
+    editWork(
+        workcards.firstWhere((element) => element.workid == editedItem.workid),
+        workcards,
+        widget.subworkflow['_id']);
   }
 
   @override
@@ -352,24 +338,16 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.help, color: kDefaultIconDarkColor),
+                      icon:
+                          const Icon(Icons.help, color: kDefaultIconDarkColor),
                       onPressed: editSubworkflow, // Show Description
                     ),
-                    IconButton(onPressed: deleteProgressBarView, icon: const Icon(Icons.delete)),
+                    IconButton(
+                        onPressed: deleteProgressBarView,
+                        icon: const Icon(Icons.delete)),
                   ],
                 ),
               ),
-              // Expanded(
-              //   child: TextFormField(
-              //     controller: _descriptionController,
-              //     decoration: const InputDecoration(
-              //       suffixIcon: Icon(Icons.create),
-              //       border: OutlineInputBorder(
-              //         borderRadius: BorderRadius.all(Radius.circular(20)),
-              //       ),
-              //     ),
-              //   ),
-              // ),
               progressBarWidget(),
               Expanded(
                 child: ListView.builder(
@@ -392,7 +370,8 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
 
   progressBarWidget() {
     int activeWorks = countActiveWorks();
-    double progress = activeWorks / workcards.length;
+
+    double progress = workcards.isEmpty ? 0 : activeWorks / workcards.length;
 
     return Container(
       padding: const EdgeInsets.all(5.0),

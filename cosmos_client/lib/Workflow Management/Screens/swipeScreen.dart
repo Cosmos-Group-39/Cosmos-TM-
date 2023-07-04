@@ -224,7 +224,10 @@ class _SwipeScreenState extends State<SwipeScreen> {
                     MaterialPageRoute(
                         builder: (context) => const HomeScreen()));
               },
-              icon: const Icon(Icons.arrow_back)),
+              icon: const Icon(
+                Icons.arrow_back,
+                color: kDefaultIconLightColor,
+              )),
           actions: [
             IconButton(
                 onPressed: () {

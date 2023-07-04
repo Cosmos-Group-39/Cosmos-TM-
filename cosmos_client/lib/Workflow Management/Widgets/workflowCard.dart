@@ -3,7 +3,6 @@ import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/swipeScreen.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/workflowMembers.dart';
-import 'package:cosmos_client/Workflow%20Management/Screens/yourSubWorkflow.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +49,7 @@ class _WorkflowCardState extends State<WorkflowCard> {
     widget.wfonEdit(wfeditedItem);
   }
 
-  //Delete Organization
+  //Delete Workflow
   deleteWorkflow() {
     showDialog(
       context: context,
@@ -218,7 +217,7 @@ class _WorkflowCardState extends State<WorkflowCard> {
                         MaterialPageRoute(
                             builder: (context) => WorkflowMembers()));
                   },
-                  icon: const Icon(Icons.add_circle_outline,
+                  icon: const Icon(Icons.person_add_alt_outlined,
                       color: kBackgroundColor))
             ],
           ),

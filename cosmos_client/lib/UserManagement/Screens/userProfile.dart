@@ -374,27 +374,31 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 40),
                         const Padding(
-                          padding: EdgeInsets.only(top: 20, left: 17),
-                          child: Text(
-                            'USD 50',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                          padding: EdgeInsets.only(top: 20),
+                          child: Center(
+                            child: Text(
+                              'USD 50',
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blueGrey),
                             ),
                           ),
                         ),
-                        Text(
-                          '/Month',
-                          style: TextStyle(
-                            fontSize: 15,
+                        const Center(
+                          child: Text(
+                            '  /Month',
+                            style: TextStyle(
+                              fontSize: 22,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
                 Center(
                   child: ElevatedButton(
                     style: kAlertBoxButtonStyle,
@@ -407,7 +411,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
               ],
             ),
           ),

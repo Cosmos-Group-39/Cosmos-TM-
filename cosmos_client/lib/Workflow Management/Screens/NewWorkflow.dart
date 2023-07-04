@@ -68,9 +68,8 @@ class _NewWorkflowScreenState extends State<NewWorkflowScreen> {
         Dio()
             .post('$baseUrls/user/createWorkflow', data: data, options: options)
             .then((value) {
-          setState(() {
-            // wfcards.add(WorkflowModel.fromJson(value.data));
-          });
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CreatedWorkflows()));
         }).catchError((onError) {
           print(onError);
         });

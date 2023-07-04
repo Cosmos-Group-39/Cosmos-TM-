@@ -28,31 +28,6 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
 
   String? selectedUnit;
   // bool isActive = false;
-  // Start Date
-  DateTime pickedStart = DateTime.now();
-  Future<DateTime?> _selectStartDate(BuildContext context) async {
-    final DateTime? pickedStart = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-
-    return pickedStart;
-  }
-
-  // End Date
-  DateTime pickedEnd = DateTime.now();
-  Future<DateTime?> _selectEndDate(BuildContext context) async {
-    final DateTime? pickedEnd = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-
-    return pickedEnd;
-  }
 
   void changeWorkCard() {
     showDialog(
@@ -285,7 +260,10 @@ class _ProgressBarWorksCardState extends State<ProgressBarWorksCard> {
                             color: kBackgroundColor,
                           ),
                         ),
-                        const Text('data')
+                        Text(
+                          widget.item.active ? 'Completed' : 'Not completed',
+                          style: TextStyle(color: Colors.white54),
+                        ),
                       ],
                     ),
                   ),

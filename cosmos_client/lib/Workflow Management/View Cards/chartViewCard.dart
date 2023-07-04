@@ -343,7 +343,11 @@ class _ChartViewWorksCardState extends State<ChartViewWorksCard> {
                             color: kBackgroundColor,
                           ),
                         ),
-                        Text('data')
+                        Text(
+                          widget.item.repetitive!.amount.toString() +
+                              widget.item.repetitive!.unit,
+                          style: TextStyle(color: Colors.white54),
+                        )
                       ],
                     ),
                   ),

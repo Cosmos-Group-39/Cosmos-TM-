@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gantt_chart/gantt_chart.dart';
 import 'package:cosmos_client/Workflow%20Management/View%20Cards/stepViewCard.dart';
 import 'package:cosmos_client/Chat/Screen/chat_group.dart';
-import 'package:cosmos_client/Workflow%20Management/Screens/yourSubWorkflow.dart';
 import 'package:cosmos_client/Constants.dart';
 import 'package:cosmos_client/Workflow%20Management/Models/workflowModels.dart';
 import 'package:intl/intl.dart';
@@ -218,6 +217,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
     createTaskArrays();
   }
 
+  // Related to view
   createTaskArrays() {
     tasks.clear();
     for (var work in workcards) {
@@ -277,7 +277,7 @@ class _GanttChartWorksScreenState extends State<GanttChartWorksScreen> {
                 TextField(
                   controller: _workDesController,
                   decoration: const InputDecoration(
-                    labelText: 'Work Name',
+                    labelText: 'Work Description',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),

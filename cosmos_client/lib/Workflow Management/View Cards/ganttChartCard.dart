@@ -438,20 +438,21 @@ class _GanttChartWorksCardState extends State<GanttChartWorksCard> {
                             color: kBackgroundColor,
                           ),
                         ),
-                        Text('data')
+                        Text(
+                          widget.item.startTime != null
+                              ? DateFormat('yyyy-MM-dd')
+                                  .format(widget.item.startTime!)
+                              : '',
+                          style: TextStyle(color: Colors.white54),
+                        ),
+                        Text(
+                          widget.item.endTime != null
+                              ? DateFormat('yyyy-MM-dd')
+                                  .format(widget.item.endTime!)
+                              : '',
+                          style: TextStyle(color: Colors.white54),
+                        ),
                       ],
-                    ),
-                  ),
-                  Transform.scale(
-                    scale: 0.75,
-                    child: Switch(
-                      value: isActive,
-                      onChanged: (bool value) {
-                        setState(() {
-                          isActive = value;
-                        });
-                        print(isActive);
-                      },
                     ),
                   ),
                   IconButton(
