@@ -32,6 +32,8 @@ class _OrgFormState extends State<OrgForm> {
       //     pic: pic,
       //     description: cardControllerDes.text,
       //   );
+      var ccd = cardControllername.text;
+      var des = cardControllerDes.text;
       FlutterSecureStorage().read(key: 'userID').then((userID) {
         final options = Options(
           method: 'POST',
@@ -42,16 +44,14 @@ class _OrgFormState extends State<OrgForm> {
 
         Map<String, dynamic> data = {
           // 'id': uuid.v1(),
-          'name': cardControllername.text,
-          'description': cardControllerDes.text,
+          'name': ccd,
+          'description': des,
           'pic': null,
           'reviews': [],
           'workflows': [],
           'members': [],
           'labels': []
         };
-
-        print(cardControllername.text);
 
         Dio().post('$baseUrls/organizations/creatOrg', data: data, options: options).then((value) {
           print(value.data);
