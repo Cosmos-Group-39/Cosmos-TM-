@@ -3,7 +3,9 @@ import 'package:cosmos_client/Orgnization/Screens/Your_Org.dart';
 import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
 import 'package:cosmos_client/Orgnization/Services/api_services.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Profile_Pic.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class OrgForm extends StatefulWidget {
   const OrgForm({Key? key}) : super(key: key);
@@ -30,6 +32,33 @@ class _OrgFormState extends State<OrgForm> {
       //     pic: pic,
       //     description: cardControllerDes.text,
       //   );
+      FlutterSecureStorage().read(key: 'userID').then((userID) {
+        final options = Options(
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer $userID',
+          },
+        );
+
+        Map<String, dynamic> data = {
+          // 'id': uuid.v1(),
+          'name': cardControllername.text,
+          'description': cardControllerDes.text,
+          'pic': null,
+          'reviews': [],
+          'workflows': [],
+          'members': [],
+          'labels': []
+        };
+
+        print(cardControllername.text);
+
+        Dio().post('$baseUrls/organizations/creatOrg', data: data, options: options).then((value) {
+          print(value.data);
+        }).catchError((onError) {
+          print(onError);
+        });
+      });
 
       cardsx.add(
         OrganizationModel(
@@ -173,12 +202,7 @@ class _OrgFormState extends State<OrgForm> {
                     decoration: BoxDecoration(
                       color: Colors.white70,
                       borderRadius: BorderRadius.circular(25),
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 6,
-                            offset: Offset(0, 2))
-                      ],
+                      boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

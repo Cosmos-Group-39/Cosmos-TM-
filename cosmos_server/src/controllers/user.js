@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Workflow = require('../models/workflow');
+
 const Access = require('../models/accessSchema');
-const { insertMany } = require('../models/workflow');
 
 require('dotenv').config();
 
@@ -113,7 +113,7 @@ module.exports.findUser = (req, res) => {
     User.findOne({ email: req.body.email })
         .then((user) => {
             if (user) {
-                console.log(req.body.workflow)
+                // console.log(req.body.workflow)
                 Workflow.updateOne(
                     { _id: req.body.workflow },
                     {
@@ -159,7 +159,6 @@ module.exports.findUser = (req, res) => {
 };
 
 module.exports.removeUser = (req, res) => {
-    console.log("entered")
     User.findOne({ email: req.body.email })
         .then((user) => {
             if (user) {
@@ -207,6 +206,8 @@ module.exports.removeUser = (req, res) => {
             res.status(500).json({ error: 'Internal Server Error' });
         });
 };
+
+
 
 module.exports.authenticateToken = (req, res, next) => {
     console.log("InAuth");

@@ -6,5 +6,6 @@ router.use('/workflows', require('../src/routes/workflows'));
 router.use('/common', require('../src/routes/common'));
 router.use('/accesscode', require('../src/routes/accessCode'));
 router.use('/user', require('../src/routes/user'));
+router.use('/organizations', require('../src/routes/oraganization'));
 
 module.exports = router;
