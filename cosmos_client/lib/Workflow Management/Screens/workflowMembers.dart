@@ -16,13 +16,16 @@ class _WorkflowMembersState extends State<WorkflowMembers> {
   // Sample list of members
   List<AccessModel> members = [];
   Map<String, String> memberRoles = {}; // Map to store member roles
-
+  String? errorMessage;
   @override
   void initState() {
     super.initState();
-    Dio().get('$baseUrls/workflows/workflowMembers/${widget.workflowId}').then((value) {
+    Dio()
+        .get('$baseUrls/workflows/workflowMembers/${widget.workflowId}')
+        .then((value) {
       setState(() {
-        members = List<AccessModel>.from(value.data.map((e) => AccessModel.fromJson(e)).toList());
+        members = List<AccessModel>.from(
+            value.data.map((e) => AccessModel.fromJson(e)).toList());
       });
     }).catchError((value) {
       // setState(() {
@@ -35,7 +38,8 @@ class _WorkflowMembersState extends State<WorkflowMembers> {
   deletePerm(
     String email,
   ) {
-    Dio().post('$baseUrls/user/removeUser', data: {'email': email, 'workflow': widget.workflowId}).then((value) {
+    Dio().post('$baseUrls/user/removeUser',
+        data: {'email': email, 'workflow': widget.workflowId}).then((value) {
       setState(() {
         members.removeWhere((item) => item.email == email);
       });
@@ -100,18 +104,31 @@ class _WorkflowMembersState extends State<WorkflowMembers> {
                     alignment: Alignment.center,
                   ),
                   onPressed: () {
+                    final newMemberEmail = _workflowMemberController.text;
                     // Your button logic
-                    print(widget.workflowId);
-                    Dio().post('$baseUrls/user/findUser', data: {'email': _workflowMemberController.text, 'workflow': widget.workflowId}).then((value) {
+                    // Check if the user is already added
+                    if (members
+                        .any((member) => member.email == newMemberEmail)) {
                       setState(() {
-                        members.add(AccessModel.fromJson(value.data));
+                        errorMessage = 'User already added';
                       });
-                    }).catchError((value) {
-                      // setState(() {
-                      //   errorMessage = 'Invalid Access Code';
-                      // });
-                      print(value);
-                    });
+                    } else {
+                      print(widget.workflowId);
+                      Dio().post('$baseUrls/user/findUser', data: {
+                        'email': _workflowMemberController.text,
+                        'workflow': widget.workflowId
+                      }).then((value) {
+                        setState(() {
+                          members.add(AccessModel.fromJson(value.data));
+                          errorMessage = null;
+                        });
+                      }).catchError((value) {
+                        // setState(() {
+                        //   errorMessage = 'Invalid Access Code';
+                        // });
+                        print(value);
+                      });
+                    }
                   },
                   child: const Icon(
                     Icons.add,
@@ -121,6 +138,11 @@ class _WorkflowMembersState extends State<WorkflowMembers> {
               ],
             ),
           ),
+          if (errorMessage != null)
+            Text(
+              errorMessage!,
+              style: TextStyle(color: Colors.red),
+            ),
           const SizedBox(height: 20),
           Expanded(
             child: ListView.builder(

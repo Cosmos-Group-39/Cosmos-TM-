@@ -252,7 +252,7 @@ class _ChartViewWorksScreenState extends State<ChartViewWorksScreen> {
                 TextField(
                   controller: _workDesController,
                   decoration: const InputDecoration(
-                    labelText: 'Work Name',
+                    labelText: 'Work Description',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
