@@ -13,6 +13,7 @@ class Loginotp extends StatefulWidget {
 }
 
 class _LoginotpState extends State<Loginotp> {
+  TextEditingController _emailController = TextEditingController();
   bool isLoginSelected = true;
   int resendTimer = 60;
   Timer? _timer;
@@ -50,8 +51,6 @@ class _LoginotpState extends State<Loginotp> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -187,7 +186,7 @@ class _LoginotpState extends State<Loginotp> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
-                            controller: emailController,
+                            controller: _emailController,
                             decoration: const InputDecoration(
                               labelText: 'Email',
                               icon: Icon(Icons.email),

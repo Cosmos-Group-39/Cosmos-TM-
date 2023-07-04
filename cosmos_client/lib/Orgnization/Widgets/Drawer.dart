@@ -142,7 +142,11 @@ Widget kDrawer(BuildContext context, String userName, String userEmail) {
             ),
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
-            const ListTile(
+            ListTile(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => OrgSettings()));
+              },
               leading: Icon(Icons.tips_and_updates, color: kBackgroundColor),
               title: Text(
                 'Help & Tips',
