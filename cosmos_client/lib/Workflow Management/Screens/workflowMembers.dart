@@ -155,16 +155,16 @@ class _WorkflowMembersState extends State<WorkflowMembers> {
                             ),
                           ],
                           onSelected: (String value) {
-                            Dio().post('$baseUrls/user/findUser', data: {'email': _workflowMemberController.text, 'workflow': widget.workflowId}).then((value) {
-                              setState(() {
-                                members.add(AccessModel.fromJson(value.data));
-                              });
-                            }).catchError((value) {
-                              // setState(() {
-                              //   errorMessage = 'Invalid Access Code';
-                              // });
-                              print(value);
-                            });
+                            // Dio().post('$baseUrls/user/findUser', data: {'email': _workflowMemberController.text, 'workflow': widget.workflowId}).then((value) {
+                            //   setState(() {
+                            //     members.add(AccessModel.fromJson(value.data));
+                            //   });
+                            // }).catchError((value) {
+                            //   // setState(() {
+                            //   //   errorMessage = 'Invalid Access Code';
+                            //   // });
+                            //   print(value);
+                            // });
                             // setState(() {
                             //   memberRoles[member] = value; // Update the selected role
                             // });
@@ -174,7 +174,7 @@ class _WorkflowMembersState extends State<WorkflowMembers> {
                             onPressed: () {
                               deletePerm(members[index].email as String);
                             },
-                            child: const Text('Delte'))
+                            child: const Text('Delete'))
                       ],
                     ),
                   ),
