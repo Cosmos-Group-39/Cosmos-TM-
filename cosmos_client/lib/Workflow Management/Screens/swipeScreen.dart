@@ -246,9 +246,10 @@ class _SwipeScreenState extends State<SwipeScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const GroupPage(
+                        builder: (context) => GroupPage(
                               name: '',
                               userId: '',
+                              workflowName: widget.workflow['title'],
                             )));
               },
               shape: RoundedRectangleBorder(

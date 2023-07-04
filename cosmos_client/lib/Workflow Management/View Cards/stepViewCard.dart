@@ -27,31 +27,31 @@ class _StepViewWorksCardState extends State<StepViewWorksCard> {
   TextEditingController _amountController = TextEditingController();
 
   String? selectedUnit;
-  // Start Date
-  DateTime pickedStart = DateTime.now();
-  Future<DateTime?> _selectStartDate(BuildContext context) async {
-    final DateTime? pickedStart = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
+  // // Start Date
+  // DateTime pickedStart = DateTime.now();
+  // Future<DateTime?> _selectStartDate(BuildContext context) async {
+  //   final DateTime? pickedStart = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(1900),
+  //     lastDate: DateTime.now(),
+  //   );
 
-    return pickedStart;
-  }
+  //   return pickedStart;
+  // }
 
-  // End Date
-  DateTime pickedEnd = DateTime.now();
-  Future<DateTime?> _selectEndDate(BuildContext context) async {
-    final DateTime? pickedEnd = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
+  // // End Date
+  // DateTime pickedEnd = DateTime.now();
+  // Future<DateTime?> _selectEndDate(BuildContext context) async {
+  //   final DateTime? pickedEnd = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(1900),
+  //     lastDate: DateTime.now(),
+  //   );
 
-    return pickedEnd;
-  }
+  //   return pickedEnd;
+  // }
 
   void changeWorkCard() {
     showDialog(
@@ -88,140 +88,140 @@ class _StepViewWorksCardState extends State<StepViewWorksCard> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                //Start Date
-                GestureDetector(
-                  onTap: () async {
-                    pickedStart = (await _selectStartDate(
-                        context))!; // Assign the value to the variable
+                // //Start Date
+                // GestureDetector(
+                //   onTap: () async {
+                //     pickedStart = (await _selectStartDate(
+                //         context))!; // Assign the value to the variable
 
-                    if (pickedStart != null) {
-                      setState(() {
-                        _startDateController.text =
-                            DateFormat('dd/MM/yyyy').format(pickedStart);
-                      });
-                    }
-                  },
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: _startDateController,
-                      decoration: const InputDecoration(
-                        labelText: 'Start Date',
-                        prefixIcon: Icon(Icons.edit_calendar),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                      ),
-                      // Validations
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter a Start Date';
-                        }
+                //     if (pickedStart != null) {
+                //       setState(() {
+                //         _startDateController.text =
+                //             DateFormat('dd/MM/yyyy').format(pickedStart);
+                //       });
+                //     }
+                //   },
+                //   child: AbsorbPointer(
+                //     child: TextFormField(
+                //       controller: _startDateController,
+                //       decoration: const InputDecoration(
+                //         labelText: 'Start Date',
+                //         prefixIcon: Icon(Icons.edit_calendar),
+                //         border: OutlineInputBorder(
+                //           borderRadius: BorderRadius.all(Radius.circular(20)),
+                //         ),
+                //         focusedBorder: OutlineInputBorder(
+                //           borderRadius: BorderRadius.all(Radius.circular(20)),
+                //         ),
+                //       ),
+                //       // Validations
+                //       validator: (value) {
+                //         if (value!.isEmpty) {
+                //           return 'Please enter a Start Date';
+                //         }
 
-                        final parts = value.split('/');
+                //         final parts = value.split('/');
 
-                        if (parts.length != 3) {
-                          return 'Invalid format. Please enter in DD/MM/YYYY format';
-                        }
+                //         if (parts.length != 3) {
+                //           return 'Invalid format. Please enter in DD/MM/YYYY format';
+                //         }
 
-                        final day = int.tryParse(parts[0]);
-                        final month = int.tryParse(parts[1]);
-                        final year = int.tryParse(parts[2]);
-                        final currentYear = DateTime.now().year;
+                //         final day = int.tryParse(parts[0]);
+                //         final month = int.tryParse(parts[1]);
+                //         final year = int.tryParse(parts[2]);
+                //         final currentYear = DateTime.now().year;
 
-                        if (day == null || month == null || year == null) {
-                          return 'Invalid format';
-                        }
+                //         if (day == null || month == null || year == null) {
+                //           return 'Invalid format';
+                //         }
 
-                        if (year > currentYear) {
-                          return 'Enter a valid year';
-                        }
+                //         if (year > currentYear) {
+                //           return 'Enter a valid year';
+                //         }
 
-                        if (month < 1 || month > 12) {
-                          return 'Enter a valid month';
-                        }
+                //         if (month < 1 || month > 12) {
+                //           return 'Enter a valid month';
+                //         }
 
-                        final daysInMonth = DateTime(year, month + 1, 0).day;
+                //         final daysInMonth = DateTime(year, month + 1, 0).day;
 
-                        if (day < 1 || day > daysInMonth) {
-                          return 'Enter a valid date';
-                        }
+                //         if (day < 1 || day > daysInMonth) {
+                //           return 'Enter a valid date';
+                //         }
 
-                        return null;
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                //End Date
-                GestureDetector(
-                  onTap: () async {
-                    pickedEnd = (await _selectEndDate(
-                        context))!; // Assign the value to the variable
+                //         return null;
+                //       },
+                //     ),
+                //   ),
+                // ),
+                // const SizedBox(height: 15),
+                // //End Date
+                // GestureDetector(
+                //   onTap: () async {
+                //     pickedEnd = (await _selectEndDate(
+                //         context))!; // Assign the value to the variable
 
-                    if (pickedEnd != null) {
-                      setState(() {
-                        _endDateController.text =
-                            DateFormat('dd/MM/yyyy').format(pickedEnd);
-                      });
-                    }
-                  },
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: _endDateController,
-                      decoration: const InputDecoration(
-                        labelText: 'End Date',
-                        prefixIcon: Icon(Icons.edit_calendar),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                      ),
-                      // Validations
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter a Start Date';
-                        }
+                //     if (pickedEnd != null) {
+                //       setState(() {
+                //         _endDateController.text =
+                //             DateFormat('dd/MM/yyyy').format(pickedEnd);
+                //       });
+                //     }
+                //   },
+                //   child: AbsorbPointer(
+                //     child: TextFormField(
+                //       controller: _endDateController,
+                //       decoration: const InputDecoration(
+                //         labelText: 'End Date',
+                //         prefixIcon: Icon(Icons.edit_calendar),
+                //         border: OutlineInputBorder(
+                //           borderRadius: BorderRadius.all(Radius.circular(20)),
+                //         ),
+                //         focusedBorder: OutlineInputBorder(
+                //           borderRadius: BorderRadius.all(Radius.circular(20)),
+                //         ),
+                //       ),
+                //       // Validations
+                //       validator: (value) {
+                //         if (value!.isEmpty) {
+                //           return 'Please enter a Start Date';
+                //         }
 
-                        final parts = value.split('/');
+                //         final parts = value.split('/');
 
-                        if (parts.length != 3) {
-                          return 'Invalid format. Please enter in DD/MM/YYYY format';
-                        }
+                //         if (parts.length != 3) {
+                //           return 'Invalid format. Please enter in DD/MM/YYYY format';
+                //         }
 
-                        final day = int.tryParse(parts[0]);
-                        final month = int.tryParse(parts[1]);
-                        final year = int.tryParse(parts[2]);
-                        final currentYear = DateTime.now().year;
+                //         final day = int.tryParse(parts[0]);
+                //         final month = int.tryParse(parts[1]);
+                //         final year = int.tryParse(parts[2]);
+                //         final currentYear = DateTime.now().year;
 
-                        if (day == null || month == null || year == null) {
-                          return 'Invalid format';
-                        }
+                //         if (day == null || month == null || year == null) {
+                //           return 'Invalid format';
+                //         }
 
-                        if (year > currentYear) {
-                          return 'Enter a valid year';
-                        }
+                //         if (year > currentYear) {
+                //           return 'Enter a valid year';
+                //         }
 
-                        if (month < 1 || month > 12) {
-                          return 'Enter a valid month';
-                        }
+                //         if (month < 1 || month > 12) {
+                //           return 'Enter a valid month';
+                //         }
 
-                        final daysInMonth = DateTime(year, month + 1, 0).day;
+                //         final daysInMonth = DateTime(year, month + 1, 0).day;
 
-                        if (day < 1 || day > daysInMonth) {
-                          return 'Enter a valid date';
-                        }
+                //         if (day < 1 || day > daysInMonth) {
+                //           return 'Enter a valid date';
+                //         }
 
-                        return null;
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
+                //         return null;
+                //       },
+                //     ),
+                //   ),
+                // ),
+                // const SizedBox(height: 15),
               ],
             ),
           ),

@@ -3,142 +3,89 @@ import 'package:cosmos_client/Chat/widgets/otherMsg_widget.dart';
 import 'package:cosmos_client/Chat/widgets/ownMsg_widget.dart';
 import 'package:cosmos_client/Constants.dart';
 import 'package:flutter/material.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class GroupPage extends StatefulWidget {
+  final String workflowName;
   final String name;
   final String userId;
-  const GroupPage({Key? key, required this.name, required this.userId})
-      : super(key: key);
+
+  const GroupPage({
+    Key? key,
+    required this.name,
+    required this.userId,
+    required this.workflowName,
+  }) : super(key: key);
 
   @override
   State<GroupPage> createState() => _GroupPageState();
 }
 
 class _GroupPageState extends State<GroupPage> {
-  IO.Socket? socket;
   List<MsgModel> messages = [];
   TextEditingController _msgController = TextEditingController();
+  String userName = 'Anonymous';
 
   @override
   void initState() {
     super.initState();
-    connect();
+    FlutterSecureStorage().read(key: 'userName').then((userName) {
+      setState(() {
+        this.userName = userName ?? 'Anonymous';
+      });
+    });
+    fetchMessages(); // Fetch existing chat messages
   }
 
-  void connect() {
-    socket = IO.io('http://localhost:3000', <String, dynamic>{
-      "transports": ["websocket"],
-      "autoConnect": false,
-    });
-    socket!.connect();
-    socket!.onConnect((_) {
-      print('connect into frontend');
-      socket!.on("sendMsgServer", (content) {
-        print(content);
-        if (content["userId"] != widget.userId) {
-          setState(() {
-            messages.add(
-              MsgModel(
-                content: content["content"],
-                type: content["type"],
-                user: content["senderName"],
-                time: DateTime.now(), // change
-              ),
-            );
-          });
-        }
+  void fetchMessages() {
+    // Call the API service function to fetch existing messages
+    fetchChatMessages().then((fetchedMessages) {
+      setState(() {
+        messages = fetchedMessages;
       });
+    }).catchError((error) {
+      print('Error fetching messages: $error');
     });
   }
 
   void sendMsg(String content, String? senderName) {
     MsgModel ownMsg = MsgModel(
-        content: content,
-        type: "ownMsg",
-        user: senderName ?? "Unknown",
-        time: DateTime.now());
-    messages.add(ownMsg);
-    setState(() {
-      messages;
-    });
-    socket!.emit('sendMsg', {
-      "type": "ownMsg",
-      "content": content,
-      "senderName": senderName ?? "Unknown",
-      "userId": widget.userId,
-    });
-  }
+      content: content,
+      type: "ownMsg",
+      user: senderName ?? "Unknown",
+      time: DateTime.now(),
+    );
 
-// //Delete chat history
-//   deleteChat() {
-//     showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return AlertDialog(
-//           shape: kAlertBoxBorderStyle,
-//           title: const Icon(
-//             Icons.backspace,
-//             size: 60.0,
-//             color: Colors.green,
-//           ),
-//           content: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               Center(
-//                 child: Text(
-//                   'Are You Sure ?',
-//                   style: kAlertBoxTopicTextStyle,
-//                 ),
-//               ),
-//               const Center(
-//                 child: Padding(
-//                   padding: EdgeInsets.only(top: 20, left: 17),
-//                   child: Text(
-//                     'You want to clear the chat !',
-//                     style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//           actions: [
-//             const SizedBox(height: 20),
-//             Center(
-//               child: ElevatedButton(
-//                 style: kAlertBoxButtonStyle, //Elevated button style
-//                 onPressed: () {
-//                   setState(() {
-//                     listMsg.clear();
-//                   });
-//                   Navigator.pop(context);
-//                 },
-//                 child: const Text(
-//                   'Clear',
-//                   style: kAlertBoxButtonTextStyle, //Elevated button Text style
-//                 ),
-//               ),
-//             ),
-//             const SizedBox(height: 10),
-//           ],
-//         );
-//       },
-//     );
-//   }
+    // Call the API service function to send the message
+    sendChatMessage(ownMsg).then((_) {
+      setState(() {
+        messages.add(ownMsg);
+      });
+    }).catchError((error) {
+      print('Error sending message: $error');
+    });
+
+    _msgController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.close)),
-        title: const Text(
-          'Workflow Name',
-          style: TextStyle(
-              fontSize: 20, letterSpacing: 0.4, fontWeight: FontWeight.w600),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.close, color: Colors.white),
+        ),
+        title: Text(
+          widget.workflowName,
+          style: const TextStyle(
+            fontSize: 20,
+            letterSpacing: 0.4,
+            fontWeight: FontWeight.w600,
+            color: Colors.white70,
+          ),
         ),
         centerTitle: true,
         backgroundColor: kPrimaryColor,
@@ -160,18 +107,22 @@ class _GroupPageState extends State<GroupPage> {
           SizedBox(height: 20),
           Expanded(
             child: ListView.builder(
-                itemCount: messages.length,
-                itemBuilder: (context, index) {
-                  if (messages[index].type == "ownMsg") {
-                    return OwnMSgWidget(
-                        content: messages[index].content,
-                        user: messages[index].user!);
-                  } else {
-                    return OtherMSgWidget(
-                        content: messages[index].content,
-                        user: messages[index].user!);
-                  }
-                }),
+              itemCount: messages.length,
+              itemBuilder: (context, index) {
+                if (messages[index].type == "ownMsg") {
+                  return OwnMsgWidget(
+                    content: messages[index].content,
+                    user: messages[index].user!,
+                    userName: userName, // Pass the userName value here
+                  );
+                } else {
+                  return OtherMsgWidget(
+                    content: messages[index].content,
+                    user: messages[index].user!,
+                  );
+                }
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -181,7 +132,7 @@ class _GroupPageState extends State<GroupPage> {
                   child: TextFormField(
                     controller: _msgController,
                     decoration: InputDecoration(
-                      hintText: "Type here ... ",
+                      hintText: "Type here...",
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         borderSide: BorderSide(
@@ -191,8 +142,8 @@ class _GroupPageState extends State<GroupPage> {
                       suffixIcon: IconButton(
                         onPressed: () {
                           String content = _msgController.text;
-                          if ((content.isNotEmpty)) {
-                            sendMsg(content, widget.name); //
+                          if (content.isNotEmpty) {
+                            sendMsg(content, widget.name);
                             _msgController.clear();
                           }
                         },

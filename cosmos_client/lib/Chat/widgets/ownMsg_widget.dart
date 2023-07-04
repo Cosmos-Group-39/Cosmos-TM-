@@ -4,9 +4,14 @@ import 'package:intl/intl.dart';
 class OwnMSgWidget extends StatelessWidget {
   final String user;
   final String content;
+  final String userName; // Add userName parameter
 
-  const OwnMSgWidget({Key? key, required this.content, required this.user})
-      : super(key: key);
+  const OwnMSgWidget({
+    Key? key,
+    required this.content,
+    required this.user,
+    required this.userName,
+  }) : super(key: key);
 
   String _getCurrentDateTime() {
     final now = DateTime.now();
@@ -35,27 +40,30 @@ class OwnMSgWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  user,
+                  userName, // Use the userName parameter
                   style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.yellow),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.yellow,
+                  ),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   content,
                   style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   _getCurrentDateTime(),
                   style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.white),
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),

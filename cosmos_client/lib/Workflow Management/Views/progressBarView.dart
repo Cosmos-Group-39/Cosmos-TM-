@@ -370,7 +370,6 @@ class _ProgressBarWorksScreenState extends State<ProgressBarWorksScreen> {
 
   progressBarWidget() {
     int activeWorks = countActiveWorks();
-
     double progress = workcards.isEmpty ? 0 : activeWorks / workcards.length;
 
     return Container(
