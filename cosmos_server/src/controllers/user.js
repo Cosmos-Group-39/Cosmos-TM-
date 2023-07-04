@@ -51,7 +51,6 @@ module.exports.ownWorkflows = (req, res) => {
             const workflowPromises = user.workflows.map((id) => Workflow.findById(id));
             Promise.all(workflowPromises)
                 .then((workflows) => {
-                    console.log(workflows);
                     res.send(workflows);
                 })
                 .catch((error) => {
@@ -89,7 +88,6 @@ module.exports.createWorkflow = (req, res) => {
 };
 
 module.exports.deleteWorkflow = (req, res) => {
-    console.log(req.body.wid);
     Workflow.findByIdAndDelete(req.body.wid)
         .then((item) => {
             User.updateOne({ _id: req.user._id }, {
@@ -98,8 +96,7 @@ module.exports.deleteWorkflow = (req, res) => {
                 }
             })
                 .then((item) => {
-                    console.log(item);
-                    res.status(200).json(item)
+                    res.status(200).json(item);
                 })
                 .catch((e) => {
                     console.log(e);
@@ -109,6 +106,105 @@ module.exports.deleteWorkflow = (req, res) => {
         .catch((error) => {
             console.log(error);
             res.status(500).json(error);
+        });
+};
+
+module.exports.findUser = (req, res) => {
+    User.findOne({ email: req.body.email })
+        .then((user) => {
+            if (user) {
+                console.log(req.body.workflow)
+                Workflow.updateOne(
+                    { _id: req.body.workflow },
+                    {
+                        $push: {
+                            users: { accessLevel: 'Viewer', _id: user._id },
+                        },
+                    }
+                )
+                    .then((workflowUpdateResult) => {
+                        console.log('hi1');
+                        User.updateOne(
+                            { _id: user._id },
+                            {
+                                $push: {
+                                    workflows: req.body.workflow,
+                                },
+                            }
+                        )
+                            .then((userUpdateResult) => {
+                                console.log(userUpdateResult);
+                                res.status(200).json({
+                                    accessLevel: 'Viewer',
+                                    _id: user._id,
+                                    email: user.email,
+                                });
+                            })
+                            .catch((error) => {
+                                console.log('hi');
+                                res.status(500).json({ error: 'Internal Server Error' });
+                            });
+                    })
+                    .catch((error) => {
+                        res.status(500).json({ error: 'Internal Server Error' });
+                    });
+            } else {
+                res.status(404).json({ message: 'User not found' });
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        });
+};
+
+module.exports.removeUser = (req, res) => {
+    console.log("entered")
+    User.findOne({ email: req.body.email })
+        .then((user) => {
+            if (user) {
+                console.log(req.body.workflow)
+                Workflow.updateOne(
+                    { _id: req.body.workflow },
+                    {
+                        $pull: {
+                            users: { accessLevel: 'Viewer', _id: user._id },
+                        },
+                    }
+                )
+                    .then((workflowUpdateResult) => {
+                        console.log('hi1');
+                        User.updateOne(
+                            { _id: user._id },
+                            {
+                                $pull: {
+                                    workflows: req.body.workflow,
+                                },
+                            }
+                        )
+                            .then((userUpdateResult) => {
+                                console.log(userUpdateResult);
+                                res.status(200).json({
+                                    accessLevel: 'Viewer',
+                                    _id: user._id,
+                                    email: user.email,
+                                });
+                            })
+                            .catch((error) => {
+                                console.log('hi');
+                                res.status(500).json({ error: 'Internal Server Error' });
+                            });
+                    })
+                    .catch((error) => {
+                        res.status(500).json({ error: 'Internal Server Error' });
+                    });
+            } else {
+                res.status(404).json({ message: 'User not found' });
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json({ error: 'Internal Server Error' });
         });
 };
 
@@ -128,3 +224,4 @@ module.exports.authenticateToken = (req, res, next) => {
         next()
     })
 }
+

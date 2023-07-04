@@ -162,10 +162,7 @@ class _WorkflowCardState extends State<WorkflowCard> {
       onTap: () {
         Dio().get('$baseUrls/workflows/${widget.item.wid}').then((value) {
           print(value.data);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SwipeScreen(workflow: value.data)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SwipeScreen(workflow: value.data)));
         }).catchError((value) {
           setState(() {
             // errorMessage = 'Invalid Access Code';
@@ -204,21 +201,18 @@ class _WorkflowCardState extends State<WorkflowCard> {
                 ),
               ),
               const SizedBox(width: 100),
-              IconButton(
-                  onPressed: changeCard,
-                  icon: const Icon(Icons.create, color: kBackgroundColor)),
-              IconButton(
-                  onPressed: deleteWorkflow,
-                  icon: const Icon(Icons.delete, color: kBackgroundColor)),
+              IconButton(onPressed: changeCard, icon: const Icon(Icons.create, color: kBackgroundColor)),
+              IconButton(onPressed: deleteWorkflow, icon: const Icon(Icons.delete, color: kBackgroundColor)),
               IconButton(
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => WorkflowMembers()));
+                            builder: (context) => WorkflowMembers(
+                                  workflowId: widget.item.wid,
+                                )));
                   },
-                  icon: const Icon(Icons.person_add_alt_outlined,
-                      color: kBackgroundColor))
+                  icon: const Icon(Icons.person_add_alt_outlined, color: kBackgroundColor))
             ],
           ),
         ),

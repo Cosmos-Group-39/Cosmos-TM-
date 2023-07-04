@@ -1,9 +1,12 @@
 import 'package:cosmos_client/Constants.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class WorkflowMembers extends StatefulWidget {
-  const WorkflowMembers({Key? key}) : super(key: key);
+import '../Models/workflowModels.dart';
 
+class WorkflowMembers extends StatefulWidget {
+  WorkflowMembers({Key? key, required this.workflowId}) : super(key: key);
+  String? workflowId;
   @override
   State<WorkflowMembers> createState() => _WorkflowMembersState();
 }
@@ -11,8 +14,39 @@ class WorkflowMembers extends StatefulWidget {
 class _WorkflowMembersState extends State<WorkflowMembers> {
   TextEditingController _workflowMemberController = TextEditingController();
   // Sample list of members
-  List<String> members = ['Member 1', 'Member 2', 'Member 3'];
+  List<AccessModel> members = [];
   Map<String, String> memberRoles = {}; // Map to store member roles
+
+  @override
+  void initState() {
+    super.initState();
+    Dio().get('$baseUrls/workflows/workflowMembers/${widget.workflowId}').then((value) {
+      setState(() {
+        members = List<AccessModel>.from(value.data.map((e) => AccessModel.fromJson(e)).toList());
+      });
+    }).catchError((value) {
+      // setState(() {
+      //   errorMessage = 'Invalid Access Code';
+      // });
+      print(value);
+    });
+  }
+
+  deletePerm(
+    String email,
+  ) {
+    Dio().post('$baseUrls/user/removeUser', data: {'email': email, 'workflow': widget.workflowId}).then((value) {
+      setState(() {
+        members.removeWhere((item) => item.email == email);
+      });
+      print("Permission removed");
+    }).catchError((value) {
+      // setState(() {
+      //   errorMessage = 'Invalid Access Code';
+      // });
+      print(value);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +101,17 @@ class _WorkflowMembersState extends State<WorkflowMembers> {
                   ),
                   onPressed: () {
                     // Your button logic
+                    print(widget.workflowId);
+                    Dio().post('$baseUrls/user/findUser', data: {'email': _workflowMemberController.text, 'workflow': widget.workflowId}).then((value) {
+                      setState(() {
+                        members.add(AccessModel.fromJson(value.data));
+                      });
+                    }).catchError((value) {
+                      // setState(() {
+                      //   errorMessage = 'Invalid Access Code';
+                      // });
+                      print(value);
+                    });
                   },
                   child: const Icon(
                     Icons.add,
@@ -81,37 +126,56 @@ class _WorkflowMembersState extends State<WorkflowMembers> {
             child: ListView.builder(
               itemCount: members.length,
               itemBuilder: (context, index) {
-                final member = members[index];
+                final member = index; //members[index];
                 final role = memberRoles[member] ?? 'Select Role';
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: ListTile(
-                    title: Text(member),
+                    title: Text(members[index].email as String),
                     subtitle: Text(role),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 40),
                     tileColor: Colors.blueAccent,
-                    trailing: PopupMenuButton<String>(
-                      itemBuilder: (context) => <PopupMenuEntry<String>>[
-                        const PopupMenuItem<String>(
-                          value: 'Owner',
-                          child: Text('Owner'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        PopupMenuButton<String>(
+                          itemBuilder: (context) => <PopupMenuEntry<String>>[
+                            const PopupMenuItem<String>(
+                              value: 'Owner',
+                              child: Text('Owner'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'Editor',
+                              child: Text('Editor'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'Viewer',
+                              child: Text('Viewer'),
+                            ),
+                          ],
+                          onSelected: (String value) {
+                            Dio().post('$baseUrls/user/findUser', data: {'email': _workflowMemberController.text, 'workflow': widget.workflowId}).then((value) {
+                              setState(() {
+                                members.add(AccessModel.fromJson(value.data));
+                              });
+                            }).catchError((value) {
+                              // setState(() {
+                              //   errorMessage = 'Invalid Access Code';
+                              // });
+                              print(value);
+                            });
+                            // setState(() {
+                            //   memberRoles[member] = value; // Update the selected role
+                            // });
+                          },
                         ),
-                        const PopupMenuItem<String>(
-                          value: 'Editor',
-                          child: Text('Editor'),
-                        ),
-                        const PopupMenuItem<String>(
-                          value: 'Viewer',
-                          child: Text('Viewer'),
-                        ),
+                        TextButton(
+                            onPressed: () {
+                              deletePerm(members[index].email as String);
+                            },
+                            child: const Text('Delte'))
                       ],
-                      onSelected: (String value) {
-                        setState(() {
-                          memberRoles[member] =
-                              value; // Update the selected role
-                        });
-                      },
                     ),
                   ),
                 );

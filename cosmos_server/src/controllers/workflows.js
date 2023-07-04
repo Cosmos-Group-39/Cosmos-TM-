@@ -9,7 +9,6 @@ module.exports.accessCode = (req, res) => {
                 Workflow.findOne(accessCode.workflow).populate('subWorkflows')
                     .then((workflow) => {
                         if (workflow) {
-                            console.log(workflow);
                             res.status(200).json(workflow);
                         } else {
                             console.log('Workflow not found');
@@ -36,7 +35,6 @@ module.exports.getWorkflow = (req, res) => {
     Workflow.findById(req.params.id).populate('subWorkflows')
         .then((workflow) => {
             if (workflow) {
-                console.log(workflow);
                 res.status(200).json(workflow);
             } else {
                 console.log('Workflow not found');
@@ -48,6 +46,33 @@ module.exports.getWorkflow = (req, res) => {
             res.status(500).json({ message: 'Internal server error' });
         });
 };
+
+module.exports.getUsers = (req, res) => {
+    Workflow.findById(req.params.id)
+        .then((workflow) => {
+            if (workflow) {
+                const userPromises = workflow.users.map((user) => User.findById(user._id));
+                Promise.all(userPromises)
+                    .then((usersGot) => {
+                        const data = workflow.users.map((user) => { return { accessLevel: user.accessLevel, _id: user._id, email: usersGot.filter((e) => e._id.toString() == user._id)[0].email } });
+                        res.status(200).send(data);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        res.status(500).send('Error occurred while fetching workflows');
+                    });
+            } else {
+                console.log('Workflow not found');
+                res.status(404).json({ message: 'Workflow not found' });
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).json({ message: 'Internal server error' });
+        });
+};
+
+// module.exports.getUsers
 
 
 

@@ -34,18 +34,15 @@ import 'package:flutter/material.dart';
 class AccessModel {
   String accessLevel;
   String userId;
+  String? email;
 
-  AccessModel({
-    required this.accessLevel,
-    required this.userId,
-  });
+  AccessModel({required this.accessLevel, required this.userId, this.email});
 
   factory AccessModel.fromJson(Map<String, dynamic> json) {
-    return AccessModel(
-      accessLevel: json['accessLevel'] ?? '',
-      userId: json['user'] ?? '',
-    );
+    return AccessModel(accessLevel: json['accessLevel'] ?? '', userId: json['_id'] ?? '', email: json['email']);
   }
+
+  Map<String, dynamic> toJson() => {'accessLevel': accessLevel, '_id': userId};
 }
 
 class WorkflowModel {
@@ -76,13 +73,9 @@ class WorkflowModel {
       wid: json['_id'],
       title: json['title'] as String? ?? '',
       type: json['type'] as String? ?? 'free',
-      subWorkflows:
-          List<String>.from(json['subWorkflows'] as List<dynamic>? ?? []),
-      users: (json['users'] as List<dynamic>?)
-          ?.map((e) => AccessModel.fromJson(e))
-          .toList(),
-      accessCodes:
-          List<String>.from(json['accessCodes'] as List<dynamic>? ?? []),
+      subWorkflows: List<String>.from(json['subWorkflows'] as List<dynamic>? ?? []),
+      users: (json['users'] as List<dynamic>?)?.map((e) => AccessModel.fromJson(e)).toList(),
+      accessCodes: List<String>.from(json['accessCodes'] as List<dynamic>? ?? []),
       chat: json['chat'] as String? ?? '',
       labels: List<String>.from(json['labels'] as List<dynamic>? ?? []),
       active: json['active'] as bool? ?? true,

@@ -4,6 +4,8 @@ const User = require('../controllers/user');
 // Route: GET /user
 router.post('/login', User.getId);
 router.post('/register', User.create);
+router.post('/findUser', User.findUser);
+router.post('/removeUser', User.removeUser);
 router.post('/createWorkflow', User.authenticateToken, User.createWorkflow);
 router.post('/deleteWorkflow', User.authenticateToken, User.deleteWorkflow);
 router.get('/ownWorkflows', User.authenticateToken, User.ownWorkflows);
