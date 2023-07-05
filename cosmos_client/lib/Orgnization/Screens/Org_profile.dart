@@ -25,6 +25,8 @@ class _OrgProState extends State<OrgPro> {
   void initState() {
     super.initState();
     _profilePic = File(widget.item.pic!);
+    _reviews.add(
+        ReviewModel(rating: 4, reviewer: 'Tim David', organization: 'new'));
   }
 
   // void delOrg() {
@@ -99,8 +101,8 @@ class _OrgProState extends State<OrgPro> {
                 const SizedBox(height: 50),
                 CircleAvatar(
                   radius: 80,
-                  backgroundImage:
-                      _profilePic != null ? FileImage(_profilePic!) : null,
+                  // backgroundImage:
+                  //     _profilePic != null ? FileImage(_profilePic!) : null,
                 ),
                 const SizedBox(height: 20),
                 const Divider(),
@@ -162,7 +164,7 @@ class _OrgProState extends State<OrgPro> {
                               children: [
                                 Icon(Icons.star, color: Colors.yellow),
                                 SizedBox(width: 8),
-                                Text(''),
+                                Text(this._reviews[0].reviewer),
                               ],
                             ),
                             onTap: null,
