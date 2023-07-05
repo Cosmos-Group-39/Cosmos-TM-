@@ -35,6 +35,7 @@ module.exports.create = (req, res) => {
 
 // PATCH /common/:type
 module.exports.update = (req, res) => {
+    console.log(req.body.set)
     require(`../models/${req.params.type}`).updateOne(req.body.head, req.body.set)
         .then((item) => {
             res.status(200).json(item)

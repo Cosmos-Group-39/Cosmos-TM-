@@ -18,8 +18,8 @@ logout(BuildContext context) {
   storage.delete(key: 'userID');
   storage.delete(key: 'userName');
   storage.delete(key: 'userEmail');
-  Navigator.push(
-      context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+  storage.delete(key: 'sid');
+  Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
 }
 
 Widget kDrawer(BuildContext context, String userName, String userEmail) {
@@ -53,8 +53,7 @@ Widget kDrawer(BuildContext context, String userName, String userEmail) {
                 accountEmail: Text(userEmail)),
             const SizedBox(height: 15),
             ListTile(
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen())),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen())),
               leading: Icon(Icons.home, color: kBackgroundColor),
               title: Text(
                 'Home',
@@ -68,10 +67,7 @@ Widget kDrawer(BuildContext context, String userName, String userEmail) {
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const CreatedWorkflows())),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CreatedWorkflows())),
               leading: Icon(Icons.timeline_rounded, color: kBackgroundColor),
               title: Text(
                 'Workflows',
@@ -85,10 +81,7 @@ Widget kDrawer(BuildContext context, String userName, String userEmail) {
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const NewWorkflowScreen())),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NewWorkflowScreen())),
               leading: Icon(Icons.add, color: kBackgroundColor),
               title: Text(
                 'Create Workflows',
@@ -102,8 +95,7 @@ Widget kDrawer(BuildContext context, String userName, String userEmail) {
             Divider(color: kBackgroundColor.withOpacity(0.5)),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const OrgMain())),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const OrgMain())),
               leading: Icon(Icons.people, color: kBackgroundColor),
               title: Text(
                 'Organizations',
@@ -144,8 +136,7 @@ Widget kDrawer(BuildContext context, String userName, String userEmail) {
             const SizedBox(height: 20),
             ListTile(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => OrgSettings()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => OrgSettings()));
               },
               leading: Icon(Icons.tips_and_updates, color: kBackgroundColor),
               title: Text(

@@ -2,6 +2,7 @@ import 'package:cosmos_client/Chat/Models/msg_Model.dart';
 import 'package:cosmos_client/Chat/widgets/otherMsg_widget.dart';
 import 'package:cosmos_client/Chat/widgets/ownMsg_widget.dart';
 import 'package:cosmos_client/Constants.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -9,12 +10,14 @@ class GroupPage extends StatefulWidget {
   final String workflowName;
   final String name;
   final String userId;
+  final String chatId;
 
   const GroupPage({
     Key? key,
     required this.name,
     required this.userId,
     required this.workflowName,
+    required this.chatId,
   }) : super(key: key);
 
   @override
@@ -29,19 +32,13 @@ class _GroupPageState extends State<GroupPage> {
   @override
   void initState() {
     super.initState();
-    FlutterSecureStorage().read(key: 'userName').then((userName) {
-      setState(() {
-        this.userName = userName ?? 'Anonymous';
-      });
-    });
     fetchMessages(); // Fetch existing chat messages
   }
 
   void fetchMessages() {
-    // Call the API service function to fetch existing messages
-    fetchChatMessages().then((fetchedMessages) {
+    Dio().get('$baseUrls/common/chat/${widget.chatId}').then((fetchedMessages) {
       setState(() {
-        messages = fetchedMessages;
+        messages = List<MsgModel>.from(fetchedMessages.data['messages'].map((e) => MsgModel.fromJson(e)).toList());
       });
     }).catchError((error) {
       print('Error fetching messages: $error');
@@ -51,16 +48,30 @@ class _GroupPageState extends State<GroupPage> {
   void sendMsg(String content, String? senderName) {
     MsgModel ownMsg = MsgModel(
       content: content,
-      type: "ownMsg",
-      user: senderName ?? "Unknown",
-      time: DateTime.now(),
+      user: widget.chatId,
+      time: DateTime.now().toUtc().toIso8601String(),
     );
 
-    // Call the API service function to send the message
-    sendChatMessage(ownMsg).then((_) {
+    Dio().patch('$baseUrls/common/chat', data: {
+      'head': {'_id': widget.chatId},
+      'set': {
+        '\$push': {
+          "messages": {
+            "user": widget.userId,
+            "time": DateTime.now().toUtc().toIso8601String(),
+            "content": content,
+          }
+        }
+      }
+    }).then((value) {
       setState(() {
         messages.add(ownMsg);
       });
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) =>
+      //             GroupPage(name: widget.name, userId: widget.userId, workflowName: widget.workflowName, chatId: widget.chatId))); //widget.workflow['chat'])));
     }).catchError((error) {
       print('Error sending message: $error');
     });
@@ -109,17 +120,10 @@ class _GroupPageState extends State<GroupPage> {
             child: ListView.builder(
               itemCount: messages.length,
               itemBuilder: (context, index) {
-                if (messages[index].type == "ownMsg") {
-                  return OwnMsgWidget(
-                    content: messages[index].content,
-                    user: messages[index].user!,
-                    userName: userName, // Pass the userName value here
-                  );
+                if (messages[index].user == widget.userId) {
+                  return OwnMSgWidget(content: messages[index].content, user: messages[index].user, userName: widget.name);
                 } else {
-                  return OtherMsgWidget(
-                    content: messages[index].content,
-                    user: messages[index].user!,
-                  );
+                  return OtherMSgWidget(content: messages[index].content, user: messages[index].user);
                 }
               },
             ),

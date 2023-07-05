@@ -16,6 +16,7 @@ module.exports.getId = (req, res) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
+                sid: user._id,
             });
             else res.status(404).json('Invalid credentials');
         })

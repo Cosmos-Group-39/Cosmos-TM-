@@ -16,18 +16,20 @@
 
 class MsgModel {
   String? id;
-  String? user;
-  DateTime time;
+  String user;
+  String time;
   String content;
-  String type;
 
   MsgModel({
     this.id,
-    this.user,
     required this.time,
     required this.content,
-    required this.type,
+    required this.user,
   });
+
+  factory MsgModel.fromJson(Map<String, dynamic> json) {
+    return MsgModel(time: json['time'], content: json['content'], user: json['user']);
+  }
 }
 
 class ChatModel {

@@ -13,6 +13,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 class SwipeScreen extends StatefulWidget {
   final dynamic workflow;
   const SwipeScreen({Key? key, this.workflow}) : super(key: key);
@@ -23,9 +25,11 @@ class SwipeScreen extends StatefulWidget {
 
 class _SwipeScreenState extends State<SwipeScreen> {
   TextEditingController _subworkflowNameController = TextEditingController();
-  TextEditingController _subworkflowDescriptonController =
-      TextEditingController();
+  TextEditingController _subworkflowDescriptonController = TextEditingController();
   _SwipeScreenState();
+  String userName = 'Anonymous';
+  String userEmail = '';
+  String sid = '';
 
   late PageController _pageController;
   int _currentPage = 0;
@@ -89,17 +93,13 @@ class _SwipeScreenState extends State<SwipeScreen> {
         _subworkflowNameController.clear();
         _subworkflowDescriptonController.clear();
         _goToNextPage();
-      }).catchError(
-          (error) => print(error)); // subworkflow couldn't link to workflow
+      }).catchError((error) => print(error)); // subworkflow couldn't link to workflow
     }).catchError((error) => print(error)); //subworkflow can't be create
   }
 
   void deleteSubworkflow(dynamic subWorflow) {
-    Dio()
-        .delete('$baseUrls/common/subWorkflow/${subWorflow['_id']}')
-        .then((res) {
-      int index =
-          subWorkflows.indexWhere((item) => item['_id'] == res.data['_id']);
+    Dio().delete('$baseUrls/common/subWorkflow/${subWorflow['_id']}').then((res) {
+      int index = subWorkflows.indexWhere((item) => item['_id'] == res.data['_id']);
       subWorkflows.removeAt(index);
       views.removeAt(index);
       Dio().patch('$baseUrls/common/workflow', data: {
@@ -173,8 +173,24 @@ class _SwipeScreenState extends State<SwipeScreen> {
     for (int i = 0; i < subWorkflows.length; i++) {
       createViews(subWorkflows[i]);
     }
-    // print(subWorkflows);
+
+    FlutterSecureStorage().read(key: 'userName').then((userName) {
+      setState(() {
+        this.userName = userName ?? 'Anonymous';
+      });
+    });
+    FlutterSecureStorage().read(key: 'userEmail').then((userEmail) {
+      setState(() {
+        this.userEmail = userEmail ?? '';
+      });
+    });
+    FlutterSecureStorage().read(key: 'sid').then((sid) {
+      setState(() {
+        this.sid = sid ?? '';
+      });
+    });
   }
+  // print(subWorkflows);
 
   @override
   void dispose() {
@@ -219,10 +235,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
           centerTitle: true,
           leading: IconButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const HomeScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
               },
               icon: const Icon(
                 Icons.arrow_back,
@@ -231,10 +244,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FeedbackReview()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackReview()));
                 },
                 icon: Icon(
                   Icons.rate_review_outlined,
@@ -247,14 +257,13 @@ class _SwipeScreenState extends State<SwipeScreen> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => GroupPage(
-                              name: '',
-                              userId: '',
-                              workflowName: widget.workflow['title'],
-                            )));
+                            name: this.userName,
+                            userId: this.sid,
+                            workflowName: widget.workflow['title'],
+                            chatId: '647f35a904b728810f37c282'))); //widget.workflow['chat'])));
               },
               shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(10.0), // Set the desired radius here
+                borderRadius: BorderRadius.circular(10.0), // Set the desired radius here
               ),
               child: const Icon(
                 Icons.chat_bubble,
@@ -287,12 +296,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 6,
-                                offset: Offset(0, 2))
-                          ],
+                          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
                         ),
                         height: MediaQuery.of(context).size.height / 1.6,
                         child: Column(
@@ -312,14 +316,11 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                   // fillColor: Colors.blue[50],
                                   // filled: true,
                                   border: const OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
                                   ),
                                   focusedBorder: const OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    borderSide:
-                                        BorderSide(color: Colors.black54),
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    borderSide: BorderSide(color: Colors.black54),
                                   ),
                                 ),
                               ),
@@ -334,22 +335,18 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                   // fillColor: Colors.blue[50],
                                   // filled: true,
                                   border: const OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
                                   ),
                                   focusedBorder: const OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    borderSide:
-                                        BorderSide(color: Colors.black54),
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    borderSide: BorderSide(color: Colors.black54),
                                   ),
                                 ),
                               ),
                             ),
                             const Text(
                               'Select View',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w700),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -364,18 +361,12 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                     ),
                                     // color: Colors.blue[50],
                                     borderRadius: BorderRadius.circular(20),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                          color: Colors.black12,
-                                          blurRadius: 6,
-                                          offset: Offset(0, 2))
-                                    ],
+                                    boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
                                   ),
                                   padding: const EdgeInsets.all(16.0),
                                   child: DropdownButton<String>(
                                     underline: const Text(''),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(20)),
+                                    borderRadius: const BorderRadius.all(Radius.circular(20)),
                                     alignment: AlignmentDirectional.centerEnd,
                                     style: const TextStyle(
                                       color: Colors.black,
@@ -388,9 +379,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                                         _selectedTemplate = newValue;
                                       });
                                     },
-                                    items: templateDisplay
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
+                                    items: templateDisplay.map<DropdownMenuItem<String>>((String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
                                         child: Text(value),
@@ -430,11 +419,9 @@ class _SwipeScreenState extends State<SwipeScreen> {
               bottom: 5,
               left: 0,
               right: 0,
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 _buildDot(0),
-                ...subWorkflows.map(
-                    (element) => _buildDot(subWorkflows.indexOf(element) + 1)),
+                ...subWorkflows.map((element) => _buildDot(subWorkflows.indexOf(element) + 1)),
               ]),
             ),
             Positioned(

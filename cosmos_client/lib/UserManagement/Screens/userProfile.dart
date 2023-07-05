@@ -3,13 +3,13 @@ import 'package:cosmos_client/UserManagement/Widgets/userProfilePic.dart';
 import 'package:cosmos_client/UserManagement/Models/userModel.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 
 class UserProfileScreen extends StatefulWidget {
   final UserModel userModel;
 
-  const UserProfileScreen({Key? key, required this.userModel})
-      : super(key: key);
+  const UserProfileScreen({Key? key, required this.userModel}) : super(key: key);
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -31,6 +31,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   bool isPasswordVisible = false;
   String updatedName = '';
   String updatedEmail = '';
+  String sid = '';
 
   Future<DateTime?> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -61,6 +62,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     _pbirthdayController.text = formattedDob;
     _pmobileNumberController.text = widget.userModel.mobile;
     _addressController.text = "";
+    FlutterSecureStorage().read(key: 'sid').then((sid) {
+      setState(() {
+        this.sid = sid ?? '';
+        Dio().get('$baseUrls/common/user/$sid').then((e) {
+          formattedDob = dateFormat.format(widget.userModel.dob);
+          _firstNameController.text = e.data['firstName'];
+          _lastNameController.text = e.data['lastName'];
+          _pemailController.text = e.data['email'];
+          _passwordController.text = e.data['password'];
+          _pbirthdayController.text = formattedDob;
+          _pmobileNumberController.text = e.data['mobile'];
+          _addressController.text = "";
+        });
+      });
+    });
   }
 
   updateUser() {
@@ -74,8 +90,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           'mobile': _pmobileNumberController.text,
           'password': _passwordController.text,
           'address': _addressController.text,
-          'dob': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ')
-              .format(DateTime.parse(picked.toString())),
+          'dob': DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(DateTime.parse(picked.toString())),
           'profilePic': null, //userprofilePic,
           'isDeleted': false,
           'subscription': 'free',
@@ -143,8 +158,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
             onPressed: () {
               setState(() {
-                isPasswordVisible =
-                    !isPasswordVisible; // Toggle the password visibility state
+                isPasswordVisible = !isPasswordVisible; // Toggle the password visibility state
               });
             },
           ),
@@ -183,9 +197,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             return 'Please enter an email address';
           }
 
-          bool emailValid = RegExp(
-                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9+\.[a-zA-Z]+")
-              .hasMatch(value);
+          bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9+\.[a-zA-Z]+").hasMatch(value);
 
           if (!emailValid) {
             return 'Enter a valid email address';
@@ -317,8 +329,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           content: Container(
             width: size.width / 1.5,
             height: size.height / 1.5,
-            decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(50.0)),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(50.0)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -380,10 +391,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           child: Center(
                             child: Text(
                               'USD 50',
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blueGrey),
+                              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blueGrey),
                             ),
                           ),
                         ),
@@ -469,9 +477,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  updatedEmail.isNotEmpty
-                      ? updatedEmail
-                      : widget.userModel.email,
+                  updatedEmail.isNotEmpty ? updatedEmail : widget.userModel.email,
                   style: const TextStyle(
                     letterSpacing: 2,
                     fontStyle: FontStyle.italic,
@@ -482,10 +488,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.amber),
-                      fixedSize:
-                          MaterialStateProperty.all<Size>(const Size(150, 50)),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.amber),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(150, 50)),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -525,9 +529,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
-                            const Text('First Name',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(fontWeight: FontWeight.w600)),
+                            const Text('First Name', textAlign: TextAlign.start, style: TextStyle(fontWeight: FontWeight.w600)),
                             const SizedBox(width: 10),
                             editFirstName(),
                           ],
@@ -538,9 +540,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
-                            const Text('Last Name',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(fontWeight: FontWeight.w600)),
+                            const Text('Last Name', textAlign: TextAlign.start, style: TextStyle(fontWeight: FontWeight.w600)),
                             const SizedBox(width: 10),
                             editLastName(),
                           ],
@@ -551,9 +551,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
-                            const Text('Password',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(fontWeight: FontWeight.w600)),
+                            const Text('Password', textAlign: TextAlign.start, style: TextStyle(fontWeight: FontWeight.w600)),
                             const SizedBox(width: 10),
                             editPassword(),
                           ],
@@ -564,9 +562,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
-                            const Text('Email        ',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(fontWeight: FontWeight.w600)),
+                            const Text('Email        ', textAlign: TextAlign.start, style: TextStyle(fontWeight: FontWeight.w600)),
                             const SizedBox(width: 10),
                             editEmail(),
                           ],
@@ -577,9 +573,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
-                            const Text('Birthday   ',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(fontWeight: FontWeight.w600)),
+                            const Text('Birthday   ', textAlign: TextAlign.start, style: TextStyle(fontWeight: FontWeight.w600)),
                             const SizedBox(width: 10),
                             editBirthday(),
                           ],
@@ -590,9 +584,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
-                            const Text('Mobile      ',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(fontWeight: FontWeight.w600)),
+                            const Text('Mobile      ', textAlign: TextAlign.start, style: TextStyle(fontWeight: FontWeight.w600)),
                             const SizedBox(width: 10),
                             editMobileNumber(),
                           ],
@@ -603,9 +595,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           children: [
-                            const Text('Address    ',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(fontWeight: FontWeight.w600)),
+                            const Text('Address    ', textAlign: TextAlign.start, style: TextStyle(fontWeight: FontWeight.w600)),
                             const SizedBox(width: 10),
                             editAddress(),
                           ],
@@ -614,10 +604,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       const SizedBox(height: 20),
                       ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(kPrimaryColor),
-                          fixedSize: MaterialStateProperty.all<Size>(
-                              const Size(150, 50)),
+                          backgroundColor: MaterialStateProperty.all<Color>(kPrimaryColor),
+                          fixedSize: MaterialStateProperty.all<Size>(const Size(150, 50)),
                           shape: MaterialStateProperty.all<OutlinedBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
