@@ -53,7 +53,10 @@ class _OrgFormState extends State<OrgForm> {
           'labels': []
         };
 
-        Dio().post('$baseUrls/organizations/creatOrg', data: data, options: options).then((value) {
+        Dio()
+            .post('$baseUrls/organizations/creatOrg',
+                data: data, options: options)
+            .then((value) {
           print(value.data);
           cardsx.add(
             OrganizationModel(
@@ -201,7 +204,12 @@ class _OrgFormState extends State<OrgForm> {
                     decoration: BoxDecoration(
                       color: Colors.white70,
                       borderRadius: BorderRadius.circular(25),
-                      boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 6,
+                            offset: Offset(0, 2))
+                      ],
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
