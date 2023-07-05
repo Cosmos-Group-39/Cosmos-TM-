@@ -31,13 +31,17 @@
 class OrgMembersModel {
   bool isAdmin = false;
   String userId;
-  String name;
+  String? email;
 
   OrgMembersModel({
     required this.isAdmin,
     required this.userId,
-    required this.name,
+    this.email,
   });
+
+  factory OrgMembersModel.fromJson(Map<String, dynamic> json) {
+    return OrgMembersModel(isAdmin: json['isAdmin'] as bool, userId: json['_id'], email: json['email']);
+  }
 }
 
 class OrganizationModel {
@@ -60,4 +64,16 @@ class OrganizationModel {
     this.members,
     this.labels,
   });
+
+  factory OrganizationModel.fromJson(Map<String, dynamic> json) {
+    return OrganizationModel(
+        id: json['_id'] ?? '',
+        name: json['name'] ?? '',
+        description: json['description'] ?? '',
+        pic: json['pic'] ?? '',
+        reviews: List<String>.from(json['reviews']),
+        workflows: List<String>.from(json['workflows']),
+        members: List<OrgMembersModel>.from(json['members'].map((e) => OrgMembersModel.fromJson(e)).toList()),
+        labels: List<String>.from(json['labels']));
+  }
 }

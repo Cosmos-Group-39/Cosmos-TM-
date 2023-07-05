@@ -3,7 +3,9 @@ import 'package:cosmos_client/Orgnization/Screens/Org_HomePage.dart';
 import 'package:cosmos_client/Orgnization/Models/orgModels.dart';
 import 'package:cosmos_client/Orgnization/Widgets/Const_Texts.dart';
 import 'package:cosmos_client/Orgnization/Widgets/orgCards.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:uuid/uuid.dart';
 
 List<OrganizationModel> cardsx = [];
@@ -20,6 +22,23 @@ class _CreateCardsState extends State<CreateCards> {
   @override
   void initState() {
     super.initState();
+    FlutterSecureStorage().read(key: 'userID').then((userID) {
+      final options = Options(
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer $userID',
+        },
+      );
+
+      Dio().get('$baseUrls/organizations/getOrg', options: options).then((value) {
+        print(value.data);
+        setState(() {
+          cardsx = List<OrganizationModel>.from(value.data.map((e) => OrganizationModel.fromJson(e)).toList());
+        });
+      }).catchError((onError) {
+        print(onError);
+      });
+    });
   }
 
   //edit a card
@@ -36,9 +55,31 @@ class _CreateCardsState extends State<CreateCards> {
 
   //delete a card
   void deleteCard(String cardID) {
-    setState(() {
-      cardsx.removeWhere((item) => item.id == cardID);
+    FlutterSecureStorage().read(key: 'userID').then((userID) {
+      final options = Options(
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer $userID',
+        },
+      );
+
+      Map<String, dynamic> data = {
+        // 'id': uuid.v1(),
+        'id': cardID,
+      };
+
+      Dio().post('$baseUrls/organizations/deleteOrg', data: data, options: options).then((value) {
+        print(value.data);
+        setState(() {
+          cardsx.removeWhere((item) => item.id == cardID);
+        });
+      }).catchError((onError) {
+        print(onError);
+      });
     });
+    // setState(() {
+    //   cardsx.removeWhere((item) => item.id == cardID);
+    // });
   }
 
   String? selectedValue;
@@ -177,8 +218,7 @@ class _CreateCardsState extends State<CreateCards> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const OrgMain()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const OrgMain()));
             },
             icon: const Icon(
               Icons.arrow_back,
@@ -206,8 +246,7 @@ class _CreateCardsState extends State<CreateCards> {
                 children: [
                   Text(
                     (selectedValue ?? 'Filter Organizations'),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w500, color: Colors.blue),
+                    style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.blue),
                   ),
                   IconButton(
                     onPressed: showFilterDialog,

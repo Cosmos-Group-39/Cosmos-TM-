@@ -14,12 +14,12 @@ class OrgAddMembers extends StatefulWidget {
 
 class _OrgAddMembersState extends State<OrgAddMembers> {
   List<OrgMembersModel> allMembers = [
-    OrgMembersModel(userId: '1', name: 'aaa', isAdmin: false),
-    OrgMembersModel(userId: '2', name: 'aaa bbb', isAdmin: false),
-    OrgMembersModel(userId: '3', name: 'bbbb ccc', isAdmin: false),
-    OrgMembersModel(userId: '1', name: 'bbb aac', isAdmin: false),
-    OrgMembersModel(userId: '2', name: 'ddrf', isAdmin: false),
-    OrgMembersModel(userId: '3', name: 'zz ddaa', isAdmin: false),
+    OrgMembersModel(userId: '1', email: 'aaa', isAdmin: false),
+    OrgMembersModel(userId: '2', email: 'aaa bbb', isAdmin: false),
+    OrgMembersModel(userId: '3', email: 'bbbb ccc', isAdmin: false),
+    OrgMembersModel(userId: '1', email: 'bbb aac', isAdmin: false),
+    OrgMembersModel(userId: '2', email: 'ddrf', isAdmin: false),
+    OrgMembersModel(userId: '3', email: 'zz ddaa', isAdmin: false),
   ];
 
   List<OrgMembersModel> filteredMembers = [];
@@ -27,11 +27,7 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
 
   void searchMembers(String query) {
     setState(() {
-      filteredMembers = allMembers
-          .where((member) =>
-              member.name.toLowerCase().contains(query.toLowerCase()) &&
-              !selectedMembers.contains(member))
-          .toList();
+      filteredMembers = allMembers.where((member) => member.email!.toLowerCase().contains(query.toLowerCase()) && !selectedMembers.contains(member)).toList();
     });
   }
 
@@ -59,7 +55,7 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
             children: [
               Divider(thickness: 3),
               const SizedBox(height: 5),
-              Text(member.name),
+              Text(member.email!),
               const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
@@ -73,8 +69,7 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
                   },
                   child: const Text(
                     'Add',
-                    style:
-                        kAlertBoxButtonTextStyle, //Elevated button Text style
+                    style: kAlertBoxButtonTextStyle, //Elevated button Text style
                   ),
                 ),
               ),
@@ -157,8 +152,7 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
                 style: ButtonStyle(
                   fixedSize: MaterialStatePropertyAll(Size(150, 45)),
                   elevation: MaterialStatePropertyAll(10),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(kPrimaryColor),
+                  backgroundColor: MaterialStateProperty.all<Color>(kPrimaryColor),
                 ),
                 onPressed: () {
                   showDialog(
@@ -167,8 +161,7 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
                       return AlertDialog(
                         shape: kAlertBoxBorderStyle,
                         title: Center(
-                          child: Text('Search Results',
-                              style: kAlertBoxTopicTextStyle),
+                          child: Text('Search Results', style: kAlertBoxTopicTextStyle),
                         ),
                         content: Container(
                           width: double.maxFinite,
@@ -178,7 +171,7 @@ class _OrgAddMembersState extends State<OrgAddMembers> {
                             itemBuilder: (BuildContext context, int index) {
                               final member = filteredMembers[index];
                               return ListTile(
-                                title: Text(member.name),
+                                title: Text(member.email!),
                                 trailing: IconButton(
                                   icon: const Icon(
                                     Icons.add,

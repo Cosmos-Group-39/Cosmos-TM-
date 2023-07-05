@@ -55,19 +55,18 @@ class _OrgFormState extends State<OrgForm> {
 
         Dio().post('$baseUrls/organizations/creatOrg', data: data, options: options).then((value) {
           print(value.data);
+          cardsx.add(
+            OrganizationModel(
+              id: value.data['_id'],
+              name: value.data['name'],
+              description: value.data['description'],
+              pic: pic,
+            ),
+          );
         }).catchError((onError) {
           print(onError);
         });
       });
-
-      cardsx.add(
-        OrganizationModel(
-          id: uuid.v1(),
-          name: cardControllername.text,
-          description: cardControllerDes.text,
-          pic: pic,
-        ),
-      );
 
       Navigator.push(
         context,

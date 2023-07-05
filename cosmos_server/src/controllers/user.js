@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Workflow = require('../models/workflow');
+const Chat = require('../models/chat');
 
 const Access = require('../models/accessSchema');
 
@@ -75,7 +76,16 @@ module.exports.createWorkflow = (req, res) => {
     new Workflow(newWorkflow).save()
         .then((item) => {
             User.updateOne({ _id: req.user._id }, { $push: { workflows: item._id } })
-                .then(() => res.status(200).json(item))
+                .then(() => {
+                    new Chat({ workflow: item._id }).save()
+                        .then((ch) => {
+                            Workflow.updateOne({ _id: item._id }, { $set: { chat: ch._id } })
+                                .then((e) => {
+                                    console.log(ch);
+                                    res.status(200).json(item)
+                                })
+                        });
+                })
                 .catch((e) => {
                     console.log(e);
                     res.status(500).json(error);
@@ -90,6 +100,9 @@ module.exports.createWorkflow = (req, res) => {
 module.exports.deleteWorkflow = (req, res) => {
     Workflow.findByIdAndDelete(req.body.wid)
         .then((item) => {
+            console.log(item.chat.toString());
+            Chat.findByIdAndDelete(item.chat.toString())
+                .then(() => { });
             User.updateOne({ _id: req.user._id }, {
                 "$pull": {
                     "workflows": req.body.wid

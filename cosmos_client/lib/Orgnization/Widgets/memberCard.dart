@@ -107,7 +107,7 @@ class _MemberCardWidgetState extends State<MemberCardWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.member.name,
+                    widget.member.email!,
                     style: const TextStyle(
                       color: kBackgroundColor,
                       fontWeight: FontWeight.w800,
