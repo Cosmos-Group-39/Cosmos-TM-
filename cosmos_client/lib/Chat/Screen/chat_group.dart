@@ -38,7 +38,9 @@ class _GroupPageState extends State<GroupPage> {
   void fetchMessages() {
     Dio().get('$baseUrls/common/chat/${widget.chatId}').then((fetchedMessages) {
       setState(() {
-        messages = List<MsgModel>.from(fetchedMessages.data['messages'].map((e) => MsgModel.fromJson(e)).toList());
+        messages = List<MsgModel>.from(fetchedMessages.data['messages']
+            .map((e) => MsgModel.fromJson(e))
+            .toList());
       });
     }).catchError((error) {
       print('Error fetching messages: $error');
@@ -67,11 +69,14 @@ class _GroupPageState extends State<GroupPage> {
       setState(() {
         messages.add(ownMsg);
       });
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) =>
-      //             GroupPage(name: widget.name, userId: widget.userId, workflowName: widget.workflowName, chatId: widget.chatId))); //widget.workflow['chat'])));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => GroupPage(
+                  name: widget.name,
+                  userId: widget.userId,
+                  workflowName: widget.workflowName,
+                  chatId: widget.chatId))); //widget.workflow['chat'])));
     }).catchError((error) {
       print('Error sending message: $error');
     });
@@ -121,9 +126,14 @@ class _GroupPageState extends State<GroupPage> {
               itemCount: messages.length,
               itemBuilder: (context, index) {
                 if (messages[index].user == widget.userId) {
-                  return OwnMSgWidget(content: messages[index].content, user: messages[index].user, userName: widget.name);
+                  return OwnMSgWidget(
+                      content: messages[index].content,
+                      user: messages[index].user,
+                      userName: widget.name);
                 } else {
-                  return OtherMSgWidget(content: messages[index].content, user: messages[index].user);
+                  return OtherMSgWidget(
+                      content: messages[index].content,
+                      user: messages[index].user);
                 }
               },
             ),

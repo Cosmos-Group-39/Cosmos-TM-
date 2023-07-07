@@ -5,6 +5,7 @@ import 'package:cosmos_client/Workflow%20Management/Screens/swipeScreen.dart';
 import 'package:cosmos_client/Workflow%20Management/Screens/workflowMembers.dart';
 import 'package:cosmos_client/Workflow%20Management/Views/calenderView.dart';
 import 'package:cosmos_client/color.schemes.g.dart';
+import 'package:cosmos_client/welcomeScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: true),
       // theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       // darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-      home: HomeScreen(),
+      home: CosmosTM(),
     );
   }
 }
