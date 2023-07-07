@@ -21,6 +21,7 @@
 .buildlog/
 .history
 .svn/
+.env
 
 .DS_Store
 .env.local
